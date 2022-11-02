@@ -1,0 +1,12 @@
+{
+    "SacPAS": {
+        "additionalLayerSouces": {
+            "Califonia WBD HUC6 WaterSheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer",
+            "Califonia WBD HUC8 WaterSheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer",
+            "Idaho Priority Waters HUC8": "https://services1.arcgis.com/754BERmVIq3RqSf8/arcgis/rest/services/idaho_priority_waters_huc8/FeatureServer",
+            "Washington HUC6 WaterSheds": "https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/3",
+            "Washington HUC8 WaterSheds": "https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/2",
+            "Oregon HUC8 WaterSheds": "https://services7.arcgis.com/Lfg8HsawuFLJUsOU/arcgis/rest/services/Oregon_HUC_08_Watersheds/FeatureServer"
+        }
+    }
+}

@@ -1,0 +1,646 @@
+{
+	"SacPAS": {
+		"American R at Fair Oaks (AFO)": {
+			"webqcode": "AFO",
+			"lat": "38.63546",
+			"lon": "-121.22773",
+			"basin": "Sacramento River Basin"
+		},
+		"American R below Folsom Dam (AFD)": {
+			"webqcode": "AFD",
+			"lat": "38.6883",
+			"lon": "-121.1667",
+			"basin": "Sacramento River Basin"
+		},
+		"Folsom Lake, American R (FOL)": {
+			"webqcode": "FOL",
+			"lat": "38.683",
+			"lon": "-121.183",
+			"basin": "Sacramento River Basin"
+		},
+		"American R at Hazel Ave Bridge (AHZ)": {
+			"webqcode": "AHZ",
+			"lat": "38.636",
+			"lon": "-121.224",
+			"basin": "Sacramento River Basin"
+		},
+		"American R below Watt Ave Bridge (AWB)": {
+			"webqcode": "AWB",
+			"lat": "38.567",
+			"lon": "-121.387",
+			"basin": "Sacramento River Basin"
+		},
+		"American R at William B Pond Park (AWP)": {
+			"webqcode": "AWP",
+			"lat": "38.591",
+			"lon": "-121.332",
+			"basin": "Sacramento River Basin"
+		},
+		"Lake Natoma (Nimbus Dam), American R (NAT)": {
+			"webqcode": "NAT",
+			"lat": "38.65",
+			"lon": "-121.183",
+			"basin": "Sacramento River Basin"
+		},
+		"Feather R at mile 61.6 (FRA)": {
+			"webqcode": "FRA",
+			"lat": "39.468",
+			"lon": "-121.597",
+			"basin": "Sacramento River Basin"
+		},
+		"Feather R near Gridley (GRL)": {
+			"webqcode": "GRL",
+			"lat": "39.366577",
+			"lon": "-121.647369",
+			"basin": "Sacramento River Basin"
+		},
+		"Feather R, Oroville Dam (ORO)": {
+			"webqcode": "ORO",
+			"lat": "39.54",
+			"lon": "-121.493",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Balls Ferry Bridge (BSF)": {
+			"webqcode": "BSF",
+			"lat": "40.417",
+			"lon": "-122.193",
+			"basin": "Sacramento River Basin"
+		},
+		"Battle Creek (BAT)": {
+			"webqcode": "BAT",
+			"lat": "40.398209",
+			"lon": "-122.146385",
+			"basin": "Sacramento River Basin"
+		},
+		"NF Battle Creek near Manton (BNF)": {
+			"webqcode": "BNF",
+			"lat": "40.424332",
+			"lon": "-121.986946",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Bend Bridge (BND)": {
+			"webqcode": "BND",
+			"lat": "40.288486",
+			"lon": "-122.186661",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Butte City (BTC)": {
+			"webqcode": "BTC",
+			"lat": "39.45784",
+			"lon": "-121.994164",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R abv Clear Ck (CCR)": {
+			"webqcode": "CCR",
+			"lat": "40.538",
+			"lon": "-122.356",
+			"basin": "Sacramento River Basin"
+		},
+		"Clear Creek nr Igo (IGO)": {
+			"webqcode": "IGO",
+			"lat": "40.513206",
+			"lon": "-122.524178",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Colusa Weir (crest 61.8';crest 60.9') (CLW)": {
+			"webqcode": "CLW",
+			"lat": "39.23682",
+			"lon": "-121.994759",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Colusa (COL)": {
+			"webqcode": "COL",
+			"lat": "39.214058",
+			"lon": "-122.000252",
+			"basin": "Sacramento River Basin"
+		},
+		"Deer Creek nr Vina (DCV)": {
+			"webqcode": "DCV",
+			"lat": "40.014046",
+			"lon": "-121.948318",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R above Delta Cross Channel (SDC)": {
+			"webqcode": "SDC",
+			"lat": "38.257",
+			"lon": "-121.518",
+			"basin": "Sacramento River Basin"
+		},
+		"Delta Cross Channel (DLC)": {
+			"webqcode": "DLC",
+			"lat": "38.245",
+			"lon": "-121.505",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Freeport (FPT)": {
+			"webqcode": "FPT",
+			"lat": "38.456112",
+			"lon": "-121.5003",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Fremont Weir (crest 33.5';crest 32') (FRE)": {
+			"webqcode": "FRE",
+			"lat": "38.759258",
+			"lon": "-121.667274",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Georgiana Slough (GSS)": {
+			"webqcode": "GSS",
+			"lat": "38.237",
+			"lon": "-121.518",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R below Georgiana Slough (GES)": {
+			"webqcode": "GES",
+			"lat": "38.2389",
+			"lon": "-121.5234",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Hamilton City-Main Ch (HMC)": {
+			"webqcode": "HMC",
+			"lat": "39.750923",
+			"lon": "-121.997879",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R upstream of Hwy 44 (SAC)": {
+			"webqcode": "SAC",
+			"lat": "40.59258",
+			"lon": "-122.36983",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Jellys Ferry (JLF)": {
+			"webqcode": "JLF",
+			"lat": "40.3172",
+			"lon": "-122.1897",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Keswick Reservoir (KES)": {
+			"webqcode": "KES",
+			"lat": "40.612104",
+			"lon": "-122.445699",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Keswick (WQ) (KWK)": {
+			"webqcode": "KWK",
+			"lat": "40.600983",
+			"lon": "-122.444458",
+			"basin": "Sacramento River Basin"
+		},
+		"Mill Creek nr Los Molinos (MLM)": {
+			"webqcode": "MLM",
+			"lat": "40.054604",
+			"lon": "-122.024155",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Moulton Weir (crest 76.8';crest 76.2') (MLW)": {
+			"webqcode": "MLW",
+			"lat": "39.338211",
+			"lon": "-122.022629",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Ord Ferry-Main Ch (ORD)": {
+			"webqcode": "ORD",
+			"lat": "39.628132",
+			"lon": "-121.993179",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Red Bluff Diversion Dam (RDB)": {
+			"webqcode": "RDB",
+			"lat": "40.154362",
+			"lon": "-122.20195",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Rio Vista Bridge (RVB)": {
+			"webqcode": "RVB",
+			"lat": "38.159737",
+			"lon": "-121.686355",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Shasta Dam (USBR) (SHA)": {
+			"webqcode": "SHA",
+			"lat": "40.718",
+			"lon": "-122.42",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Shasta Dam (WQ) (SHD)": {
+			"webqcode": "SHD",
+			"lat": "40.7161",
+			"lon": "-122.4253",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Tisdale Weir (crest 45.5';crest 44.1') (TIS)": {
+			"webqcode": "TIS",
+			"lat": "39.02644",
+			"lon": "-121.822083",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Verona (VON)": {
+			"webqcode": "VON",
+			"lat": "38.774155",
+			"lon": "-121.598068",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R at Vina Bridge-Main Ch (VIN)": {
+			"webqcode": "VIN",
+			"lat": "39.908737",
+			"lon": "-122.092468",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R, Whiskeytown Dam (USBR) (WHI)": {
+			"webqcode": "WHI",
+			"lat": "40.598",
+			"lon": "-122.537",
+			"basin": "Sacramento River Basin"
+		},
+		"Sacramento R below Wilkins Slough (WLK)": {
+			"webqcode": "WLK",
+			"lat": "39.009895",
+			"lon": "-121.824692",
+			"basin": "Sacramento River Basin"
+		},
+		"New Exchequer Lk McClure, Merced R (EXC)": {
+			"webqcode": "EXC",
+			"lat": "37.585",
+			"lon": "-120.27",
+			"basin": "San Joaquin River Basin"
+		},
+		"Merced R below Crocker-Huffman Dam (MBH)": {
+			"webqcode": "MBH",
+			"lat": "37.518223",
+			"lon": "-120.380196",
+			"basin": "San Joaquin River Basin"
+		},
+		"Merced R at Shaffer Bridge near Cressy (MBN)": {
+			"webqcode": "MBN",
+			"lat": "37.454224",
+			"lon": "-120.608803",
+			"basin": "San Joaquin River Basin"
+		},
+		"Merced R at Cressy (CRS)": {
+			"webqcode": "CRS",
+			"lat": "37.425",
+			"lon": "-120.663",
+			"basin": "San Joaquin River Basin"
+		},
+		"Merced R near Stevinson (MST)": {
+			"webqcode": "MST",
+			"lat": "37.371",
+			"lon": "-120.931",
+			"basin": "San Joaquin River Basin"
+		},
+		"Old River at Head (OH1)": {
+			"webqcode": "OH1",
+			"lat": "37.807552",
+			"lon": "-121.331253",
+			"basin": "San Joaquin River Basin"
+		},
+		"SJR Basin, Bear Creek below Eastside Canal (BSD)": {
+			"webqcode": "BSD",
+			"lat": "37.2547",
+			"lon": "-120.7194",
+			"basin": "San Joaquin River Basin"
+		},
+		"SJR Basin, Little Dry Creek (LDC)": {
+			"webqcode": "LDC",
+			"lat": "36.934193",
+			"lon": "-119.729557",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Antioch (ANH)": {
+			"webqcode": "ANH",
+			"lat": "38.01783",
+			"lon": "-121.802963",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Below Bifurcation (SJB)": {
+			"webqcode": "SJB",
+			"lat": "36.773",
+			"lon": "-120.286",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Brandt Bridge (BDT)": {
+			"webqcode": "BDT",
+			"lat": "37.865",
+			"lon": "-121.3231",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Chowchilla Bypass (CBP)": {
+			"webqcode": "CBP",
+			"lat": "36.774",
+			"lon": "-120.285",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Delta Mendota Canal Check 21 (DM3)": {
+			"webqcode": "DM3",
+			"lat": "36.780899",
+			"lon": "-120.372473",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Donny Bridge (DNB)": {
+			"webqcode": "DNB",
+			"lat": "36.8335",
+			"lon": "-119.9658",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, near Dos Palos (SDP)": {
+			"webqcode": "SDP",
+			"lat": "36.994",
+			"lon": "-120.5015",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Eastside Bypass below Mariposa (EBM)": {
+			"webqcode": "EBM",
+			"lat": "37.205",
+			"lon": "-120.6981",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Eastside Bypass near El Nido (ELN)": {
+			"webqcode": "ELN",
+			"lat": "37.1475",
+			"lon": "-120.6053",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Fremont Ford (FFB)": {
+			"webqcode": "FFB",
+			"lat": "37.30994",
+			"lon": "-120.931038",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Friant Dam (Millerton) (MIL)": {
+			"webqcode": "MIL",
+			"lat": "37.001",
+			"lon": "-119.705",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Friant Dam (WQ) (FWQ)": {
+			"webqcode": "FWQ",
+			"lat": "36.9993",
+			"lon": "-119.7061",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R below Friant (SJF)": {
+			"webqcode": "SJF",
+			"lat": "36.984394",
+			"lon": "-119.724312",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Gravelly Ford (GRF)": {
+			"webqcode": "GRF",
+			"lat": "36.798",
+			"lon": "-120.16",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Holland Cut (HOL)": {
+			"webqcode": "HOL",
+			"lat": "38.0164",
+			"lon": "-121.5819",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Hwy 41 (H41)": {
+			"webqcode": "H41",
+			"lat": "36.8762",
+			"lon": "-119.7932",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, James Bypass (JBP)": {
+			"webqcode": "JBP",
+			"lat": "36.653",
+			"lon": "-120.18",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Jersey Point (USGS) (SJJ)": {
+			"webqcode": "SJJ",
+			"lat": "38.052",
+			"lon": "-121.689",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Maze Rd Bridge (MRB)": {
+			"webqcode": "MRB",
+			"lat": "37.6414",
+			"lon": "-121.2276",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, near Mendota (MEN)": {
+			"webqcode": "MEN",
+			"lat": "36.810505",
+			"lon": "-120.378227",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Mossdale Bridge (MSD)": {
+			"webqcode": "MSD",
+			"lat": "37.786",
+			"lon": "-121.306",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Mud Slough (MSG)": {
+			"webqcode": "MSG",
+			"lat": "37.2625",
+			"lon": "-120.9056",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, near Newman (NEW)": {
+			"webqcode": "NEW",
+			"lat": "37.350494",
+			"lon": "-120.97715",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, near Newman above Merced R (SMN)": {
+			"webqcode": "SMN",
+			"lat": "37.347214",
+			"lon": "-120.976181",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R below Old R near Lathrop (SJL)": {
+			"webqcode": "SJL",
+			"lat": "37.81115",
+			"lon": "-121.324036",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R at Prisoners Pt near Termino (PRI)": {
+			"webqcode": "PRI",
+			"lat": "38.0594",
+			"lon": "-121.5572",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Rough and Ready Island (RRI)": {
+			"webqcode": "RRI",
+			"lat": "37.963",
+			"lon": "-121.365",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Salt Slough (SSH)": {
+			"webqcode": "SSH",
+			"lat": "37.2478",
+			"lon": "-120.8511",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Stevinson (SJS)": {
+			"webqcode": "SJS",
+			"lat": "37.295",
+			"lon": "-120.851",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Tracy Pumping Plant (TRP)": {
+			"webqcode": "TRP",
+			"lat": "37.8",
+			"lon": "-121.585",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R near Vernalis (VNS)": {
+			"webqcode": "VNS",
+			"lat": "37.676041",
+			"lon": "-121.266327",
+			"basin": "San Joaquin River Basin"
+		},
+		"San Joaquin R, Washington Road (SWA)": {
+			"webqcode": "SWA",
+			"lat": "37.11532",
+			"lon": "-120.587",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R, Goodwin Dam (GDW)": {
+			"webqcode": "GDW",
+			"lat": "37.8628",
+			"lon": "-120.6297",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R at Koetitz Ranch (KOT)": {
+			"webqcode": "KOT",
+			"lat": "37.69978",
+			"lon": "-121.170194",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R, New Melones Reservoir (NML)": {
+			"webqcode": "NML",
+			"lat": "37.9481",
+			"lon": "-120.525",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R at Orange Blossom Bridge (OBB)": {
+			"webqcode": "OBB",
+			"lat": "37.783",
+			"lon": "-120.75",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R at Ripon (RPN)": {
+			"webqcode": "RPN",
+			"lat": "37.729859",
+			"lon": "-121.110135",
+			"basin": "San Joaquin River Basin"
+		},
+		"Stanislaus R at Ripon (USGS) (RIP)": {
+			"webqcode": "RIP",
+			"lat": "37.729652",
+			"lon": "-121.110497",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R,Don Pedro Reservoir (DNP)": {
+			"webqcode": "DNP",
+			"lat": "37.702",
+			"lon": "-120.421",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R, La Grange Dam (TLG)": {
+			"webqcode": "TLG",
+			"lat": "37.666",
+			"lon": "-120.441",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R below La Grange Dam near La Grange (LGN)": {
+			"webqcode": "LGN",
+			"lat": "37.666321",
+			"lon": "-120.442139",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R at Waterford (TRW)": {
+			"webqcode": "TRW",
+			"lat": "37.6336",
+			"lon": "-120.76556",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R at Modesto (MOD)": {
+			"webqcode": "MOD",
+			"lat": "37.626877",
+			"lon": "-120.987991",
+			"basin": "San Joaquin River Basin"
+		},
+		"Tuolumne R at Tuolumne City (TRT)": {
+			"webqcode": "TRT",
+			"lat": "37.60314",
+			"lon": "-121.13131",
+			"basin": "San Joaquin River Basin"
+		},
+		"Old River at Bacon Island (USGS) (OBI)": {
+			"webqcode": "OBI",
+			"lat": "37.969368",
+			"lon": "-121.57222",
+			"basin": "Delta"
+		},
+		"Old River at Franks Tract (OSJ)": {
+			"webqcode": "OSJ",
+			"lat": "38.0711",
+			"lon": "-121.5789",
+			"basin": "Delta"
+		},
+		"Old River at Highway 4 (OH4)": {
+			"webqcode": "OH4",
+			"lat": "37.891109",
+			"lon": "-121.569168",
+			"basin": "Delta"
+		},
+		"Old River near Tracy (OLD)": {
+			"webqcode": "OLD",
+			"lat": "37.80481",
+			"lon": "-121.449562",
+			"basin": "Delta"
+		},
+		"Old and Middle River (OMR)": {
+			"webqcode": "OMR",
+			"lat": "37.97",
+			"lon": "-121.5711",
+			"basin": "Delta"
+		},
+		"Bethel Island (BET)": {
+			"webqcode": "BET",
+			"lat": "38.041092",
+			"lon": "-121.632187",
+			"basin": "Delta"
+		},
+		"Clifton Court (CLC)": {
+			"webqcode": "CLC",
+			"lat": "37.8298",
+			"lon": "-121.5574",
+			"basin": "Delta"
+		},
+		"Delta Outflow (DTO)": {
+			"webqcode": "DTO",
+			"lat": "38.059",
+			"lon": "-122.025",
+			"basin": "Delta"
+		},
+		"Emmaton (EMM)": {
+			"webqcode": "EMM",
+			"lat": "38.084272",
+			"lon": "-121.738924",
+			"basin": "Delta"
+		},
+		"Harvey O Banks Pumping Plant (HRO)": {
+			"webqcode": "HRO",
+			"lat": "37.798",
+			"lon": "-121.623",
+			"basin": "Delta"
+		},
+		"Prisoner's Point (PPT)": {
+			"webqcode": "PPT",
+			"lat": "38.066",
+			"lon": "-121.562",
+			"basin": "Delta"
+		},
+		"Victoria Canal (VCU)": {
+			"webqcode": "VCU",
+			"lat": "37.8717",
+			"lon": "-121.5283",
+			"basin": "Delta"
+		}
+	}
+}

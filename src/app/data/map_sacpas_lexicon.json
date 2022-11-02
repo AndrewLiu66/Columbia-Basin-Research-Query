@@ -1,0 +1,630 @@
+{
+	"SacPAS": {
+		"Locations": [
+			{
+				"name": "American R at Fair Oaks (AFO)"
+			},
+			{
+				"name": "American R below Folsom Dam (AFD)"
+			},
+			{
+				"name": "Folsom Lake, American R (FOL)"
+			},
+			{
+				"name": "American R at Hazel Ave Bridge (AHZ)"
+			},
+			{
+				"name": "American R below Watt Ave Bridge (AWB)"
+			},
+			{
+				"name": "American R at William B Pond Park (AWP)"
+			},
+			{
+				"name": "Lake Natoma (Nimbus Dam), American R (NAT)"
+			},
+			{
+				"name": "Feather R at mile 61.6 (FRA)"
+			},
+			{
+				"name": "Feather R near Gridley (GRL)"
+			},
+			{
+				"name": "Feather R, Oroville Dam (ORO)"
+			},
+			{
+				"name": "Sacramento R, Balls Ferry Bridge (BSF)"
+			},
+			{
+				"name": "Battle Creek (BAT)"
+			},
+			{
+				"name": "NF Battle Creek near Manton (BNF)"
+			},
+			{
+				"name": "Sacramento R at Bend Bridge (BND)"
+			},
+			{
+				"name": "Sacramento R at Butte City (BTC)"
+			},
+			{
+				"name": "Sacramento R abv Clear Ck (CCR)"
+			},
+			{
+				"name": "Clear Creek nr Igo (IGO)"
+			},
+			{
+				"name": "Sacramento R at Colusa Weir (crest 61.8';crest 60.9') (CLW)"
+			},
+			{
+				"name": "Sacramento R at Colusa (COL)"
+			},
+			{
+				"name": "Deer Creek nr Vina (DCV)"
+			},
+			{
+				"name": "Sacramento R above Delta Cross Channel (SDC)"
+			},
+			{
+				"name": "Delta Cross Channel (DLC)"
+			},
+			{
+				"name": "Sacramento R at Freeport (FPT)"
+			},
+			{
+				"name": "Sacramento R at Fremont Weir (crest 33.5';crest 32') (FRE)"
+			},
+			{
+				"name": "Sacramento R at Georgiana Slough (GSS)"
+			},
+			{
+				"name": "Sacramento R below Georgiana Slough (GES)"
+			},
+			{
+				"name": "Sacramento R at Hamilton City-Main Ch (HMC)"
+			},
+			{
+				"name": "Sacramento R upstream of Hwy 44 (SAC)"
+			},
+			{
+				"name": "Sacramento R, Jellys Ferry (JLF)"
+			},
+			{
+				"name": "Sacramento R, Keswick Reservoir (KES)"
+			},
+			{
+				"name": "Sacramento R, Keswick (WQ) (KWK)"
+			},
+			{
+				"name": "Mill Creek nr Los Molinos (MLM)"
+			},
+			{
+				"name": "Sacramento R at Moulton Weir (crest 76.8';crest 76.2') (MLW)"
+			},
+			{
+				"name": "Sacramento R at Ord Ferry-Main Ch (ORD)"
+			},
+			{
+				"name": "Sacramento R at Red Bluff Diversion Dam (RDB)"
+			},
+			{
+				"name": "Sacramento R at Rio Vista Bridge (RVB)"
+			},
+			{
+				"name": "Sacramento R, Shasta Dam (USBR) (SHA)"
+			},
+			{
+				"name": "Sacramento R, Shasta Dam (WQ) (SHD)"
+			},
+			{
+				"name": "Sacramento R at Tisdale Weir (crest 45.5';crest 44.1') (TIS)"
+			},
+			{
+				"name": "Sacramento R at Verona (VON)"
+			},
+			{
+				"name": "Sacramento R at Vina Bridge-Main Ch (VIN)"
+			},
+			{
+				"name": "Sacramento R, Whiskeytown Dam (USBR) (WHI)"
+			},
+			{
+				"name": "Sacramento R below Wilkins Slough (WLK)"
+			},
+			{
+				"name": "New Exchequer Lk McClure, Merced R (EXC)"
+			},
+			{
+				"name": "Merced R below Crocker-Huffman Dam (MBH)"
+			},
+			{
+				"name": "Merced R at Shaffer Bridge near Cressy (MBN)"
+			},
+			{
+				"name": "Merced R at Cressy (CRS)"
+			},
+			{
+				"name": "Merced R near Stevinson (MST)"
+			},
+			{
+				"name": "Old River at Head (OH1)"
+			},
+			{
+				"name": "SJR Basin, Bear Creek below Eastside Canal (BSD)"
+			},
+			{
+				"name": "SJR Basin, Little Dry Creek (LDC)"
+			},
+			{
+				"name": "San Joaquin R at Antioch (ANH)"
+			},
+			{
+				"name": "San Joaquin R, Below Bifurcation (SJB)"
+			},
+			{
+				"name": "San Joaquin R at Brandt Bridge (BDT)"
+			},
+			{
+				"name": "San Joaquin R, Chowchilla Bypass (CBP)"
+			},
+			{
+				"name": "San Joaquin R, Delta Mendota Canal Check 21 (DM3)"
+			},
+			{
+				"name": "San Joaquin R at Donny Bridge (DNB)"
+			},
+			{
+				"name": "San Joaquin R, near Dos Palos (SDP)"
+			},
+			{
+				"name": "San Joaquin R, Eastside Bypass below Mariposa (EBM)"
+			},
+			{
+				"name": "San Joaquin R, Eastside Bypass near El Nido (ELN)"
+			},
+			{
+				"name": "San Joaquin R, Fremont Ford (FFB)"
+			},
+			{
+				"name": "San Joaquin R, Friant Dam (Millerton) (MIL)"
+			},
+			{
+				"name": "San Joaquin R at Friant Dam (WQ) (FWQ)"
+			},
+			{
+				"name": "San Joaquin R below Friant (SJF)"
+			},
+			{
+				"name": "San Joaquin R at Gravelly Ford (GRF)"
+			},
+			{
+				"name": "San Joaquin R, Holland Cut (HOL)"
+			},
+			{
+				"name": "San Joaquin R at Hwy 41 (H41)"
+			},
+			{
+				"name": "San Joaquin R, James Bypass (JBP)"
+			},
+			{
+				"name": "San Joaquin R at Jersey Point (USGS) (SJJ)"
+			},
+			{
+				"name": "San Joaquin R at Maze Rd Bridge (MRB)"
+			},
+			{
+				"name": "San Joaquin R, near Mendota (MEN)"
+			},
+			{
+				"name": "San Joaquin R at Mossdale Bridge (MSD)"
+			},
+			{
+				"name": "San Joaquin R, Mud Slough (MSG)"
+			},
+			{
+				"name": "San Joaquin R, near Newman (NEW)"
+			},
+			{
+				"name": "San Joaquin R, near Newman above Merced R (SMN)"
+			},
+			{
+				"name": "San Joaquin R below Old R near Lathrop (SJL)"
+			},
+			{
+				"name": "San Joaquin R at Prisoners Pt near Termino (PRI)"
+			},
+			{
+				"name": "San Joaquin R, Rough and Ready Island (RRI)"
+			},
+			{
+				"name": "San Joaquin R, Salt Slough (SSH)"
+			},
+			{
+				"name": "San Joaquin R, Stevinson (SJS)"
+			},
+			{
+				"name": "San Joaquin R, Tracy Pumping Plant (TRP)"
+			},
+			{
+				"name": "San Joaquin R near Vernalis (VNS)"
+			},
+			{
+				"name": "San Joaquin R, Washington Road (SWA)"
+			},
+			{
+				"name": "Stanislaus R, Goodwin Dam (GDW)"
+			},
+			{
+				"name": "Stanislaus R at Koetitz Ranch (KOT)"
+			},
+			{
+				"name": "Stanislaus R, New Melones Reservoir (NML)"
+			},
+			{
+				"name": "Stanislaus R at Orange Blossom Bridge (OBB)"
+			},
+			{
+				"name": "Stanislaus R at Ripon (RPN)"
+			},
+			{
+				"name": "Stanislaus R at Ripon (USGS) (RIP)"
+			},
+			{
+				"name": "Tuolumne R,Don Pedro Reservoir (DNP)"
+			},
+			{
+				"name": "Tuolumne R, La Grange Dam (TLG)"
+			},
+			{
+				"name": "Tuolumne R below La Grange Dam near La Grange (LGN)"
+			},
+			{
+				"name": "Tuolumne R at Waterford (TRW)"
+			},
+			{
+				"name": "Tuolumne R at Modesto (MOD)"
+			},
+			{
+				"name": "Tuolumne R at Tuolumne City (TRT)"
+			},
+			{
+				"name": "Old River at Bacon Island (USGS) (OBI)"
+			},
+			{
+				"name": "Old River at Franks Tract (OSJ)"
+			},
+			{
+				"name": "Old River at Highway 4 (OH4)"
+			},
+			{
+				"name": "Old River near Tracy (OLD)"
+			},
+			{
+				"name": "Old and Middle River (OMR)"
+			},
+			{
+				"name": "Bethel Island (BET)"
+			},
+			{
+				"name": "Clifton Court (CLC)"
+			},
+			{
+				"name": "Delta Outflow (DTO)"
+			},
+			{
+				"name": "Emmaton (EMM)"
+			},
+			{
+				"name": "Harvey O Banks Pumping Plant (HRO)"
+			},
+			{
+				"name": "Prisoner's Point (PPT)"
+			},
+			{
+				"name": "Victoria Canal (VCU)"
+			}
+		],
+		"Hydrologic Area": [
+			{
+				"name": "Sacramento River Basin"
+			},
+			{
+				"name": "San Joaquin River Basin"
+			},
+			{
+				"name": "Delta"
+			},
+			{
+				"name": "All Locations"
+			}
+		],
+		"Years": [
+			{
+				"name": "2022"
+			},
+			{
+				"name": "2021"
+			},
+			{
+				"name": "2020"
+			},
+			{
+				"name": "2019"
+			},
+			{
+				"name": "2018"
+			},
+			{
+				"name": "2017"
+			},
+			{
+				"name": "2016"
+			},
+			{
+				"name": "2015"
+			},
+			{
+				"name": "2014"
+			},
+			{
+				"name": "2013"
+			},
+			{
+				"name": "2012"
+			},
+			{
+				"name": "2011"
+			},
+			{
+				"name": "2010"
+			},
+			{
+				"name": "2009"
+			},
+			{
+				"name": "2008"
+			},
+			{
+				"name": "2007"
+			},
+			{
+				"name": "2006"
+			},
+			{
+				"name": "2005"
+			},
+			{
+				"name": "2004"
+			},
+			{
+				"name": "2003"
+			},
+			{
+				"name": "2002"
+			},
+			{
+				"name": "2001"
+			},
+			{
+				"name": "2000"
+			},
+			{
+				"name": "1999"
+			},
+			{
+				"name": "1998"
+			},
+			{
+				"name": "1997"
+			},
+			{
+				"name": "1996"
+			},
+			{
+				"name": "1995"
+			},
+			{
+				"name": "1994"
+			},
+			{
+				"name": "1993"
+			},
+			{
+				"name": "1992"
+			},
+			{
+				"name": "1991"
+			},
+			{
+				"name": "1990"
+			},
+			{
+				"name": "1989"
+			},
+			{
+				"name": "1988"
+			},
+			{
+				"name": "1987"
+			},
+			{
+				"name": "1986"
+			},
+			{
+				"name": "1985"
+			},
+			{
+				"name": "1984"
+			},
+			{
+				"name": "1983"
+			},
+			{
+				"name": "1982"
+			},
+			{
+				"name": "1981"
+			},
+			{
+				"name": "1980"
+			},
+			{
+				"name": "1979"
+			},
+			{
+				"name": "1978"
+			},
+			{
+				"name": "1977"
+			},
+			{
+				"name": "1976"
+			},
+			{
+				"name": "1975"
+			},
+			{
+				"name": "1974"
+			},
+			{
+				"name": "1973"
+			},
+			{
+				"name": "1972"
+			},
+			{
+				"name": "1971"
+			},
+			{
+				"name": "1970"
+			},
+			{
+				"name": "1969"
+			},
+			{
+				"name": "1968"
+			},
+			{
+				"name": "1967"
+			},
+			{
+				"name": "1966"
+			},
+			{
+				"name": "1965"
+			},
+			{
+				"name": "1964"
+			},
+			{
+				"name": "1963"
+			},
+			{
+				"name": "1962"
+			},
+			{
+				"name": "1961"
+			},
+			{
+				"name": "1960"
+			},
+			{
+				"name": "1959"
+			},
+			{
+				"name": "1958"
+			},
+			{
+				"name": "1957"
+			},
+			{
+				"name": "1956"
+			},
+			{
+				"name": "1955"
+			},
+			{
+				"name": "1954"
+			},
+			{
+				"name": "1953"
+			},
+			{
+				"name": "1952"
+			},
+			{
+				"name": "1951"
+			},
+			{
+				"name": "1950"
+			},
+			{
+				"name": "1949"
+			},
+			{
+				"name": "1948"
+			}
+		],
+		"DataTypes": [
+			{
+				"name": "Flow (CFS)"
+			},
+			{
+				"name": "Stage (ft)"
+			},
+			{
+				"name": "Water Temperature (F)"
+			},
+			{
+				"name": "Reservoir Elevation (ft)"
+			},
+			{
+				"name": "Reservoir Flow (CFS)"
+			},
+			{
+				"name": "Reservoir Storage (AF)"
+			},
+			{
+				"name": "Spillway Discharge (CFS)"
+			},
+			{
+				"name": "Control Regulating Discharge (CFS)"
+			},
+			{
+				"name": "Pumping Discharge (CFS)"
+			},
+			{
+				"name": "Reservoir Inflow (CFS)"
+			},
+			{
+				"name": "Full Natural Flow (CFS)"
+			},
+			{
+				"name": "Turbidity (NTU)"
+			},
+			{
+				"name": "Electrical Conductivity (uS/cm)"
+			},
+			{
+				"name": "Dissolved Oxygen (mg/L)"
+			},
+			{
+				"name": "Air Temperature (F)"
+			},
+			{
+				"name": "Water Velocity (ft/s)"
+			},
+			{
+				"name": "Air Temperature Max (F)"
+			},
+			{
+				"name": "Air Temperature Min (F)"
+			},
+			{
+				"name": "Water Temperature (C)"
+			},
+			{
+				"name": "Dissolved Chloride (mg/L)"
+			}
+		]
+	}
+}

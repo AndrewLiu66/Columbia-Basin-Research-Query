@@ -1,0 +1,22 @@
+{
+    "basin": [
+        {
+            "name": "All Locations"
+        },
+        {
+            "name": "Sacramento River Basin"
+        },
+        {
+            "name": "San Joaquin River Basin"
+        },
+        {
+            "name": "Delta"
+        }
+    ],
+    "basinList": [
+        "All Locations",
+        "Sacramento River Basin",
+        "San Joaquin River Basin",
+        "Delta"
+    ]
+}

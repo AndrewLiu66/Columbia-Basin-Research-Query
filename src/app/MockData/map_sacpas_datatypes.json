@@ -1,0 +1,20 @@
+{
+	"SacPAS": {
+		"Flow (CFS)": {
+			"webqcode": "Flow",
+			"units": "CFS"
+		},
+		"Stage (ft)": {
+			"webqcode": "RiverStage",
+			"units": "ft"
+		},
+		"Water Temperature (F)": {
+			"webqcode": "WaterTemperature",
+			"units": "F"
+		},
+		"Reservoir Elevation (ft)": {
+			"webqcode": "ReservoirElevation",
+			"units": "ft"
+		}
+	}
+}

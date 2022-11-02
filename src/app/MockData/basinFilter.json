@@ -1,0 +1,58 @@
+{
+    "SacPAS": {
+        "All Locations": {
+            "Locations": [
+                "American R at Fair Oaks (AFO)",
+                "American R below Folsom Dam (AFD)",
+                "Folsom Lake, American R (FOL)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ],
+            "Year": [
+                "2020",
+                "2021"
+            ]
+        },
+        "Sacramento River Basin": {
+            "Locations": [
+                "American R at Fair Oaks (AFO)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ],
+            "Year": [
+                "2020",
+                "2021"
+            ]
+        },
+        "San Joaquin River Basin": {
+            "Locations": [
+                "American R at Fair Oaks (AFO)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ],
+            "Year": [
+                "2020",
+                "2021"
+            ]
+        },
+        "Delta": {
+            "Locations": [
+                "American R at Fair Oaks (AFO)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ],
+            "Year": [
+                "2020",
+                "2021"
+            ]
+        }
+    }
+}

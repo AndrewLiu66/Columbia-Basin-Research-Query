@@ -1,0 +1,22 @@
+{
+	"SacPAS": {
+		"American R at Fair Oaks (AFO)": {
+			"webqcode": "AFO",
+			"lat": "38.63546",
+			"lon": "-121.22773",
+			"basin": "SacramentoRiverBasin"
+		},
+		"American R below Folsom Dam (AFD)": {
+			"webqcode": "AFD",
+			"lat": "38.6883",
+			"lon": "-121.1667",
+			"basin": "SacramentoRiverBasin"
+		},
+		"Folsom Lake, American R (FOL)": {
+			"webqcode": "FOL",
+			"lat": "38.683",
+			"lon": "-121.183",
+			"basin": "SacramentoRiverBasin"
+		}
+	}
+}

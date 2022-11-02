@@ -1,0 +1,37 @@
+{
+	"SacPAS": {
+		"Locations": [
+			{
+				"name": "American R at Fair Oaks (AFO)"
+			},
+			{
+				"name": "American R below Folsom Dam (AFD)"
+			},
+			{
+				"name": "Folsom Lake, American R (FOL)"
+			}
+		],
+		"Years": [
+			{
+				"name": "2022"
+			},
+			{
+				"name": "2021"
+			},
+			{
+				"name": "2020"
+			}
+		],
+		"DataTypes": [
+			{
+				"name": "Flow (CFS)"
+			},
+			{
+				"name": "Stage (ft)"
+			},
+			{
+				"name": "Water Temperature (F)"
+			}
+		]
+	}
+}

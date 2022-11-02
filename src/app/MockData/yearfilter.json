@@ -1,0 +1,46 @@
+{
+    "SacPAS": {
+        "2020": {
+            "Hydrologic Area": [
+                "All Locations",
+                "Sacramento River Basin"
+            ],
+            "Locations": [
+                "American R at Fair Oaks (AFO)",
+                "American R below Folsom Dam (AFD)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ]
+        },
+        "2021": {
+            "Hydrologic Area": [
+                "All Locations",
+                "Sacramento River Basin"
+            ],
+            "Locations": [
+                "American R at Fair Oaks (AFO)",
+                "American R below Folsom Dam (AFD)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ]
+        },
+        "2022": {
+            "Hydrologic Area": [
+                "All Locations",
+                "Sacramento River Basin"
+            ],
+            "Locations": [
+                "American R at Fair Oaks (AFO)",
+                "American R below Folsom Dam (AFD)"
+            ],
+            "Data Type": [
+                "Flow (CFS)",
+                "Stage (ft)"
+            ]
+        }
+    }
+}

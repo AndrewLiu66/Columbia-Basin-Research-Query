@@ -1,0 +1,24 @@
+{
+    "SacPAS": {
+        "additionalLayer": [
+            {
+                "name": "Califonia WBD HUC6 WaterSheds"
+            },
+            {
+                "name": "Califonia WBD HUC8 WaterSheds"
+            },
+            {
+                "name": "Idaho Priority Waters HUC8"
+            },
+            {
+                "name": "Washington HUC6 WaterSheds"
+            },
+            {
+                "name": "Washington HUC8 WaterSheds"
+            },
+            {
+                "name": "Oregon HUC8 WaterSheds"
+            }
+        ]
+    }
+}

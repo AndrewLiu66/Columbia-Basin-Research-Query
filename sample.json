@@ -1,0 +1,99 @@
+# 1. the first one: {
+    "SacPAS": {
+        "SacromentoRiverBain": {
+            "Location": {
+                "American R at Fair Oasks (AFO)": {
+                    "Full Natural Flow": {
+                        "year": [
+                            2009,
+                            2012
+                        ]
+                    },
+                    "Pumping Discharge": {
+                        "year": [
+                            2009,
+                            2011
+                        ]
+                    }
+                },
+                "American R below Folsom Dam (AFD)": {
+                    "Full Natural Flow": {
+                        "year": [
+                            2008,
+                            2012
+                        ]
+                    },
+                    "Pumping Discharge": {
+                        "year": [
+                            2008,
+                            2012
+                        ]
+                    }
+                }
+            },
+        },
+        "San Joaquinq River Basin": {
+            same as "SacromentoRiverBain"
+        },
+        "Delta": {
+            same as "SacromentoRiverBain"
+        },
+    },
+    "DART":
+        same as "SacPAS"
+}
+
+
+{
+    "SacPAS": {
+        "Locations": [
+            {
+                "name": "American R at Fair Oasks (AFO)",
+            },
+            {
+                "name": "American R below Folsom Dam (AFD)",
+            }
+        ],
+        "Years": [
+            {
+                "name": "2021",
+            },
+            {
+                "name": "2022",
+            }
+        ],
+        "DataType": [
+            {
+                "name": "Full Natural Flow",
+            },
+            {
+                "name": "Pumping Discharge",
+            }
+        ]
+    },
+    "DART":
+        same as "SacPAS"
+}
+
+{
+    "AMERICAN R BELOW FOLSOM DAM": {
+        "abbreviation": "AFD",
+        "latitude": 38.6883,
+        "longitude": -121.1667
+    },
+    "AMERICAN R BELOW FOLSOM DAM": {
+        "abbreviation": "AFD",
+        "latitude2": 38.6883,
+        "longitude2": -121.1667
+    }
+}
+
+
+{
+    "Full Natural Flow": {
+        "abbreviation": "FullNaturalFlow",
+    },
+    "AMERICAN R BELOW FOLSOM DAM": {
+        "abbreviation": "AMERICANRBELOWFOLSOMDAM",
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "SacPAS": {
+        "baseLayer": [
+            {
+                "name": "arcgis-oceans"
+            },
+            {
+                "name": "national-geographic"
+            },
+            {
+                "name": "arcgis-terrain"
+            },
+            {
+                "name": "arcgis-charted-territory"
+            },
+            {
+                "name": "arcgis-community"
+            }
+        ],
+        "layerList": [
+            "arcgis-oceans",
+            "national-geographic",
+            "arcgis-terrain",
+            "arcgis-charted-territory",
+            "arcgis-community"
+        ]
+    }
+}

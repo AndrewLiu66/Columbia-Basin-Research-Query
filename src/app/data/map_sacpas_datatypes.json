@@ -1,0 +1,84 @@
+{
+	"SacPAS": {
+		"Flow (CFS)": {
+			"webqcode": "Flow",
+			"units": "CFS"
+		},
+		"Stage (ft)": {
+			"webqcode": "RiverStage",
+			"units": "ft"
+		},
+		"Water Temperature (F)": {
+			"webqcode": "WaterTemperature",
+			"units": "F"
+		},
+		"Reservoir Elevation (ft)": {
+			"webqcode": "ReservoirElevation",
+			"units": "ft"
+		},
+		"Reservoir Flow (CFS)": {
+			"webqcode": "ReservoirOutflow",
+			"units": "CFS"
+		},
+		"Reservoir Storage (AF)": {
+			"webqcode": "ReservoirStorage",
+			"units": "AF"
+		},
+		"Spillway Discharge (CFS)": {
+			"webqcode": "SpillwayDischarge",
+			"units": "CFS"
+		},
+		"Control Regulating Discharge (CFS)": {
+			"webqcode": "ControlRegulatingDischarge",
+			"units": "CFS"
+		},
+		"Pumping Discharge (CFS)": {
+			"webqcode": "PumpingDischarge",
+			"units": "CFS"
+		},
+		"Reservoir Inflow (CFS)": {
+			"webqcode": "ReservoirInflow",
+			"units": "CFS"
+		},
+		"Full Natural Flow (CFS)": {
+			"webqcode": "FullNaturalFlow",
+			"units": "CFS"
+		},
+		"Turbidity (NTU)": {
+			"webqcode": "Turbidity",
+			"units": "NTU"
+		},
+		"Electrical Conductivity (uS/cm)": {
+			"webqcode": "ElectricalCond",
+			"units": "uS/cm"
+		},
+		"Dissolved Oxygen (mg/L)": {
+			"webqcode": "DissolvedOxygen",
+			"units": "mg/L"
+		},
+		"Air Temperature (F)": {
+			"webqcode": "AirTemp",
+			"units": "F"
+		},
+		"Water Velocity (ft/s)": {
+			"webqcode": "velocity",
+			"units": "ft/s"
+		},
+		"Air Temperature Max (F)": {
+			"webqcode": "AirTempMax",
+			"units": "F"
+		},
+		"Air Temperature Min (F)": {
+			"webqcode": "AirTempMin",
+			"units": "F"
+		},
+		"Water Temperature (C)": {
+			"webqcode": "WaterTempC",
+			"units": "C"
+		},
+		"Dissolved Chloride (mg/L)": {
+			"webqcode": "DissolvedChloride",
+			"units": "mg/L"
+		}
+	}
+}
