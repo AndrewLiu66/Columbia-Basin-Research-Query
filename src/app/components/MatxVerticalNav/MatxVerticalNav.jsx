@@ -59,21 +59,6 @@ const BulletIcon = styled('div')(({ theme }) => ({
     background: theme.palette.text.primary,
 }))
 
-const convertListToListOfObj = (list) => {
-    let result = []
-    for(let i = 0; i < list.length; i++) {
-        result.push({name: list[i]})
-    }
-    return result;
-}
-
-const convertListOfObjList = (lst) => {
-    let res = {}
-    lst.map(item => {
-        res[item] = item
-    })
-    return res
-}
 
 const converListOfObjToList = (list) => {
     let result = []
@@ -84,12 +69,8 @@ const converListOfObjToList = (list) => {
 }
 
 const getIntersection = (a, b) => {
-    const set1 = new Set(a);
-    const set2 = new Set(b);
-    const intersection = [...set1].filter(
-        element => set2.has(element)
-    );
-    return intersection;
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
 }
 
 const allAdditionalLayers = Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"])
@@ -158,10 +139,45 @@ const MatxVerticalNav = () => {
         updateSettings({ layout1Settings: { map: {baseLayer: temp} } })
         console.log(baseLayer)
     }
+
+    const handleQueryFilter = (querySelected, item) => {
+        let filteredLocation;
+        let filteredType;
+        let filteredYear;
+
+        // all the current query
+        let locationDisplayTemp =Object.keys(locationDisplay)
+        let typeDisplayTemp = Object.keys(dataTypeDisplay)
+        let yearDisplayTemp = Object.keys(yearDisplay)
+
+        let temp = allQueryData
+
+        let locationFilterTemp = basinFilter["SacPAS"][item]["Locations"]
+        let typeFilterTemp = basinFilter["SacPAS"][item]["Data Type"]
+        let yearFilterTemp = basinFilter["SacPAS"][item]["Year"]
+
+
+        let locationIntersection = getIntersection(locationDisplayTemp, locationFilterTemp)
+        let typeIntersection = getIntersection(typeDisplayTemp, typeFilterTemp)
+        let yearIntersection = getIntersection(yearDisplayTemp, yearFilterTemp)
+
+        console.log("temp", temp)
+        temp[2].children = locationIntersection
+        temp[3].children = typeIntersection
+        temp[4].children = yearIntersection
+
+        updateSettings({ layout1Settings: { map: { allQueryData: temp } } })
+        // Object.keys(querySelected).map(item => {
+
+        // })
+    }
+
     const handleItemClick = (item, index) => {
+        // deal with selection logic
         if (Object.keys(BasinData["basinList"]).includes(item))
         {
             handleItemSelected(basinSelected, item)
+            handleQueryFilter(basinSelected, item)
         } else if (Object.keys(LocationData["SacPAS"]).includes(item))
         {
             handleItemSelected(locationSelected, item)
@@ -176,9 +192,9 @@ const MatxVerticalNav = () => {
             handleItemSelected(additionalLayer, item)
         } else
         {
-            console.log(123)
             handleBaselayerSelected(item)
         }
+        // deal with filter logic
     }
 
     const renderLevels = (data) => {
