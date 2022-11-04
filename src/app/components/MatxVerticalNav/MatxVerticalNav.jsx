@@ -17,6 +17,10 @@ import typeFilter from 'app/data/map_sacpas_typeFilter.json'
 import AllData from 'app/data/map_sacpas_lexicon.json'
 
 
+import LocationData from 'app/data/map_sacpas_sites.json'
+import TypeData from 'app/data/map_sacpas_datatypes.json'
+import YearData from 'app/data/map_sacpas_yearFilter.json'
+
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
     fontSize: '12px',
     marginTop: '20px',
@@ -61,6 +65,14 @@ const convertListToListOfObj = (list) => {
         result.push({name: list[i]})
     }
     return result;
+}
+
+const convertListOfObjList = (lst) => {
+    let res = {}
+    lst.map(item => {
+        res[item] = item
+    })
+    return res
 }
 
 const converListOfObjToList = (list) => {
@@ -114,124 +126,59 @@ const MatxVerticalNav = () => {
     const {
         map: {
             baseLayer,
-            basinSelected,
             additionalLayer,
+            // select
+            basinSelected,
             locationSelected,
             yearSelected,
             dataTypeSelected,
             allQueryData,
-            ifReset
-        } } = layout1Settings
+            // ifReset
+            hydroDisplay,
+            locationDisplay,
+            dataTypeDisplay,
+            yearDisplay
+        }
+    } = layout1Settings
 
-    useEffect(() => {
-        setBasin(allBasin)
-        setCurLocation(allLocation)
-        setCurType(allType)
-        setCurYear(allYears)
-        updateSettings({
-            layout1Settings: {
-                map: {
-                    ifReset: false
-                }
-            }
-        })
-    }, [ifReset])
-    // memorize the current sublist under each query category
-    const [curBasin, setBasin] = useState(allBasin)
-    const [curLocation, setCurLocation] = useState(allLocation)
-    const [curType, setCurType] = useState(allType)
-    const [curYear, setCurYear] = useState(allYears)
-
-
-    const filterQueryOptions = (filterOption, type, clickItem) => {
-
-        const newHydrologicAreaObjLst = filterOption[type][clickItem]["Hydrologic Area"] || [clickItem]
-
-        const newLocationObjLst = filterOption[type][clickItem]["Locations"] || [clickItem]
-        const newDataTypeObjLst = filterOption[type][clickItem]["Data Type"] || [clickItem]
-        const newYearObjLst = filterOption[type][clickItem]["Year"] || [clickItem]
-
-        const basinIntersect = getIntersection(newHydrologicAreaObjLst, curBasin)
-        const locationIntersect = getIntersection(newLocationObjLst, curLocation)
-        const typeIntersect = getIntersection(newDataTypeObjLst, curType)
-        const yearIntersect = getIntersection(newYearObjLst, curYear)
-
-
-        setBasin(basinIntersect)
-        setCurLocation(locationIntersect)
-        setCurType(typeIntersect)
-        setCurYear(yearIntersect)
-        // setCurLocation(newLocationObjLst)
-        // setCurType(newDataTypeObjLst)
-        // setCurYear(newYearObjLst)
-
-
-        let temp = allQueryData
-        temp[1]["children"] = convertListToListOfObj(basinIntersect)
-        temp[2]["children"] = convertListToListOfObj(locationIntersect)
-        temp[3]["children"] = convertListToListOfObj(typeIntersect)
-        temp[4]["children"] = convertListToListOfObj(yearIntersect)
-
-        updateSettings({
-            layout1Settings: {
-                map: {
-                    allQueryData: temp,
-                }
-            }
-        })
+    const handleItemSelected = (querySelect, item) => {
+        let temp = querySelect;
+        if (Object.keys(temp).includes(item))
+        {
+            delete temp[item]
+        } else
+        {
+            temp[item] = item
+        }
+        updateSettings({ layout1Settings: { map: { querySelect:  temp}} })
     }
 
-    const setCurrentClick = (item) => {
-        if (allYears.includes(item))
-        {
-            updateSettings({ layout1Settings: { map: { yearSelected: item } } })
-        } else if (allLocation.includes(item))
-        {
-            updateSettings({ layout1Settings: { map: { locationSelected: item } } })
-        } else if (allBasin.includes(item))
-        {
-            updateSettings({ layout1Settings: { map: { basinSelected: item } } })
-        } else if (allType.includes(item))
-        {
-            updateSettings({ layout1Settings: { map: { dataTypeSelected: item } } })
-        } else if (allBaseLayer.includes(item))
-        {
-            updateSettings({ layout1Settings: { map: { baseLayer: item } } })
-        } else if (allAdditionalLayers.includes(item))
-        {
-            if (item in additionalLayer)
-            {
-                delete additionalLayer[item];
-            } else
-            {
-                additionalLayer[item] =  AdditionalLayerSources["SacPAS"]["additionalLayerSouces"][item]
-            }
-            updateSettings({ layout1Settings: { map: {additionalLayer} } })
-        }
+    const handleBaselayerSelected = (item) => {
+        let temp = item
+        updateSettings({ layout1Settings: { map: {baseLayer: temp} } })
+        console.log(baseLayer)
     }
     const handleItemClick = (item, index) => {
-        if (allBasin.includes(item))
+        if (Object.keys(BasinData["basinList"]).includes(item))
         {
-            filterQueryOptions(basinFilter, "SacPAS", item)
+            handleItemSelected(basinSelected, item)
+        } else if (Object.keys(LocationData["SacPAS"]).includes(item))
+        {
+            handleItemSelected(locationSelected, item)
+        } else if (Object.keys(TypeData["SacPAS"]).includes(item))
+        {
+            handleItemSelected(dataTypeSelected, item)
+        } else if (Object.keys(YearData["SacPAS"]).includes(item))
+        {
+            handleItemSelected(yearSelected, item)
+        } else if (Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"]).includes(item))
+        {
+            handleItemSelected(additionalLayer, item)
+        } else
+        {
+            console.log(123)
+            handleBaselayerSelected(item)
         }
-
-        // Query Item changes as year changes
-        if (allYears.includes(item))
-        {
-            filterQueryOptions(yearFilter, "SacPAS", item)
-        } else if (allLocation.includes(item))
-        {
-            filterQueryOptions(locationFilter, "SacPAS", item)
-        } else if (allBasin.includes(item))
-        {
-            filterQueryOptions(basinFilter, "SacPAS", item)
-        } else if (allType.includes(item))
-        {
-            filterQueryOptions(typeFilter, "SacPAS", item)
-        }
-
-
-        setCurrentClick(item)
     }
 
     const renderLevels = (data) => {
@@ -296,11 +243,10 @@ const MatxVerticalNav = () => {
                                     mode={mode}
                                     className="sidenavHoverShow"
                                     style={(
-                                        (basinSelected === item.name) ||
-                                        (dataTypeSelected === item.name) ||
-                                        (locationSelected === item.name) ||
-                                        (yearSelected === item.name) ||
-                                        // (yearSelected.includes(item.name)) ||
+                                        (Object.keys(basinSelected).includes(item.name)) ||
+                                        (Object.keys(dataTypeSelected).includes(item.name)) ||
+                                        (Object.keys(locationSelected).includes(item.name)) ||
+                                        (Object.keys(yearSelected).includes(item.name)) ||
                                         (Object.keys(additionalLayer).includes(item.name)) ||
                                         (baseLayer === item.name)
                                     ) ? { color: '#db5609' } : null}

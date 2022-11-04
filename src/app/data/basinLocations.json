@@ -13,10 +13,10 @@
             "name": "Delta"
         }
     ],
-    "basinList": [
-        "All Locations",
-        "Sacramento River Basin",
-        "San Joaquin River Basin",
-        "Delta"
-    ]
+    "basinList": {
+        "All Locations": "All Locations",
+        "Sacramento River Basin": "Sacramento River Basin",
+        "San Joaquin River Basin": "San Joaquin River Basin",
+        "Delta": "Delta"
+    }
 }

@@ -2,6 +2,10 @@
 import { navigations, getfilteredNavigations } from 'app/navigations'
 import AllData from 'app/data/map_sacpas_lexicon'
 import BasinData from "app/data/basinLocations.json"
+import LocationData from 'app/data/map_sacpas_sites.json'
+import TypeData from 'app/data/map_sacpas_datatypes.json'
+import YearData from 'app/data/map_sacpas_yearFilter.json'
+
 
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
@@ -15,11 +19,11 @@ const converListOfObjToList = (list) => {
 }
 
 const allBasin = BasinData["basinList"]
-const allLocation = converListOfObjToList(AllData["SacPAS"]["Locations"])
-const allType = converListOfObjToList(AllData["SacPAS"]["DataTypes"])
-const allYears = converListOfObjToList(AllData["SacPAS"]["Years"])
+const allLocation = LocationData["SacPAS"]
+const allType = TypeData["SacPAS"]
+const allYears = YearData["SacPAS"]
 
-
+console.log("allLocation", allLocation)
 
 const Layout1Settings = {
     leftSidebar: {
@@ -34,20 +38,23 @@ const Layout1Settings = {
         theme: 'whiteBlue',
     },
     map: {
-        ifReset: false,
+        // ifReset: false,
+        // all selected values
         baseLayer: 'arcgis-oceans',
+        basinSelected: {},
+        locationSelected: {},
+        dataTypeSelected: {},
+        yearSelected: {},
         additionalLayer: {},
-        basinSelected: "",
-        locationSelected: "",
-        dataTypeSelected: "",
-        yearSelected: "",
+        // all value display under each category
+        hydroDisplay: allBasin,
+        locationDisplay: allLocation,
+        dataTypeDisplay: allType,
+        yearDisplay: allYears,
+        // contain all query data under each list
         allQueryData: filteredNavigations,
-
-        // basinDisplay: allBasin,
-        // locationDisplay: [],
-        // dataTypeDisplay: [],
-        // yearDisplay: []
-    }
+    },
+    // basinSelected: {},
 }
 
 export default Layout1Settings
