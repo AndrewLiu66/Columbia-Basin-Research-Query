@@ -21,6 +21,11 @@ import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 
+const allBasin = BasinData["basinList"]
+const allLocation = LocationData["SacPAS"]
+const allType = TypeData["SacPAS"]
+const allYears = YearData["SacPAS"]
+
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
     fontSize: '12px',
     marginTop: '20px',
@@ -59,13 +64,12 @@ const BulletIcon = styled('div')(({ theme }) => ({
     background: theme.palette.text.primary,
 }))
 
-
-const converListOfObjToList = (list) => {
-    let result = []
-    for(let i = 0; i < list.length; i++) {
-        result.push(list[i]["name"])
-    }
-    return result;
+const convertListToObj = (lst) => {
+    let res = {}
+    lst.map(item => {
+        res[item] = item
+    })
+    return res
 }
 
 const getIntersection = (a, b) => {
@@ -75,10 +79,7 @@ const getIntersection = (a, b) => {
 
 const allAdditionalLayers = Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"])
 const allBaseLayer = BaseLayer["SacPAS"]["layerList"]
-const allBasin = BasinData["basinList"]
-const allLocation = converListOfObjToList(AllData["SacPAS"]["Locations"])
-const allType = converListOfObjToList(AllData["SacPAS"]["DataTypes"])
-const allYears = converListOfObjToList(AllData["SacPAS"]["Years"])
+
 
 const alterDisplayName = (item) => {
     if (allBaseLayer.includes(item))
@@ -97,6 +98,14 @@ const alterDisplayName = (item) => {
         }
     }
     return item
+}
+
+const convertListToListOfObjWithName = (lst) => {
+    let res = []
+    lst.map(item => {
+        res.push({name: item})
+    })
+    return res
 }
 
 const MatxVerticalNav = () => {
@@ -140,36 +149,53 @@ const MatxVerticalNav = () => {
         console.log(baseLayer)
     }
 
-    const handleQueryFilter = (querySelected, item) => {
-        let filteredLocation;
-        let filteredType;
-        let filteredYear;
+    const updateQueryValue = () => {
 
-        // all the current query
-        let locationDisplayTemp =Object.keys(locationDisplay)
-        let typeDisplayTemp = Object.keys(dataTypeDisplay)
-        let yearDisplayTemp = Object.keys(yearDisplay)
+    }
 
+    const handleQueryFilter = (querySelected) => {
+        let filteredLocation = Object.keys(allLocation)
+        let filteredType = Object.keys(allType)
+        let filteredYear = Object.keys(allYears)
         let temp = allQueryData
+        // all the current query
+        Object.keys(querySelected).map(item => {
+            // let locationDisplayTemp = Object.keys(locationDisplay)
+            // let typeDisplayTemp = Object.keys(dataTypeDisplay)
+            // let yearDisplayTemp = Object.keys(yearDisplay)
 
-        let locationFilterTemp = basinFilter["SacPAS"][item]["Locations"]
-        let typeFilterTemp = basinFilter["SacPAS"][item]["Data Type"]
-        let yearFilterTemp = basinFilter["SacPAS"][item]["Year"]
+            // let temp = allQueryData
+            let locationFilterTemp = basinFilter["SacPAS"][item]["Locations"]
+            let typeFilterTemp = basinFilter["SacPAS"][item]["Data Type"]
+            let yearFilterTemp = basinFilter["SacPAS"][item]["Year"]
 
+            filteredLocation = getIntersection(filteredLocation, locationFilterTemp)
+            filteredType = getIntersection(filteredType, typeFilterTemp)
+            filteredYear = getIntersection(filteredYear, yearFilterTemp)
 
-        let locationIntersection = getIntersection(locationDisplayTemp, locationFilterTemp)
-        let typeIntersection = getIntersection(typeDisplayTemp, typeFilterTemp)
-        let yearIntersection = getIntersection(yearDisplayTemp, yearFilterTemp)
+        })
 
-        console.log("temp", temp)
-        temp[2].children = locationIntersection
-        temp[3].children = typeIntersection
-        temp[4].children = yearIntersection
+        temp[2].children = convertListToListOfObjWithName(filteredLocation)
+        temp[3].children = convertListToListOfObjWithName(filteredType)
+        temp[4].children = convertListToListOfObjWithName(filteredYear)
 
-        updateSettings({ layout1Settings: { map: { allQueryData: temp } } })
-        // Object.keys(querySelected).map(item => {
+        let temp1 = locationDisplay
+        Object.keys(temp1).forEach(key => {
+            delete temp1[key];
+        })
+        filteredLocation.map(item => {
+            temp1[item] = item
+        })
 
-        // })
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    allQueryData: temp,
+                    locationDisplay: temp1,
+                    // locationDisplay: convertListToObj(filteredLocation),
+                }
+            }
+        })
     }
 
     const handleItemClick = (item, index) => {
