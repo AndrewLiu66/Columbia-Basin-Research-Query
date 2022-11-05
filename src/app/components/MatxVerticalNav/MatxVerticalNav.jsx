@@ -146,53 +146,62 @@ const MatxVerticalNav = () => {
     const handleBaselayerSelected = (item) => {
         let temp = item
         updateSettings({ layout1Settings: { map: {baseLayer: temp} } })
-        console.log(baseLayer)
     }
 
-    const updateQueryValue = () => {
-
+    // remove all display data in the category and add new data from the new filtered list
+    const updateQueryValue = (DisplayData, filteredData) => {
+        let temp1 = DisplayData
+        Object.keys(temp1).forEach(key => {
+            delete temp1[key];
+        })
+        filteredData.map(item => {
+            temp1[item] = item
+        })
     }
 
-    const handleQueryFilter = (querySelected) => {
+    // filterData: the corresponding filter JSON file for a specific category
+    const handleQueryFilter = (querySelected, filterData) => {
+        // each time we filter, we filter from all data available
+        let filteredBasin = Object.keys(allBasin)
         let filteredLocation = Object.keys(allLocation)
         let filteredType = Object.keys(allType)
         let filteredYear = Object.keys(allYears)
-        let temp = allQueryData
+
         // all the current query
         Object.keys(querySelected).map(item => {
-            // let locationDisplayTemp = Object.keys(locationDisplay)
-            // let typeDisplayTemp = Object.keys(dataTypeDisplay)
-            // let yearDisplayTemp = Object.keys(yearDisplay)
+            let basinFilterTemp = filterData["SacPAS"][item]["Hydrologic Area"] || filteredBasin
+            let locationFilterTemp = filterData["SacPAS"][item]["Locations"] || filteredLocation
+            let typeFilterTemp = filterData["SacPAS"][item]["Data Type"] || filteredType
+            let yearFilterTemp = filterData["SacPAS"][item]["Year"] || filteredYear
 
-            // let temp = allQueryData
-            let locationFilterTemp = basinFilter["SacPAS"][item]["Locations"]
-            let typeFilterTemp = basinFilter["SacPAS"][item]["Data Type"]
-            let yearFilterTemp = basinFilter["SacPAS"][item]["Year"]
-
+            filteredBasin = getIntersection(filteredBasin, basinFilterTemp)
             filteredLocation = getIntersection(filteredLocation, locationFilterTemp)
             filteredType = getIntersection(filteredType, typeFilterTemp)
             filteredYear = getIntersection(filteredYear, yearFilterTemp)
-
         })
 
+        // update the displayed data
+        let temp = allQueryData
+        // console.log(temp)
+        temp[1].children = convertListToListOfObjWithName(filteredBasin)
         temp[2].children = convertListToListOfObjWithName(filteredLocation)
         temp[3].children = convertListToListOfObjWithName(filteredType)
         temp[4].children = convertListToListOfObjWithName(filteredYear)
 
-        let temp1 = locationDisplay
-        Object.keys(temp1).forEach(key => {
-            delete temp1[key];
-        })
-        filteredLocation.map(item => {
-            temp1[item] = item
-        })
+        // update the new query data for each category
+        let basinTemp = updateQueryValue(hydroDisplay, filteredBasin)
+        let locationTemp = updateQueryValue(locationDisplay, filteredLocation)
+        let typeTemp = updateQueryValue(dataTypeDisplay, filteredType)
+        let yearTemp = updateQueryValue(yearDisplay, filteredYear)
 
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    locationDisplay: temp1,
-                    // locationDisplay: convertListToObj(filteredLocation),
+                    hydroDisplay: basinTemp,
+                    locationDisplay: locationTemp,
+                    dataTypeDisplay: typeTemp,
+                    yearDisplay: yearTemp,
                 }
             }
         })
@@ -203,16 +212,19 @@ const MatxVerticalNav = () => {
         if (Object.keys(BasinData["basinList"]).includes(item))
         {
             handleItemSelected(basinSelected, item)
-            handleQueryFilter(basinSelected, item)
+            handleQueryFilter(basinSelected, basinFilter)
         } else if (Object.keys(LocationData["SacPAS"]).includes(item))
         {
             handleItemSelected(locationSelected, item)
+            handleQueryFilter(locationSelected, locationFilter)
         } else if (Object.keys(TypeData["SacPAS"]).includes(item))
         {
             handleItemSelected(dataTypeSelected, item)
+            handleQueryFilter(dataTypeSelected, typeFilter)
         } else if (Object.keys(YearData["SacPAS"]).includes(item))
         {
             handleItemSelected(yearSelected, item)
+            handleQueryFilter(yearSelected, yearFilter)
         } else if (Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"]).includes(item))
         {
             handleItemSelected(additionalLayer, item)
