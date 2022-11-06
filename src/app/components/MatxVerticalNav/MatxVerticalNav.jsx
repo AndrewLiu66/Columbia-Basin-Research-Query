@@ -180,9 +180,11 @@ const MatxVerticalNav = () => {
         Object.keys(temp1).forEach(key => {
             delete temp1[key];
         })
+
         filteredData.map(item => {
             temp1[item] = item
         })
+        return temp1
     }
 
     const handleBasinClick = () => {
@@ -256,16 +258,20 @@ const MatxVerticalNav = () => {
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
 
+        console.log("newBasin123", newBasin)
         // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
+        console.log("hydroDisplay", hydroDisplay)
+
         let basinTemp = updateQueryValue(hydroDisplay, newBasin)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
         let yearTemp = updateQueryValue(yearDisplay, newYear)
 
+        console.log("basinTemp", basinTemp)
         updateSettings({
             layout1Settings: {
                 map: {
@@ -276,6 +282,7 @@ const MatxVerticalNav = () => {
                 }
             }
         })
+        console.log("hydroDisplay123", hydroDisplay)
     }
 
     const handleTypeClick = () => {
@@ -405,7 +412,7 @@ const MatxVerticalNav = () => {
         // deal with filter logic
     }
 
-
+    console.log("allQueryDataBBBB", allQueryData)
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
