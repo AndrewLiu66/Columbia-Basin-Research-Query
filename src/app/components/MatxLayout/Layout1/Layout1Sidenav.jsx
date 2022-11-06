@@ -133,8 +133,6 @@ function ClipboardCopy({ copyText }) {
 
     return (
       <div>
-        {/* <input type="text" value={copyText} readOnly /> */}
-        {/* Bind our handler function to the onClick button property */}
         <button onClick={handleCopyClick}>
           <span>{isCopied ? 'Copied!' : 'Copy'}</span>
         </button>
@@ -149,8 +147,6 @@ const Layout1Sidenav = () => {
     const leftSidebar = settings.layout1Settings.leftSidebar
     const { locationSelected, dataTypeSelected, yearSelected } = settings.layout1Settings.map
     const { mode, bgImgURL } = leftSidebar
-    const navigate = useNavigate();
-
     const getSidenavWidth = () => {
         switch (mode)
         {
@@ -160,8 +156,8 @@ const Layout1Sidenav = () => {
                 return sideNavWidth
         }
     }
-    const primaryRGB = convertHexToRGB(theme.palette.primary.main)
 
+    const primaryRGB = convertHexToRGB(theme.palette.primary.main)
 
     const [open, setOpen] = React.useState(false);
 
@@ -169,17 +165,27 @@ const Layout1Sidenav = () => {
         let url_location = ""
         let url_type = ""
         let url_year = ""
-        if (locationSelected !== "") {
-            url_location = "&loc[]=" + LocationMap["SacPAS"][locationSelected]["webqcode"]
-        }
 
-        if (dataTypeSelected !== "") {
-            url_type = "&data[]=" + DataTypeMap["SacPAS"][dataTypeSelected]["webqcode"]
-        }
+        // if (Object.keys(locationSelected).length !== 0)
+        // {
+        //     console.log(123)
+        //     Object.keys(locationSelected).map(item => {
+        //         console.log("item", item)
+        //         // url_location = "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
+        //     })
+        //     console.log("url_location", url_location)
+        // }
+        // if (locationSelected !== "") {
+        //     url_location = "&loc[]=" + LocationMap["SacPAS"][locationSelected]["webqcode"]
+        // }
 
-        if (yearSelected !== "") {
-            url_year = "&year[]=" + yearSelected
-        }
+        // if (dataTypeSelected !== "") {
+        //     url_type = "&data[]=" + DataTypeMap["SacPAS"][dataTypeSelected]["webqcode"]
+        // }
+
+        // if (yearSelected !== "") {
+        //     url_year = "&year[]=" + yearSelected
+        // }
 
 
         const final_url = baseURL + url_type + url_location + url_year
@@ -194,7 +200,6 @@ const Layout1Sidenav = () => {
 
 
     const handleReset = () => {
-        console.log("allLocation", allLocation)
         updateSettings({
             layout1Settings: {
                 map: {
@@ -214,12 +219,33 @@ const Layout1Sidenav = () => {
     }
 
     const handleGenerateUrl = () => {
+        let url_location = ""
+        let url_type = ""
+        let url_year = ""
+        if (Object.keys(locationSelected).length !== 0)
+        {
+            Object.keys(locationSelected).map(item => {
+                url_location = url_location + "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
+            })
+        }
 
-        const url_location = "&loc[]=" + LocationMap["SacPAS"][locationSelected]["webqcode"]
-        const url_type = "&data[]=" + DataTypeMap["SacPAS"][dataTypeSelected]["webqcode"]
-        const url_year = "&year[]=" + yearSelected
+        if (Object.keys(dataTypeSelected).length !== 0)
+        {
+            Object.keys(dataTypeSelected).map(item => {
+                url_type = url_type + "&data[]=" + DataTypeMap["SacPAS"][item]["webqcode"]
+            })
+        }
+
+        if (Object.keys(yearSelected).length !== 0)
+        {
+            Object.keys(yearSelected).map(item => {
+                url_year = url_year + "&year[]=" + item
+            })
+        }
+
 
         const final_url = baseURL + url_type + url_location + url_year
+
 
         setUrl(final_url)
         window.open(final_url);
@@ -229,6 +255,7 @@ const Layout1Sidenav = () => {
     const handleCopy = () => {
         document.execCommand('copy', true, url)
     }
+
     return (
         <SidebarNavRoot
             bgImgURL={bgImgURL}

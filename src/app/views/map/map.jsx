@@ -11,7 +11,7 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import LocationData from 'app/data/map_sacpas_sites.json'
 
 import { navigations, getfilteredNavigations } from 'app/navigations'
-
+import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
 const StyledBox = styled(Box)(() => ({
@@ -28,6 +28,8 @@ function Oceanmap() {
     const mapDiv = useRef(null);
     const { baseLayer, additionalLayer, locationSelected, yearSelected } = settings.layout1Settings.map
 
+
+    console.log("additionalLayer", additionalLayer)
     const plotAPoint = (element, color) => {
         const simpleMarkerSymbol = {
             type: "simple-marker",
@@ -93,7 +95,8 @@ function Oceanmap() {
             webmap.add(graphicsLayer);
 
             for (const add in additionalLayer) {
-                const layer_url = additionalLayer[add]
+                const layer_url = AdditionalLayerSources["SacPAS"]["additionalLayerSouces"][add]
+                console.log("layer_url", layer_url)
                 const layer = new FeatureLayer(layer_url);
                 view.map.add(layer)
             }

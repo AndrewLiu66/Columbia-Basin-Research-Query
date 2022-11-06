@@ -23,7 +23,9 @@ const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
+
 console.log("allLocation", allLocation)
+console.log("filteredNavigations", filteredNavigations)
 
 const Layout1Settings = {
     leftSidebar: {

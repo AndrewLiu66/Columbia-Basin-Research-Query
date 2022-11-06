@@ -77,6 +77,14 @@ const getIntersection = (a, b) => {
     return [...new Set(a)].filter(x => setB.has(x));
 }
 
+const getIntersectionThree = (a, b, c) => {
+    var setB = new Set(b);
+    var setC = new Set(c);
+    var temp = [...new Set(a)].filter(x => setB.has(x));
+    return [...new Set(temp)].filter(x => setC.has(x));
+}
+
+
 const allAdditionalLayers = Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"])
 const allBaseLayer = BaseLayer["SacPAS"]["layerList"]
 
@@ -112,6 +120,24 @@ const MatxVerticalNav = () => {
     const { settings, updateSettings } = useSettings()
     const { mode } = settings.layout1Settings.leftSidebar
     const { layout1Settings } = settings
+
+    // all corresponding list for each categories
+    const [basinLocation, setBasinLocation] = useState(Object.keys(allLocation))
+    const [basinType, setBasinType] = useState(Object.keys(allType))
+    const [basinYear, setBasinYear] = useState(Object.keys(allYears))
+
+    const [locationType, setLocationType] = useState(Object.keys(allType))
+    const [locationBasin, setLocationBasin] = useState(Object.keys(allBasin))
+    const [locationYear, setLocationYear] = useState(Object.keys(allYears))
+
+    const [typeBasin, setTypeBasin] = useState(Object.keys(allBasin))
+    const [typeLocation, setTypeLocation] = useState(Object.keys(allLocation))
+    const [typeYear, setTypeYear] = useState(Object.keys(allYears))
+
+    const [yearBasin, setYearBasin] = useState(Object.keys(allBasin))
+    const [yearLocation, setYearLocation] = useState(Object.keys(allLocation))
+    const [yearType, setYearType] = useState(Object.keys(allType))
+
 
     const {
         map: {
@@ -159,46 +185,44 @@ const MatxVerticalNav = () => {
         })
     }
 
-    // filterData: the corresponding filter JSON file for a specific category
-    const handleQueryFilter = (querySelected, filterData) => {
-        // each time we filter, we filter from all data available
-        let filteredBasin = Object.keys(allBasin)
-        let filteredLocation = Object.keys(allLocation)
-        let filteredType = Object.keys(allType)
-        let filteredYear = Object.keys(allYears)
+    const handleBasinClick = () => {
+        // if chose a new basin, all basin - location, type, year gets updated
+        let newBasinLocation = Object.keys(allLocation);
+        let newBasinType = Object.keys(allType);
+        let newBasinYear = Object.keys(allYears);
 
-        // all the current query
-        Object.keys(querySelected).map(item => {
-            let basinFilterTemp = filterData["SacPAS"][item]["Hydrologic Area"] || filteredBasin
-            let locationFilterTemp = filterData["SacPAS"][item]["Locations"] || filteredLocation
-            let typeFilterTemp = filterData["SacPAS"][item]["Data Type"] || filteredType
-            let yearFilterTemp = filterData["SacPAS"][item]["Year"] || filteredYear
+        // console.log("newBasinLocation", newBasinLocation)
 
-            filteredBasin = getIntersection(filteredBasin, basinFilterTemp)
-            filteredLocation = getIntersection(filteredLocation, locationFilterTemp)
-            filteredType = getIntersection(filteredType, typeFilterTemp)
-            filteredYear = getIntersection(filteredYear, yearFilterTemp)
+        // console.log("basinSelected", basinSelected)
+        Object.keys(basinSelected).map(item => {
+            newBasinLocation = getIntersection(newBasinLocation, basinFilter["SacPAS"][item]["Locations"] )
+            newBasinType = getIntersection(newBasinType, basinFilter["SacPAS"][item]["Data Type"])
+            newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
         })
 
-        // update the displayed data
-        let temp = allQueryData
-        // console.log(temp)
-        temp[1].children = convertListToListOfObjWithName(filteredBasin)
-        temp[2].children = convertListToListOfObjWithName(filteredLocation)
-        temp[3].children = convertListToListOfObjWithName(filteredType)
-        temp[4].children = convertListToListOfObjWithName(filteredYear)
+        // console.log("newBasinLocation", newBasinLocation)
+        setBasinLocation(newBasinLocation)
+        setBasinType(newBasinType)
+        setBasinYear(newBasinYear)
 
-        // update the new query data for each category
-        let basinTemp = updateQueryValue(hydroDisplay, filteredBasin)
-        let locationTemp = updateQueryValue(locationDisplay, filteredLocation)
-        let typeTemp = updateQueryValue(dataTypeDisplay, filteredType)
-        let yearTemp = updateQueryValue(yearDisplay, filteredYear)
+        let newLocation = getIntersectionThree(newBasinLocation, typeLocation, yearLocation)
+        let newType = getIntersectionThree(newBasinType, locationType, yearType)
+        let newYear = getIntersectionThree(newBasinYear, locationYear, typeYear)
+
+        // console.log("newLocation", newLocation)
+        let temp = allQueryData
+        temp[2].children = convertListToListOfObjWithName(newLocation)
+        temp[3].children = convertListToListOfObjWithName(newType)
+        temp[4].children = convertListToListOfObjWithName(newYear)
+
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
 
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    hydroDisplay: basinTemp,
                     locationDisplay: locationTemp,
                     dataTypeDisplay: typeTemp,
                     yearDisplay: yearTemp,
@@ -207,24 +231,170 @@ const MatxVerticalNav = () => {
         })
     }
 
+
+    const handleLocationClick = () => {
+        // if chose a new basin, all basin - location, type, year gets updated
+        let newlocationBasin = Object.keys(allBasin);
+        let newlocationType = Object.keys(allType);
+        let newlocationYear = Object.keys(allYears);
+
+        // console.log("newBasinLocation", newBasinLocation)
+
+        // console.log("basinSelected", basinSelected)
+        Object.keys(locationSelected).map(item => {
+            newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"] )
+            newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
+            newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
+        })
+
+        // console.log("newBasinLocation", newBasinLocation)
+        setLocationBasin(newlocationBasin)
+        setLocationType(newlocationType)
+        setLocationYear(newlocationYear)
+
+        let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
+        let newType = getIntersectionThree(newlocationType, basinType, yearType)
+        let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
+
+        // console.log("newLocation", newLocation)
+        let temp = allQueryData
+        temp[1].children = convertListToListOfObjWithName(newBasin)
+        temp[3].children = convertListToListOfObjWithName(newType)
+        temp[4].children = convertListToListOfObjWithName(newYear)
+
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    dataTypeDisplay: typeTemp,
+                    yearDisplay: yearTemp,
+                }
+            }
+        })
+    }
+
+    const handleTypeClick = () => {
+        // if chose a new basin, all basin - location, type, year gets updated
+        let newTypeBasin = Object.keys(allBasin);
+        let newTypeLocation = Object.keys(allLocation);
+        let newTypeYear = Object.keys(allYears);
+
+        // console.log("newBasinLocation", newBasinLocation)
+
+        // console.log("basinSelected", basinSelected)
+        Object.keys(dataTypeSelected).map(item => {
+            newTypeBasin = getIntersection(newTypeBasin, typeFilter["SacPAS"][item]["Hydrologic Area"] )
+            newTypeLocation = getIntersection(newTypeLocation, typeFilter["SacPAS"][item]["Locations"])
+            newTypeYear = getIntersection(newTypeYear, typeFilter["SacPAS"][item]["Year"])
+        })
+
+        // console.log("newBasinLocation", newBasinLocation)
+        setTypeBasin(newTypeBasin)
+        setTypeLocation(newTypeLocation)
+        setTypeYear(newTypeYear)
+
+        let newBasin = getIntersectionThree(newTypeBasin, locationBasin, yearBasin)
+        let newLocation = getIntersectionThree(newTypeLocation, basinLocation, yearLocation)
+        let newYear = getIntersectionThree(newTypeYear, basinYear, locationYear)
+
+        // console.log("newLocation", newLocation)
+        let temp = allQueryData
+        temp[1].children = convertListToListOfObjWithName(newBasin)
+        temp[2].children = convertListToListOfObjWithName(newLocation)
+        temp[4].children = convertListToListOfObjWithName(newYear)
+
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    locationDisplay: locationTemp,
+                    yearDisplay: yearTemp,
+                }
+            }
+        })
+    }
+
+    const handleYearClick = () => {
+        // if chose a new basin, all basin - location, type, year gets updated
+        let newYearBasin = Object.keys(allBasin);
+        let newYearLocation = Object.keys(allLocation);
+        let newYearType = Object.keys(allType);
+
+        // console.log("newBasinLocation", newBasinLocation)
+
+        // console.log("basinSelected", basinSelected)
+        Object.keys(yearSelected).map(item => {
+            newYearBasin = getIntersection(newYearBasin, yearFilter["SacPAS"][item]["Hydrologic Area"])
+            newYearLocation = getIntersection(newYearLocation, yearFilter["SacPAS"][item]["Locations"])
+            newYearType = getIntersection(newYearType, yearFilter["SacPAS"][item]["Data Type"])
+        })
+
+        // console.log("newBasinLocation", newBasinLocation)
+        setYearBasin(newYearBasin)
+        setYearLocation(newYearLocation)
+        setYearType(newYearType)
+
+        let newBasin = getIntersectionThree(newYearBasin, locationBasin, typeBasin)
+        let newLocation = getIntersectionThree(newYearLocation, basinLocation, typeLocation)
+
+        console.log("basinType", basinType)
+        console.log("locationType", locationType)
+
+        let newType = getIntersectionThree(newYearType, basinType, locationType)
+
+        console.log("newType", newType)
+        // console.log("newLocation", newLocation)
+        let temp = allQueryData
+        temp[1].children = convertListToListOfObjWithName(newBasin)
+        temp[2].children = convertListToListOfObjWithName(newLocation)
+        temp[3].children = convertListToListOfObjWithName(newType)
+
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    locationDisplay: locationTemp,
+                    dataTypeDisplay: typeTemp,
+                }
+            }
+        })
+    }
+
+
     const handleItemClick = (item, index) => {
         // deal with selection logic
         if (Object.keys(BasinData["basinList"]).includes(item))
         {
             handleItemSelected(basinSelected, item)
-            handleQueryFilter(basinSelected, basinFilter)
+            handleBasinClick()
         } else if (Object.keys(LocationData["SacPAS"]).includes(item))
         {
             handleItemSelected(locationSelected, item)
-            handleQueryFilter(locationSelected, locationFilter)
+            handleLocationClick()
         } else if (Object.keys(TypeData["SacPAS"]).includes(item))
         {
             handleItemSelected(dataTypeSelected, item)
-            handleQueryFilter(dataTypeSelected, typeFilter)
+            handleTypeClick()
         } else if (Object.keys(YearData["SacPAS"]).includes(item))
         {
             handleItemSelected(yearSelected, item)
-            handleQueryFilter(yearSelected, yearFilter)
+            handleYearClick()
+
         } else if (Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"]).includes(item))
         {
             handleItemSelected(additionalLayer, item)
@@ -234,6 +404,8 @@ const MatxVerticalNav = () => {
         }
         // deal with filter logic
     }
+
+
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
