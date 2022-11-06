@@ -1,6 +1,5 @@
 
 import { navigations, getfilteredNavigations } from 'app/navigations'
-import AllData from 'app/data/map_sacpas_lexicon'
 import BasinData from "app/data/basinLocations.json"
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
@@ -9,23 +8,12 @@ import YearData from 'app/data/map_sacpas_yearFilter.json'
 
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
-const converListOfObjToList = (list) => {
-    let result = []
-    for (let i = 0; i < list.length; i++)
-    {
-        result.push(list[i]["name"])
-    }
-    return result;
-}
 
 const allBasin = BasinData["basinList"]
 const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
-
-console.log("allLocation", allLocation)
-console.log("filteredNavigations", filteredNavigations)
 
 const Layout1Settings = {
     leftSidebar: {

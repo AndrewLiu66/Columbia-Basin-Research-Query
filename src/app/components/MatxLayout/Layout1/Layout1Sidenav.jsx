@@ -6,8 +6,6 @@ import useSettings from 'app/hooks/useSettings'
 import { themeShadows } from 'app/components/MatxTheme/themeColors'
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant'
 import { navigations, getfilteredNavigations } from 'app/navigations'
-import { useNavigate } from "react-router-dom";
-import AllData from 'app/data/map_sacpas_lexicon'
 import BasinData from "app/data/basinLocations.json"
 import DataTypeMap from "app/data/map_sacpas_datatypes.json"
 import LocationMap from "app/data/map_sacpas_sites.json"
@@ -18,31 +16,16 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 
-// const converListOfObjToList = (list) => {
-//     let result = []
-//     for (let i = 0; i < list.length; i++)
-//     {
-//         result.push(list[i]["name"])
-//     }
-//     return result;
-// }
-
 const allBasin = BasinData["basinList"]
 const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
-
-console.log("allBasin", allBasin)
-// const allLocation = converListOfObjToList(AllData["SacPAS"]["Locations"])
-// const allType = converListOfObjToList(AllData["SacPAS"]["DataTypes"])
-// const allYears = converListOfObjToList(AllData["SacPAS"]["Years"])
 
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
@@ -165,9 +148,7 @@ const Layout1Sidenav = () => {
     const theme = useTheme()
     const { settings, updateSettings } = useSettings()
     const leftSidebar = settings.layout1Settings.leftSidebar
-    const { basinSelected, locationSelected, dataTypeSelected, yearSelected, hydroDisplay, locationDisplay, dataTypeDisplay, yearDisplay, allQueryData} = settings.layout1Settings.map
-
-    const ttt = settings.layout1Settings.map
+    const { basinSelected, locationSelected, dataTypeSelected, yearSelected, hydroDisplay, locationDisplay, dataTypeDisplay, yearDisplay} = settings.layout1Settings.map
     const { mode, bgImgURL } = leftSidebar
     const getSidenavWidth = () => {
         switch (mode)
@@ -179,7 +160,6 @@ const Layout1Sidenav = () => {
         }
     }
 
-    console.log("basinDisplay", hydroDisplay)
     const primaryRGB = convertHexToRGB(theme.palette.primary.main)
 
     const [open, setOpen] = React.useState(false);
@@ -198,14 +178,12 @@ const Layout1Sidenav = () => {
     }
 
     const replaceObjWithOriginal = (cur, original) => {
-        console.log("original", original)
-        console.log("cur", cur)
         let temp = cur
         Object.keys(temp).forEach(key => {
             delete temp[key];
         })
         Object.keys(original).map(item => {
-            temp[item] = item
+            return temp[item] = item
         })
         return temp
     }
@@ -216,10 +194,6 @@ const Layout1Sidenav = () => {
         let emptyLocation = clearObj(locationSelected)
         let emptyType = clearObj(dataTypeSelected)
         let emptyYear = clearObj(yearSelected)
-
-        console.log("aaa", "locationDisplay", locationDisplay, Object.keys(locationDisplay).length)
-        console.log("allLocation", allLocation)
-
         let emptyBasinDisplay = replaceObjWithOriginal(hydroDisplay, allBasin)
         let emptyLocationDisplay = replaceObjWithOriginal(locationDisplay, allLocation)
         let emptyTypeDisplay = replaceObjWithOriginal(dataTypeDisplay, allType)
@@ -242,7 +216,6 @@ const Layout1Sidenav = () => {
                 }
             }
         })
-        console.log("ttt", "allQueryData", allQueryData, Object.keys(allQueryData).length)
     }
 
     const handleGenerateUrl = () => {
@@ -253,6 +226,7 @@ const Layout1Sidenav = () => {
         {
             Object.keys(locationSelected).map(item => {
                 url_location = url_location + "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
+                return url_location
             })
         }
 
@@ -260,6 +234,7 @@ const Layout1Sidenav = () => {
         {
             Object.keys(dataTypeSelected).map(item => {
                 url_type = url_type + "&data[]=" + DataTypeMap["SacPAS"][item]["webqcode"]
+                return url_type
             })
         }
 
@@ -267,6 +242,7 @@ const Layout1Sidenav = () => {
         {
             Object.keys(yearSelected).map(item => {
                 url_year = url_year + "&year[]=" + item
+                return url_year
             })
         }
 
@@ -285,10 +261,6 @@ const Layout1Sidenav = () => {
         window.open(url);
 
     }
-
-    // const handleCopy = () => {
-    //     document.execCommand('copy', true, url)
-    // }
 
     return (
         <SidebarNavRoot

@@ -4,7 +4,6 @@ import BasinLocation from 'app/data/basinLocations.json'
 import BaseLayer from 'app/data/baseLayer.json'
 import AdditionalLayer from 'app/data/additionalLayer.json'
 
-console.log("123213", BasinLocation["basin"])
 export const navigations = [
     {
         label: 'River Condition Query',

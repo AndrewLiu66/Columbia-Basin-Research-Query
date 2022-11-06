@@ -10,9 +10,7 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 // import LocationData from 'app/MockData/map_sacpas_sites.json'
 import LocationData from 'app/data/map_sacpas_sites.json'
 
-import { navigations, getfilteredNavigations } from 'app/navigations'
 import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
-const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
 const StyledBox = styled(Box)(() => ({
     padding: 0,
@@ -24,12 +22,10 @@ const StyledBox = styled(Box)(() => ({
 esriConfig.apiKey = "AAPK460c081ffc584c5090c2b383ede3366b1JA6FLMBYno7qMVVlHo12K6EOAtFnfYV_6UQH2_bUGzYM0qQIBxyfrSfrVF8mJM8";
 
 function Oceanmap() {
-    const { settings, updateSettings } = useSettings()
+    const { settings } = useSettings()
     const mapDiv = useRef(null);
-    const { baseLayer, additionalLayer, locationSelected, yearSelected } = settings.layout1Settings.map
+    const { baseLayer, additionalLayer} = settings.layout1Settings.map
 
-
-    console.log("additionalLayer", additionalLayer)
     const plotAPoint = (element, color) => {
         const simpleMarkerSymbol = {
             type: "simple-marker",

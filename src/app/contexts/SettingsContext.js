@@ -14,12 +14,6 @@ export const SettingsProvider = ({ settings, children }) => {
         settings || MatxLayoutSettings
     )
 
-    function customizer(objValue, srcValue) {
-        if (Array.isArray(objValue))
-        {
-            return srcValue;
-        }
-    }
     const handleUpdateSettings = (update = {}) => {
         const marged = merge({}, currentSettings, update)
         setCurrentSettings(marged)

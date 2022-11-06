@@ -1,5 +1,5 @@
 import { styled, Box } from '@mui/system'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import useSettings from 'app/hooks/useSettings'
 import { Paragraph, Span } from '../Typography'
 import { ButtonBase } from '@mui/material'
@@ -14,8 +14,6 @@ import yearFilter from 'app/data/map_sacpas_yearFilter.json'
 import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 import basinFilter from 'app/data/map_sacpas_basinFilter.json'
 import typeFilter from 'app/data/map_sacpas_typeFilter.json'
-import AllData from 'app/data/map_sacpas_lexicon.json'
-
 
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
@@ -64,13 +62,6 @@ const BulletIcon = styled('div')(({ theme }) => ({
     background: theme.palette.text.primary,
 }))
 
-const convertListToObj = (lst) => {
-    let res = {}
-    lst.map(item => {
-        res[item] = item
-    })
-    return res
-}
 
 const getIntersection = (a, b) => {
     var setB = new Set(b);
@@ -85,7 +76,6 @@ const getIntersectionThree = (a, b, c) => {
 }
 
 
-const allAdditionalLayers = Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"])
 const allBaseLayer = BaseLayer["SacPAS"]["layerList"]
 
 
@@ -111,7 +101,8 @@ const alterDisplayName = (item) => {
 const convertListToListOfObjWithName = (lst) => {
     let res = []
     lst.map(item => {
-        res.push({name: item})
+        res.push({ name: item })
+        return res
     })
     return res
 }
@@ -183,6 +174,7 @@ const MatxVerticalNav = () => {
 
         filteredData.map(item => {
             temp1[item] = item
+            return temp1
         })
         return temp1
     }
@@ -196,11 +188,18 @@ const MatxVerticalNav = () => {
         // console.log("newBasinLocation", newBasinLocation)
 
         // console.log("basinSelected", basinSelected)
-        Object.keys(basinSelected).map(item => {
+        for (let i = 0; i < Object.keys(basinSelected).length; i++)
+        {
+            let item = Object.keys(basinSelected)[i]
             newBasinLocation = getIntersection(newBasinLocation, basinFilter["SacPAS"][item]["Locations"] )
             newBasinType = getIntersection(newBasinType, basinFilter["SacPAS"][item]["Data Type"])
             newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
-        })
+        }
+        // Object.keys(basinSelected).map(item => {
+        //     newBasinLocation = getIntersection(newBasinLocation, basinFilter["SacPAS"][item]["Locations"] )
+        //     newBasinType = getIntersection(newBasinType, basinFilter["SacPAS"][item]["Data Type"])
+        //     newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
+        // })
 
         // console.log("newBasinLocation", newBasinLocation)
         setBasinLocation(newBasinLocation)
@@ -243,11 +242,20 @@ const MatxVerticalNav = () => {
         // console.log("newBasinLocation", newBasinLocation)
 
         // console.log("basinSelected", basinSelected)
-        Object.keys(locationSelected).map(item => {
+        // Object.keys(locationSelected).map(item => {
+        //     newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"] )
+        //     newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
+        //     newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
+        // })
+
+        for (let i = 0; i < Object.keys(locationSelected).length; i++)
+        {
+            let item = Object.keys(locationSelected)[i]
             newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"] )
             newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
             newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
-        })
+        }
+
 
         // console.log("newBasinLocation", newBasinLocation)
         setLocationBasin(newlocationBasin)
@@ -258,20 +266,16 @@ const MatxVerticalNav = () => {
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
 
-        console.log("newBasin123", newBasin)
         // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
-        console.log("hydroDisplay", hydroDisplay)
 
         let basinTemp = updateQueryValue(hydroDisplay, newBasin)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
         let yearTemp = updateQueryValue(yearDisplay, newYear)
-
-        console.log("basinTemp", basinTemp)
         updateSettings({
             layout1Settings: {
                 map: {
@@ -282,7 +286,6 @@ const MatxVerticalNav = () => {
                 }
             }
         })
-        console.log("hydroDisplay123", hydroDisplay)
     }
 
     const handleTypeClick = () => {
@@ -294,11 +297,18 @@ const MatxVerticalNav = () => {
         // console.log("newBasinLocation", newBasinLocation)
 
         // console.log("basinSelected", basinSelected)
-        Object.keys(dataTypeSelected).map(item => {
+        // Object.keys(dataTypeSelected).map(item => {
+        //     newTypeBasin = getIntersection(newTypeBasin, typeFilter["SacPAS"][item]["Hydrologic Area"] )
+        //     newTypeLocation = getIntersection(newTypeLocation, typeFilter["SacPAS"][item]["Locations"])
+        //     newTypeYear = getIntersection(newTypeYear, typeFilter["SacPAS"][item]["Year"])
+        // })
+        for (let i = 0; i < Object.keys(dataTypeSelected).length; i++)
+        {
+            let item = Object.keys(dataTypeSelected)[i]
             newTypeBasin = getIntersection(newTypeBasin, typeFilter["SacPAS"][item]["Hydrologic Area"] )
             newTypeLocation = getIntersection(newTypeLocation, typeFilter["SacPAS"][item]["Locations"])
             newTypeYear = getIntersection(newTypeYear, typeFilter["SacPAS"][item]["Year"])
-        })
+        }
 
         // console.log("newBasinLocation", newBasinLocation)
         setTypeBasin(newTypeBasin)
@@ -340,11 +350,22 @@ const MatxVerticalNav = () => {
         // console.log("newBasinLocation", newBasinLocation)
 
         // console.log("basinSelected", basinSelected)
-        Object.keys(yearSelected).map(item => {
+        // Object.keys(yearSelected).map(item => {
+        //     newYearBasin = getIntersection(newYearBasin, yearFilter["SacPAS"][item]["Hydrologic Area"])
+        //     newYearLocation = getIntersection(newYearLocation, yearFilter["SacPAS"][item]["Locations"])
+        //     newYearType = getIntersection(newYearType, yearFilter["SacPAS"][item]["Data Type"])
+        // })
+
+        for (let i = 0; i < Object.keys(yearSelected).length; i++)
+        {
+            let item = Object.keys(yearSelected)[i]
             newYearBasin = getIntersection(newYearBasin, yearFilter["SacPAS"][item]["Hydrologic Area"])
             newYearLocation = getIntersection(newYearLocation, yearFilter["SacPAS"][item]["Locations"])
             newYearType = getIntersection(newYearType, yearFilter["SacPAS"][item]["Data Type"])
-        })
+        }
+
+
+
 
         // console.log("newBasinLocation", newBasinLocation)
         setYearBasin(newYearBasin)
@@ -354,12 +375,8 @@ const MatxVerticalNav = () => {
         let newBasin = getIntersectionThree(newYearBasin, locationBasin, typeBasin)
         let newLocation = getIntersectionThree(newYearLocation, basinLocation, typeLocation)
 
-        console.log("basinType", basinType)
-        console.log("locationType", locationType)
-
         let newType = getIntersectionThree(newYearType, basinType, locationType)
 
-        console.log("newType", newType)
         // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
@@ -412,7 +429,6 @@ const MatxVerticalNav = () => {
         // deal with filter logic
     }
 
-    console.log("allQueryDataBBBB", allQueryData)
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
