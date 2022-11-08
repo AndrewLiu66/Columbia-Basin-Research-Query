@@ -219,36 +219,38 @@ const Layout1Sidenav = () => {
     }
 
     const handleGenerateUrl = () => {
-        let url_location = ""
-        let url_type = ""
-        let url_year = ""
-        if (Object.keys(locationSelected).length !== 0)
-        {
-            Object.keys(locationSelected).map(item => {
-                url_location = url_location + "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
-                return url_location
-            })
-        }
+        return new Promise(resolve => {
+            let url_location = ""
+            let url_type = ""
+            let url_year = ""
+            if (Object.keys(locationSelected).length !== 0)
+            {
+                Object.keys(locationSelected).map(item => {
+                    url_location = url_location + "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
+                    return url_location
+                })
+            }
 
-        if (Object.keys(dataTypeSelected).length !== 0)
-        {
-            Object.keys(dataTypeSelected).map(item => {
-                url_type = url_type + "&data[]=" + DataTypeMap["SacPAS"][item]["webqcode"]
-                return url_type
-            })
-        }
+            if (Object.keys(dataTypeSelected).length !== 0)
+            {
+                Object.keys(dataTypeSelected).map(item => {
+                    url_type = url_type + "&data[]=" + DataTypeMap["SacPAS"][item]["webqcode"]
+                    return url_type
+                })
+            }
 
-        if (Object.keys(yearSelected).length !== 0)
-        {
-            Object.keys(yearSelected).map(item => {
-                url_year = url_year + "&year[]=" + item
-                return url_year
-            })
-        }
+            if (Object.keys(yearSelected).length !== 0)
+            {
+                Object.keys(yearSelected).map(item => {
+                    url_year = url_year + "&year[]=" + item
+                    return url_year
+                })
+            }
 
-
-        const final_url = baseURL + url_type + url_location + url_year
-        setUrl(final_url)
+            const final_url = baseURL + url_type + url_location + url_year
+            setUrl(final_url)
+            resolve(final_url);
+        });
     }
 
     const handleOpenUrl = () => {
@@ -256,10 +258,9 @@ const Layout1Sidenav = () => {
         setOpen(true);
     };
 
-    const handleTransitToUrl = () => {
-        handleGenerateUrl()
-        window.open(url);
-
+    const handleTransitToUrl = async () => {
+        let result = await handleGenerateUrl()
+        window.open(result);
     }
 
     return (
