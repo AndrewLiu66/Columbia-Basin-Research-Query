@@ -26,6 +26,15 @@ function Oceanmap() {
     const mapDiv = useRef(null);
     const { baseLayer, additionalLayer} = settings.layout1Settings.map
 
+    const {
+        map: {
+            locationSelected,
+            locationDisplay,
+        }
+    } = settings.layout1Settings
+
+    console.log("test", locationDisplay)
+    console.log("locationDisplay", locationDisplay)
     const plotAPoint = (element, color) => {
         const simpleMarkerSymbol = {
             type: "simple-marker",
@@ -83,7 +92,7 @@ function Oceanmap() {
                 container: mapDiv.current,
                 map: webmap,
                 center: [-122.4194, 37.7749], //Longitude, latitude
-                zoom: 5
+                zoom: 7
             });
 
             // set up points
@@ -92,15 +101,24 @@ function Oceanmap() {
 
             for (const add in additionalLayer) {
                 const layer_url = AdditionalLayerSources["SacPAS"]["additionalLayerSouces"][add]
-                console.log("layer_url", layer_url)
                 const layer = new FeatureLayer(layer_url);
                 view.map.add(layer)
             }
 
-            for (const element in LocationData["SacPAS"])
+            for (const key in locationDisplay)
             {
+                // console.log("element", key)
+                let orangeColor = {first: 80, second: 80, third: 80}
+                // let orangeColor = {first: 226, second: 119, third: 40}
+                let pointGraphic = plotAPoint(key, orangeColor)
+                graphicsLayer.add(pointGraphic);
+            }
+
+            for (const key in locationSelected)
+            {
+                // console.log("element", key)
                 let orangeColor = {first: 226, second: 119, third: 40}
-                let pointGraphic = plotAPoint(element, orangeColor)
+                let pointGraphic = plotAPoint(key, orangeColor)
                 graphicsLayer.add(pointGraphic);
             }
             // user click on a location
