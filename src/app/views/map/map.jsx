@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, Fragment} from "react";
 import MapView from "@arcgis/core/views/MapView";
+
+
+
 import WebMap from "@arcgis/core/WebMap";
 import esriConfig from "@arcgis/core/config";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
@@ -7,10 +10,10 @@ import Graphic from "@arcgis/core/Graphic";
 import { styled, Box } from '@mui/system'
 import useSettings from 'app/hooks/useSettings'
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
-// import LocationData from 'app/MockData/map_sacpas_sites.json'
 import LocationData from 'app/data/map_sacpas_sites.json'
 
 import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
+
 
 const StyledBox = styled(Box)(() => ({
     padding: 0,
@@ -22,7 +25,7 @@ const StyledBox = styled(Box)(() => ({
 esriConfig.apiKey = "AAPK460c081ffc584c5090c2b383ede3366b1JA6FLMBYno7qMVVlHo12K6EOAtFnfYV_6UQH2_bUGzYM0qQIBxyfrSfrVF8mJM8";
 
 function Oceanmap() {
-    const { settings } = useSettings()
+    const { settings, updateSettings } = useSettings()
     const mapDiv = useRef(null);
     const { baseLayer, additionalLayer} = settings.layout1Settings.map
 
@@ -34,6 +37,19 @@ function Oceanmap() {
     } = settings.layout1Settings
 
     const plotAPoint = (element, color) => {
+
+        // const measureThisAction = {
+        //     title: "Get Info",
+        //     id: "show_popup",
+        //     location: element
+        // };
+
+        // const popupTemplate = {
+        //     title: "{Name}",
+        //     content: "<div>123</div>",
+        //     actions: [measureThisAction]
+        // }
+
         const simpleMarkerSymbol = {
             type: "simple-marker",
             color: [color.first, color.second, color.third],  // Orange
@@ -42,18 +58,6 @@ function Oceanmap() {
                 width: 1
             }
         };
-
-        const measureThisAction = {
-            title: "Get Info",
-            id: "show_popup",
-            location: element
-        };
-
-        const popupTemplate = {
-            title: "{Name}",
-            content: "<div>123</div>",
-            actions: [measureThisAction]
-        }
 
         const point = {
             type: "point",
@@ -70,15 +74,22 @@ function Oceanmap() {
             geometry: point,
             symbol: simpleMarkerSymbol,
             attributes: attributes,
-            popupTemplate: popupTemplate
+            // popupTemplate: popupTemplate
         });
 
-        // pointGraphic.on("mouse-over",function (event) {
-        //     console.log(event)
-        // });
-
-
         return pointGraphic;
+    }
+
+    const handleItemSelected = (querySelect, item) => {
+        let temp = querySelect;
+        if (Object.keys(temp).includes(item))
+        {
+            delete temp[item]
+        } else
+        {
+            temp[item] = item
+        }
+        updateSettings({ layout1Settings: { map: { querySelect:  temp}} })
     }
 
     useEffect(() => {
@@ -96,12 +107,8 @@ function Oceanmap() {
                 container: mapDiv.current,
                 map: webmap,
                 center: [-122.4194, 37.7749], //Longitude, latitude
-                zoom: 7,
-                popup: {
-                    autoOpenEnabled: false
-                }
+                zoom: 7
             });
-
 
             // set up points
             const graphicsLayer = new GraphicsLayer();
@@ -113,81 +120,160 @@ function Oceanmap() {
                 view.map.add(layer)
             }
 
-            for (const key in locationDisplay)
-            {
-                let orangeColor = {first: 120, second: 121, third: 122}
-                // let pointGraphic = plotAPoint(key, orangeColor)
+            const color = { first: 88, second: 88, third: 88 }
+            const simpleMarkerSymbol = {
+                type: "simple-marker",
+                color: [color.first, color.second, color.third],  // Orange
+                outline: {
+                    color: [255, 255, 255], // White
+                    width: 1
+                }
+            };
 
-                let element = key
-                let color = {first: 120, second: 121, third: 122}
-                const simpleMarkerSymbol = {
-                    type: "simple-marker",
-                    color: [color.first, color.second, color.third],  // Orange
-                    outline: {
-                        color: [255, 255, 255], // White
-                        width: 1
+
+            // create empty FeatureLayer
+            const monumentLayer = new FeatureLayer({
+                // create an instance of esri/layers/support/Field for each field object
+                title: "National Monuments",
+                fields: [
+                    {
+                        name: "ObjectID",
+                        alias: "ObjectID",
+                        type: "oid"
+                    },
+                    {
+                        name: "Name",
+                        alias: "Name",
+                        type: "string"
+                    },
+                    {
+                        name: "Type",
+                        alias: "Type",
+                        type: "string"
                     }
-                };
-
-                const measureThisAction = {
-                    title: "Get Info",
-                    id: "show_popup",
-                    location: element
-                };
-
-                const popupTemplate = {
-                    title: "{Name}",
-                    content: "<div>123</div>",
-                    actions: [measureThisAction]
+                ],
+                objectIdField: "ObjectID",
+                geometryType: "point",
+                spatialReference: { wkid: 4326 },
+                source: [], // adding an empty feature collection
+                renderer: {
+                    type: "simple",
+                    symbol: simpleMarkerSymbol
+                },
+                popupTemplate: {
+                    title: "{Name}"
                 }
+            });
+            webmap.add(monumentLayer);
 
-                const point = {
-                    type: "point",
-                    longitude: LocationData["SacPAS"][element]["lon"],
-                    latitude: LocationData["SacPAS"][element]["lat"]
-                };
+            const addBtn = document.getElementById("add");
+            const removeBtn = document.getElementById("remove");
 
-                const attributes = {
-                    Name: element,
-                    Description: ""
-                }
+            // addBtn.addEventListener("click", addFeatures);
+            removeBtn.addEventListener("click", removeFeatures);
 
-                const pointGraphic = new Graphic({
-                    geometry: point,
-                    symbol: simpleMarkerSymbol,
-                    attributes: attributes,
-                    popupTemplate: popupTemplate
-                });
+            const data = Object.keys(LocationData["SacPAS"])
 
-                graphicsLayer.add(pointGraphic);
+            // fires when "Add Features" button is clicked
+            function addFeatures() {
+                let graphics = [];
+                let graphic;
+                for (let i = 0; i < data.length; i++)
+                {
 
-                view.on("pointer-move", eventHandler);
-
-                function eventHandler(event) {
-                    // only include graphics from hurricanesLayer in the hitTest
-                    const opts = {
-                        include: pointGraphic
+                    const point = {
+                        type: "point",
+                        longitude: parseFloat(LocationData["SacPAS"][data[i]]["lon"]),
+                        latitude: parseFloat(LocationData["SacPAS"][data[i]]["lat"])
                     };
-                    // the hitTest() checks to see if any graphics from the hurricanesLayer
-                    // intersect the x, y coordinates of the pointer
-                    view.hitTest(event, opts).then(() => {
-                        console.log(123)
+
+                    const attributes = {
+                        Name: data[i],
+                        Description: ""
+                    }
+
+                    graphic = new Graphic({
+                        geometry: point,
+                        attributes: attributes,
                     });
+
+                    graphics.push(graphic);
                 }
+                // addEdits object tells applyEdits that you want to add the features
+                const addEdits = {
+                    addFeatures: graphics
+                };
+                // apply the edits to the layer
+                applyEditsToLayer(addEdits);
+            }
+            addFeatures()
+
+            // fires when "Remove Features" button clicked
+            function removeFeatures() {
+                // query for the features you want to remove
+                monumentLayer.queryFeatures().then((results) => {
+                    // edits object tells apply edits that you want to delete the features
+                    const deleteEdits = {
+                        deleteFeatures: results.features
+                    };
+                    // apply edits to the layer
+                    applyEditsToLayer(deleteEdits);
+                });
             }
 
-            for (const key in locationSelected)
-            {
-                // console.log("element", key)
-                let orangeColor = {first: 226, second: 119, third: 40}
-                let pointGraphic = plotAPoint(key, orangeColor)
-                graphicsLayer.add(pointGraphic);
+            function applyEditsToLayer(edits) {
+                monumentLayer
+                    .applyEdits(edits)
+                    .then((results) => {
+                    // if edits were removed
+                    if (results.deleteFeatureResults.length > 0) {
+                        console.log(
+                        results.deleteFeatureResults.length,
+                        "features have been removed"
+                        );
+                        addBtn.disabled = false;
+                        removeBtn.disabled = true;
+                    }
+                    // if features were added - call queryFeatures to return
+                    //    newly added graphics
+                    if (results.addFeatureResults.length > 0) {
+                        let objectIds = [];
+                        results.addFeatureResults.forEach((item) => {
+                        objectIds.push(item.objectId);
+                        });
+                        // query the newly added features from the layer
+                        monumentLayer
+                        .queryFeatures({
+                            objectIds: objectIds
+                        })
+                        .then((results) => {
+                            console.log(
+                            results.features.length,
+                            "features have been added."
+                            );
+                            addBtn.disabled = true;
+                            removeBtn.disabled = false;
+                        });
+                    }
+                    })
+                    .catch((error) => {
+                    console.error();
+                    });
             }
 
-            view.on("mouse-over", function (event) {
-                console.log(event)
-            })
+            view.when(function () {
+                view.on("click", function (event) {
+                    view.hitTest(event).then(function (response) {
+                        console.log("response", response)
 
+                        let graphicID = response.results[0].graphic.attributes.ObjectID
+                        console.log("graphicID", graphicID)
+                        let clickedLocation = data[graphicID - 1]
+                        handleItemSelected(locationSelected, clickedLocation)
+                        console.log(data[graphicID - 1])
+                    });
+                });
+            });
 
         }
     });
@@ -203,43 +289,3 @@ function Oceanmap() {
 }
 
 export default Oceanmap;
-
-
-// Event handler that fires each time an action is clicked.
-// view.on("click", test);
-
-// view.popup.on("trigger-action", (event) => {
-//     // Execute the measureThis() function if the measure-this action is clicked
-//     if (event.action.id === "show_popup")
-//     {
-//         console.log(event.action.location)
-//         // setCurrentLocation(event.action.location)
-//         // handleOpenDialog(true, event.action.location)
-//     }
-// });
-
-
-// Event handler that fires each time an action is clicked.
-// view.on("click", test);
-
-// view.popup.on("trigger-action", (event) => {
-//     // Execute the measureThis() function if the measure-this action is clicked
-//     if (event.action.id === "show_popup")
-//     {
-//         console.log(event.action.location)
-//         // setCurrentLocation(event.action.location)
-//         // handleOpenDialog(true, event.action.location)
-//     }
-// });
-
-
-// view.on("click", (event) => {
-//     const lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
-//     const lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
-
-
-//     view.popup.open({
-//         title: "Reverse geocode: [" + lon + ", " + lat + "]",
-//         location: event.mapPoint
-//     });
-// });
