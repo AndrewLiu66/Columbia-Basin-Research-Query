@@ -33,8 +33,6 @@ function Oceanmap() {
         }
     } = settings.layout1Settings
 
-    console.log("test", locationDisplay)
-    console.log("locationDisplay", locationDisplay)
     const plotAPoint = (element, color) => {
         const simpleMarkerSymbol = {
             type: "simple-marker",
@@ -53,7 +51,7 @@ function Oceanmap() {
 
         const popupTemplate = {
             title: "{Name}",
-            content: "<div></div>",
+            content: "<div>123</div>",
             actions: [measureThisAction]
         }
 
@@ -74,6 +72,12 @@ function Oceanmap() {
             attributes: attributes,
             popupTemplate: popupTemplate
         });
+
+        // pointGraphic.on("mouse-over",function (event) {
+        //     console.log(event)
+        // });
+
+
         return pointGraphic;
     }
 
@@ -92,8 +96,12 @@ function Oceanmap() {
                 container: mapDiv.current,
                 map: webmap,
                 center: [-122.4194, 37.7749], //Longitude, latitude
-                zoom: 7
+                zoom: 7,
+                popup: {
+                    autoOpenEnabled: false
+                }
             });
+
 
             // set up points
             const graphicsLayer = new GraphicsLayer();
@@ -107,11 +115,65 @@ function Oceanmap() {
 
             for (const key in locationDisplay)
             {
-                // console.log("element", key)
-                let orangeColor = {first: 80, second: 80, third: 80}
-                // let orangeColor = {first: 226, second: 119, third: 40}
-                let pointGraphic = plotAPoint(key, orangeColor)
+                let orangeColor = {first: 120, second: 121, third: 122}
+                // let pointGraphic = plotAPoint(key, orangeColor)
+
+                let element = key
+                let color = {first: 120, second: 121, third: 122}
+                const simpleMarkerSymbol = {
+                    type: "simple-marker",
+                    color: [color.first, color.second, color.third],  // Orange
+                    outline: {
+                        color: [255, 255, 255], // White
+                        width: 1
+                    }
+                };
+
+                const measureThisAction = {
+                    title: "Get Info",
+                    id: "show_popup",
+                    location: element
+                };
+
+                const popupTemplate = {
+                    title: "{Name}",
+                    content: "<div>123</div>",
+                    actions: [measureThisAction]
+                }
+
+                const point = {
+                    type: "point",
+                    longitude: LocationData["SacPAS"][element]["lon"],
+                    latitude: LocationData["SacPAS"][element]["lat"]
+                };
+
+                const attributes = {
+                    Name: element,
+                    Description: ""
+                }
+
+                const pointGraphic = new Graphic({
+                    geometry: point,
+                    symbol: simpleMarkerSymbol,
+                    attributes: attributes,
+                    popupTemplate: popupTemplate
+                });
+
                 graphicsLayer.add(pointGraphic);
+
+                view.on("pointer-move", eventHandler);
+
+                function eventHandler(event) {
+                    // only include graphics from hurricanesLayer in the hitTest
+                    const opts = {
+                        include: pointGraphic
+                    };
+                    // the hitTest() checks to see if any graphics from the hurricanesLayer
+                    // intersect the x, y coordinates of the pointer
+                    view.hitTest(event, opts).then(() => {
+                        console.log(123)
+                    });
+                }
             }
 
             for (const key in locationSelected)
@@ -121,23 +183,12 @@ function Oceanmap() {
                 let pointGraphic = plotAPoint(key, orangeColor)
                 graphicsLayer.add(pointGraphic);
             }
-            // user click on a location
-            // if (locationSelected !== '')
-            // {
-            //     let orangeColor = {first: 80, second: 80, third: 80}
-            //     let pointGraphic = plotAPoint(locationSelected, orangeColor)
-            //     graphicsLayer.add(pointGraphic);
-            // }
-            // set up pop up window
-            view.on("click", (event) => {
-                const lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
-                const lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
 
-                view.popup.open({
-                    title: "Reverse geocode: [" + lon + ", " + lat + "]",
-                    location: event.mapPoint
-                });
-            });
+            view.on("mouse-over", function (event) {
+                console.log(event)
+            })
+
+
         }
     });
 
@@ -179,4 +230,16 @@ export default Oceanmap;
 //         // setCurrentLocation(event.action.location)
 //         // handleOpenDialog(true, event.action.location)
 //     }
+// });
+
+
+// view.on("click", (event) => {
+//     const lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
+//     const lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
+
+
+//     view.popup.open({
+//         title: "Reverse geocode: [" + lon + ", " + lat + "]",
+//         location: event.mapPoint
+//     });
 // });
