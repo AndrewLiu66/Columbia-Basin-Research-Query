@@ -27,14 +27,60 @@ esriConfig.apiKey = "AAPK460c081ffc584c5090c2b383ede3366b1JA6FLMBYno7qMVVlHo12K6
 function Oceanmap() {
     const { settings, updateSettings } = useSettings()
     const mapDiv = useRef(null);
-    const { baseLayer, additionalLayer} = settings.layout1Settings.map
+    const { baseLayer, additionalLayer, locationDisplay, locationSelected} = settings.layout1Settings.map
 
-    const {
-        map: {
-            locationSelected,
-            locationDisplay,
+    // const {
+    //     map: {
+    //         locationSelected,
+    //         locationDisplay,
+    //     }
+    // } = settings.layout1Settings
+
+    const color = { first: 88, second: 88, third: 88 }
+    const simpleMarkerSymbol = {
+        type: "simple-marker",
+        color: [color.first, color.second, color.third],  // Orange
+        outline: {
+            color: [255, 255, 255], // White
+            width: 1
         }
-    } = settings.layout1Settings
+    };
+
+
+    // create empty FeatureLayer
+    const monumentLayer = new FeatureLayer({
+        // create an instance of esri/layers/support/Field for each field object
+        title: "National Monuments",
+        fields: [
+            {
+                name: "ObjectID",
+                alias: "ObjectID",
+                type: "oid"
+            },
+            {
+                name: "Name",
+                alias: "Name",
+                type: "string"
+            },
+            {
+                name: "Type",
+                alias: "Type",
+                type: "string"
+            }
+        ],
+        objectIdField: "ObjectID",
+        geometryType: "point",
+        spatialReference: { wkid: 4326 },
+        source: [], // adding an empty feature collection
+        renderer: {
+            type: "simple",
+            symbol: simpleMarkerSymbol
+        },
+        popupTemplate: {
+            title: "{Name}"
+        }
+    });
+
 
     const plotAPoint = (element, color) => {
 
@@ -92,6 +138,93 @@ function Oceanmap() {
         updateSettings({ layout1Settings: { map: { querySelect:  temp}} })
     }
 
+    const data = Object.keys(locationDisplay)
+    // const data = Object.keys(LocationData["SacPAS"])
+
+    function addFeatures() {
+        let graphics = [];
+        let graphic;
+        for (let i = 0; i < data.length; i++)
+        {
+
+            const point = {
+                type: "point",
+                longitude: parseFloat(LocationData["SacPAS"][data[i]]["lon"]),
+                latitude: parseFloat(LocationData["SacPAS"][data[i]]["lat"])
+            };
+
+            const attributes = {
+                Name: data[i],
+                Description: ""
+            }
+
+            graphic = new Graphic({
+                geometry: point,
+                attributes: attributes,
+            });
+
+            graphics.push(graphic);
+        }
+        // addEdits object tells applyEdits that you want to add the features
+        const addEdits = {
+            addFeatures: graphics
+        };
+        // apply the edits to the layer
+        applyEditsToLayer(addEdits);
+    }
+
+    function applyEditsToLayer(edits) {
+        monumentLayer
+            .applyEdits(edits)
+            .then((results) => {
+            // if edits were removed
+            if (results.deleteFeatureResults.length > 0) {
+                console.log(
+                results.deleteFeatureResults.length,
+                "features have been removed"
+                );
+                // addBtn.disabled = false;
+                // removeBtn.disabled = true;
+            }
+            // if features were added - call queryFeatures to return
+            //    newly added graphics
+            if (results.addFeatureResults.length > 0) {
+                let objectIds = [];
+                results.addFeatureResults.forEach((item) => {
+                objectIds.push(item.objectId);
+                });
+                // query the newly added features from the layer
+                monumentLayer
+                .queryFeatures({
+                    objectIds: objectIds
+                })
+                .then((results) => {
+                    console.log(
+                    results.features.length,
+                    "features have been added."
+                    );
+                    // addBtn.disabled = true;
+                    // removeBtn.disabled = false;
+                });
+            }
+            })
+            .catch((error) => {
+            console.error();
+            });
+    }
+
+    function removeFeatures() {
+        // query for the features you want to remove
+        monumentLayer.queryFeatures().then((results) => {
+            // edits object tells apply edits that you want to delete the features
+            const deleteEdits = {
+                deleteFeatures: results.features
+            };
+            // apply edits to the layer
+            applyEditsToLayer(deleteEdits);
+        });
+    }
+
     useEffect(() => {
         if (mapDiv.current)
         {
@@ -120,146 +253,9 @@ function Oceanmap() {
                 view.map.add(layer)
             }
 
-            const color = { first: 88, second: 88, third: 88 }
-            const simpleMarkerSymbol = {
-                type: "simple-marker",
-                color: [color.first, color.second, color.third],  // Orange
-                outline: {
-                    color: [255, 255, 255], // White
-                    width: 1
-                }
-            };
-
-
-            // create empty FeatureLayer
-            const monumentLayer = new FeatureLayer({
-                // create an instance of esri/layers/support/Field for each field object
-                title: "National Monuments",
-                fields: [
-                    {
-                        name: "ObjectID",
-                        alias: "ObjectID",
-                        type: "oid"
-                    },
-                    {
-                        name: "Name",
-                        alias: "Name",
-                        type: "string"
-                    },
-                    {
-                        name: "Type",
-                        alias: "Type",
-                        type: "string"
-                    }
-                ],
-                objectIdField: "ObjectID",
-                geometryType: "point",
-                spatialReference: { wkid: 4326 },
-                source: [], // adding an empty feature collection
-                renderer: {
-                    type: "simple",
-                    symbol: simpleMarkerSymbol
-                },
-                popupTemplate: {
-                    title: "{Name}"
-                }
-            });
             webmap.add(monumentLayer);
 
-            const addBtn = document.getElementById("add");
-            const removeBtn = document.getElementById("remove");
-
-            // addBtn.addEventListener("click", addFeatures);
-            removeBtn.addEventListener("click", removeFeatures);
-
-            const data = Object.keys(LocationData["SacPAS"])
-
-            // fires when "Add Features" button is clicked
-            function addFeatures() {
-                let graphics = [];
-                let graphic;
-                for (let i = 0; i < data.length; i++)
-                {
-
-                    const point = {
-                        type: "point",
-                        longitude: parseFloat(LocationData["SacPAS"][data[i]]["lon"]),
-                        latitude: parseFloat(LocationData["SacPAS"][data[i]]["lat"])
-                    };
-
-                    const attributes = {
-                        Name: data[i],
-                        Description: ""
-                    }
-
-                    graphic = new Graphic({
-                        geometry: point,
-                        attributes: attributes,
-                    });
-
-                    graphics.push(graphic);
-                }
-                // addEdits object tells applyEdits that you want to add the features
-                const addEdits = {
-                    addFeatures: graphics
-                };
-                // apply the edits to the layer
-                applyEditsToLayer(addEdits);
-            }
             addFeatures()
-
-            // fires when "Remove Features" button clicked
-            function removeFeatures() {
-                // query for the features you want to remove
-                monumentLayer.queryFeatures().then((results) => {
-                    // edits object tells apply edits that you want to delete the features
-                    const deleteEdits = {
-                        deleteFeatures: results.features
-                    };
-                    // apply edits to the layer
-                    applyEditsToLayer(deleteEdits);
-                });
-            }
-
-            function applyEditsToLayer(edits) {
-                monumentLayer
-                    .applyEdits(edits)
-                    .then((results) => {
-                    // if edits were removed
-                    if (results.deleteFeatureResults.length > 0) {
-                        console.log(
-                        results.deleteFeatureResults.length,
-                        "features have been removed"
-                        );
-                        addBtn.disabled = false;
-                        removeBtn.disabled = true;
-                    }
-                    // if features were added - call queryFeatures to return
-                    //    newly added graphics
-                    if (results.addFeatureResults.length > 0) {
-                        let objectIds = [];
-                        results.addFeatureResults.forEach((item) => {
-                        objectIds.push(item.objectId);
-                        });
-                        // query the newly added features from the layer
-                        monumentLayer
-                        .queryFeatures({
-                            objectIds: objectIds
-                        })
-                        .then((results) => {
-                            console.log(
-                            results.features.length,
-                            "features have been added."
-                            );
-                            addBtn.disabled = true;
-                            removeBtn.disabled = false;
-                        });
-                    }
-                    })
-                    .catch((error) => {
-                    console.error();
-                    });
-            }
 
             view.when(function () {
                 view.on("click", function (event) {
