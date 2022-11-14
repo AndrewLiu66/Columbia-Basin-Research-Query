@@ -272,8 +272,6 @@ const Layout1Sidenav = () => {
             <NavListBox>
                 <Sidenav />
                 <ButtonBox>
-                    <div id="add">add</div>
-                    <div id="remove">remove</div>
                     <OperateButton onClick={handleTransitToUrl}>Submit</OperateButton>
                     <OperateButton onClick={handleOpenUrl}>Get Url</OperateButton>
                     <OperateButton onClick={handleReset}>Reset</OperateButton>
