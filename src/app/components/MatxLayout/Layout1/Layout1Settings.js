@@ -15,6 +15,7 @@ const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
 
+
 const Layout1Settings = {
     leftSidebar: {
         show: true,
@@ -43,6 +44,22 @@ const Layout1Settings = {
         yearDisplay: allYears,
         // contain all query data under each list
         allQueryData: filteredNavigations,
+        // for location
+        locationBasin: Object.keys(allBasin),
+        locationType: Object.keys(allType),
+        locationYear: Object.keys(allYears),
+        // for basin
+        basinLocation: Object.keys(allLocation),
+        basinType: Object.keys(allType),
+        basinYear: Object.keys(allYears),
+        // for type
+        typeBasin: Object.keys(allBasin),
+        typeLocation: Object.keys(allLocation),
+        typeYear: Object.keys(allYears),
+        // for year
+        yearBasin: Object.keys(allBasin),
+        yearLocation: Object.keys(allLocation),
+        yearType: Object.keys(allType)
     },
     // basinSelected: {},
 }

@@ -7,9 +7,15 @@ import Graphic from '@arcgis/core/Graphic'
 import { styled, Box } from '@mui/system'
 import useSettings from 'app/hooks/useSettings'
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer'
-import LocationData from 'app/data/map_sacpas_sites.json'
 
 import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
+
+import BasinData from "app/data/basinLocations.json"
+import LocationData from 'app/data/map_sacpas_sites.json'
+import TypeData from 'app/data/map_sacpas_datatypes.json'
+import YearData from 'app/data/map_sacpas_yearFilter.json'
+
+import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 
 const StyledBox = styled(Box)(() => ({
     padding: 0,
@@ -122,10 +128,20 @@ const removeFeatures2 = () => {
         applyEditsToLayer2(deleteEdits)
     })
 }
+const getIntersection = (a, b) => {
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
+}
+
+const getIntersectionThree = (a, b, c) => {
+    var setB = new Set(b);
+    var setC = new Set(c);
+    var temp = [...new Set(a)].filter(x => setB.has(x));
+    return [...new Set(temp)].filter(x => setC.has(x));
+}
 
 const addFeatures = (locationDisplay) => {
     let data = Object.keys(locationDisplay)
-
     let graphics = []
     let graphic
     for (let i = 0; i < data.length; i++) {
@@ -134,6 +150,7 @@ const addFeatures = (locationDisplay) => {
             longitude: parseFloat(LocationData['SacPAS'][data[i]]['lon']),
             latitude: parseFloat(LocationData['SacPAS'][data[i]]['lat']),
         }
+
         const attributes = {
             Name: data[i],
             Description: data[i],
@@ -168,10 +185,11 @@ const addFeatures = (locationDisplay) => {
     }
     // console.log('addEdits', addEdits)
     applyEditsToLayer(addEdits)
-
-
+    // return addEdits
     return addEdits
+
 }
+
 const addFeatures2 = (locationSelected) => {
     let data = Object.keys(locationSelected)
     let graphics = []
@@ -221,11 +239,7 @@ const addFeatures2 = (locationSelected) => {
 const applyEditsToLayer = (edits) => {
     monumentLayer
         .applyEdits(edits)
-        .then((editsResult) => {
-            // console.log('edits', edits)
-            // if (editsResult.addFeatureResults.length > 0) {
-            //     return edits
-            // }
+            .then((editsResult) => {
         })
         .catch((error) => {
             console.log('error = ', error)
@@ -247,13 +261,59 @@ const applyEditsToLayer2 = (edits) => {
         })
 }
 
+const convertListToListOfObjWithName = (lst) => {
+    let res = []
+    lst.map(item => {
+        res.push({ name: item })
+        return res
+    })
+    return res
+}
+
+const allBasin = BasinData["basinList"]
+const allLocation = LocationData["SacPAS"]
+const allType = TypeData["SacPAS"]
+const allYears = YearData["SacPAS"]
 
 
 function Oceanmap() {
     const { settings, updateSettings } = useSettings()
     const mapDiv = useRef(null)
-    const { baseLayer, additionalLayer, locationDisplay, locationSelected } =
-        settings.layout1Settings.map
+    const { layout1Settings } = settings
+    const {
+        map: {
+            baseLayer,
+            additionalLayer,
+            // select
+            basinSelected,
+            locationSelected,
+            yearSelected,
+            dataTypeSelected,
+            allQueryData,
+            // ifReset
+            hydroDisplay,
+            locationDisplay,
+            dataTypeDisplay,
+            yearDisplay,
+            // for location
+            locationBasin,
+            locationType,
+            locationYear,
+            // for basin
+            basinLocation,
+            basinType,
+            basinYear,
+            // for type
+            typeBasin,
+            typeLocation,
+            typeYear,
+
+            yearBasin,
+            yearLocation,
+            yearType
+
+        }
+    } = layout1Settings
 
     const handleItemSelected = (querySelect, item) => {
         let temp = querySelect
@@ -265,18 +325,107 @@ function Oceanmap() {
         updateSettings({ layout1Settings: { map: { querySelect: temp } } })
     }
 
+    const updateQueryValue = (DisplayData, filteredData) => {
+        let temp1 = DisplayData
+        Object.keys(temp1).forEach(key => {
+            delete temp1[key];
+        })
+
+        filteredData.map(item => {
+            temp1[item] = item
+            return temp1
+        })
+        return temp1
+    }
+
+
     let view
 
     const [baseDots, setBaseDots] = useState({})
     const [alteredIds, setAlteredIds] = useState('')
 
+    const replaceReduxList = (old, newLst) => {
+        let temp = old
+        while (temp.length > 0) {
+            temp.pop();
+        }
+        for (let i = 0; i < newLst.length; i++)
+        {
+            temp.push(newLst[i])
+        }
+        return temp
+    }
+
+
+    const handleLocationClick = () => {
+        // if chose a new basin, all basin - location, type, year gets updated
+        let newlocationBasin = Object.keys(allBasin);
+        let newlocationType = Object.keys(allType);
+        let newlocationYear = Object.keys(allYears);
+
+        for (let i = 0; i < Object.keys(locationSelected).length; i++)
+        {
+            let item = Object.keys(locationSelected)[i]
+            newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"])
+            newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
+            newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
+        }
+        // console.log(56, locationBasin, newlocationBasin)
+        let updatedLocationBasin = replaceReduxList(locationBasin, newlocationBasin)
+        let updatedLocationType = replaceReduxList(locationType, newlocationType)
+        let updatedLocationYear = replaceReduxList(locationYear, newlocationYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    locationBasin: updatedLocationBasin,
+                    locationType: updatedLocationType,
+                    locationYear: updatedLocationYear,
+                }
+            }
+        })
+
+
+
+        let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
+        let newType = getIntersectionThree(newlocationType, basinType, yearType)
+        let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
+
+
+        // console.log("newLocation", newLocation)
+        let temp = allQueryData
+        temp[1].children = convertListToListOfObjWithName(newBasin)
+        temp[3].children = convertListToListOfObjWithName(newType)
+        temp[4].children = convertListToListOfObjWithName(newYear)
+
+
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    dataTypeDisplay: typeTemp,
+                    yearDisplay: yearTemp,
+                }
+            }
+        })
+    }
 
     // change the dark color dots on the map
     useEffect(() => {
         removeFeatures()
-        let addEdits = addFeatures(locationDisplay)
-        let addArray = addEdits.addFeatures
-        setBaseDots(addArray)
+        // console.log(234)
+        setTimeout(() => {
+            let addEdits = addFeatures(locationDisplay)
+            let addArray = addEdits.addFeatures
+            setBaseDots(addArray)
+        }, 100)
+
+
     }, [locationDisplay])
 
     // based on the location selected, change the filter
@@ -285,6 +434,7 @@ function Oceanmap() {
             if (baseDots[i].attributes.ObjectID === alteredIds.ObjectID) {
                 let selectedLocationName = baseDots[i].attributes.Name
                 handleItemSelected(locationSelected, selectedLocationName)
+                handleLocationClick()
             }
         }
     }, [alteredIds])
@@ -292,7 +442,12 @@ function Oceanmap() {
     // change the orange color dot on the map
     useEffect(() => {
         removeFeatures2()
-        addFeatures2(locationSelected)
+        setTimeout(() => {
+            addFeatures2(locationSelected)
+        }, 100)
+
+
+
     }, [locationSelected])
 
     // initialize the map
@@ -327,20 +482,6 @@ function Oceanmap() {
 
     }, [baseLayer])
 
-    //  useEffect(() => {
-    //     if (mapDiv.current) {
-    //     for (const add in additionalLayer) {
-    //         const layer_url =
-    //             AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
-    //                 add
-    //             ]
-    //         const layer = new FeatureLayer(layer_url)
-    //         view.map.add(layer)
-    //     }
-    //     }
-    //     // addFeatures3(additionalLayer)
-    // }, [additionalLayer])
-
     useEffect(() => {
         if (view) {
             view.on('click', (event) => {
@@ -350,7 +491,6 @@ function Oceanmap() {
                     include: monumentLayer,
                 }
 
-                console.log(123)
                 view.hitTest(event, opts).then((response) => {
                     // check if a feature is returned from the hurricanesLayer
                     if (response.results.length) {
@@ -361,7 +501,7 @@ function Oceanmap() {
                 })
             })
         }
-    })
+    }, [])
     return (
         <Fragment>
             <StyledBox className="mapDiv" ref={mapDiv}></StyledBox>

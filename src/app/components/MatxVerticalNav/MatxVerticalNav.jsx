@@ -113,21 +113,21 @@ const MatxVerticalNav = () => {
     const { layout1Settings } = settings
 
     // all corresponding list for each categories
-    const [basinLocation, setBasinLocation] = useState(Object.keys(allLocation))
-    const [basinType, setBasinType] = useState(Object.keys(allType))
-    const [basinYear, setBasinYear] = useState(Object.keys(allYears))
+    // const [basinLocation, setBasinLocation] = useState(Object.keys(allLocation))
+    // const [basinType, setBasinType] = useState(Object.keys(allType))
+    // const [basinYear, setBasinYear] = useState(Object.keys(allYears))
 
-    const [locationType, setLocationType] = useState(Object.keys(allType))
-    const [locationBasin, setLocationBasin] = useState(Object.keys(allBasin))
-    const [locationYear, setLocationYear] = useState(Object.keys(allYears))
+    // const [locationType, setLocationType] = useState(Object.keys(allType))
+    // const [locationBasin, setLocationBasin] = useState(Object.keys(allBasin))
+    // const [locationYear, setLocationYear] = useState(Object.keys(allYears))
 
-    const [typeBasin, setTypeBasin] = useState(Object.keys(allBasin))
-    const [typeLocation, setTypeLocation] = useState(Object.keys(allLocation))
-    const [typeYear, setTypeYear] = useState(Object.keys(allYears))
+    // const [typeBasin, setTypeBasin] = useState(Object.keys(allBasin))
+    // const [typeLocation, setTypeLocation] = useState(Object.keys(allLocation))
+    // const [typeYear, setTypeYear] = useState(Object.keys(allYears))
 
-    const [yearBasin, setYearBasin] = useState(Object.keys(allBasin))
-    const [yearLocation, setYearLocation] = useState(Object.keys(allLocation))
-    const [yearType, setYearType] = useState(Object.keys(allType))
+    // const [yearBasin, setYearBasin] = useState(Object.keys(allBasin))
+    // const [yearLocation, setYearLocation] = useState(Object.keys(allLocation))
+    // const [yearType, setYearType] = useState(Object.keys(allType))
 
 
     const {
@@ -144,9 +144,27 @@ const MatxVerticalNav = () => {
             hydroDisplay,
             locationDisplay,
             dataTypeDisplay,
-            yearDisplay
+            yearDisplay,
+            // for location
+            locationBasin,
+            locationType,
+            locationYear,
+            // for basin
+            basinLocation,
+            basinType,
+            basinYear,
+            // for type
+            typeBasin,
+            typeLocation,
+            typeYear,
+
+            yearBasin,
+            yearLocation,
+            yearType
+
         }
     } = layout1Settings
+
 
     const handleItemSelected = (querySelect, item) => {
         let temp = querySelect;
@@ -179,6 +197,18 @@ const MatxVerticalNav = () => {
         return temp1
     }
 
+    const replaceReduxList = (old, newLst) => {
+        let temp = old
+        while (temp.length > 0) {
+            temp.pop();
+        }
+        for (let i = 0; i < newLst.length; i++)
+        {
+            temp.push(newLst[i])
+        }
+        return temp
+    }
+
     const handleBasinClick = () => {
         // if chose a new basin, all basin - location, type, year gets updated
         let newBasinLocation = Object.keys(allLocation);
@@ -201,10 +231,24 @@ const MatxVerticalNav = () => {
         //     newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
         // })
 
-        // console.log("newBasinLocation", newBasinLocation)
-        setBasinLocation(newBasinLocation)
-        setBasinType(newBasinType)
-        setBasinYear(newBasinYear)
+        let updatedBasinLocation = replaceReduxList(basinLocation, newBasinLocation)
+        let updatedBasinType = replaceReduxList(basinType, newBasinType)
+        let updatedBasinYear = replaceReduxList(basinYear, newBasinYear)
+
+
+        // setBasinLocation(newBasinLocation)
+        // setBasinType(newBasinType)
+        // setBasinYear(newBasinYear)
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    basinLocation: updatedBasinLocation,
+                    basinType: updatedBasinType,
+                    basinYear: updatedBasinYear,
+                }
+            }
+        })
+
 
         let newLocation = getIntersectionThree(newBasinLocation, typeLocation, yearLocation)
         let newType = getIntersectionThree(newBasinType, locationType, yearType)
@@ -232,7 +276,6 @@ const MatxVerticalNav = () => {
         })
     }
 
-
     const handleLocationClick = () => {
         // if chose a new basin, all basin - location, type, year gets updated
         let newlocationBasin = Object.keys(allBasin);
@@ -242,22 +285,42 @@ const MatxVerticalNav = () => {
         for (let i = 0; i < Object.keys(locationSelected).length; i++)
         {
             let item = Object.keys(locationSelected)[i]
-            newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"] )
+            newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"])
             newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
             newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
         }
 
 
         // console.log("newBasinLocation", newBasinLocation)
-        setLocationBasin(newlocationBasin)
-        setLocationType(newlocationType)
-        setLocationYear(newlocationYear)
+        // setLocationBasin(newlocationBasin)
+        // setLocationType(newlocationType)
+        // setLocationYear(newlocationYear)
+
+
+        // console.log("locationBasin", locationBasin)
+        // console.log("locationBasin1", locationBasin1)
+
+        // testing
+        // console.log(56, locationBasin, newlocationBasin)
+        let updatedLocationBasin = replaceReduxList(locationBasin, newlocationBasin)
+        let updatedLocationType = replaceReduxList(locationType, newlocationType)
+        let updatedLocationYear = replaceReduxList(locationYear, newlocationYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    locationBasin: updatedLocationBasin,
+                    locationType: updatedLocationType,
+                    locationYear: updatedLocationYear,
+                }
+            }
+        })
 
         let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
 
-        // console.log("newLocation", newLocation)
+
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[3].children = convertListToListOfObjWithName(newType)
@@ -267,6 +330,7 @@ const MatxVerticalNav = () => {
         let basinTemp = updateQueryValue(hydroDisplay, newBasin)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
         let yearTemp = updateQueryValue(yearDisplay, newYear)
+
         updateSettings({
             layout1Settings: {
                 map: {
@@ -302,14 +366,30 @@ const MatxVerticalNav = () => {
         }
 
         // console.log("newBasinLocation", newBasinLocation)
-        setTypeBasin(newTypeBasin)
-        setTypeLocation(newTypeLocation)
-        setTypeYear(newTypeYear)
+        // setTypeBasin(newTypeBasin)
+        // setTypeLocation(newTypeLocation)
+        // setTypeYear(newTypeYear)
+
+
+        let updatedTypeBasin = replaceReduxList(typeBasin, newTypeBasin)
+        let updatedTypeLocation = replaceReduxList(typeLocation, newTypeLocation)
+        let updatedTypeYear = replaceReduxList(typeYear, newTypeYear)
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    typeBasin: updatedTypeBasin,
+                    typeLocation: updatedTypeLocation,
+                    typeYear: updatedTypeYear,
+                }
+            }
+        })
 
         let newBasin = getIntersectionThree(newTypeBasin, locationBasin, yearBasin)
         let newLocation = getIntersectionThree(newTypeLocation, basinLocation, yearLocation)
         let newYear = getIntersectionThree(newTypeYear, basinYear, locationYear)
 
+        // console.log("newLocation", newLocation)
         // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
@@ -319,6 +399,7 @@ const MatxVerticalNav = () => {
         let basinTemp = updateQueryValue(hydroDisplay, newBasin)
         let locationTemp = updateQueryValue(locationDisplay, newLocation)
         let yearTemp = updateQueryValue(yearDisplay, newYear)
+
 
         updateSettings({
             layout1Settings: {
@@ -359,9 +440,25 @@ const MatxVerticalNav = () => {
 
 
         // console.log("newBasinLocation", newBasinLocation)
-        setYearBasin(newYearBasin)
-        setYearLocation(newYearLocation)
-        setYearType(newYearType)
+        // setYearBasin(newYearBasin)
+        // setYearLocation(newYearLocation)
+        // setYearType(newYearType)
+        let updatedYearBasin = replaceReduxList(yearBasin, newYearBasin)
+        let updatedYearLocation = replaceReduxList(yearLocation, newYearLocation)
+        let updatedYearType = replaceReduxList(yearType, newYearType)
+
+
+        updateSettings({
+            layout1Settings: {
+                map: {
+                    yearBasin: updatedYearBasin,
+                    yearLocation: updatedYearLocation,
+                    yearType: updatedYearType,
+                }
+            }
+        })
+
+
 
         let newBasin = getIntersectionThree(newYearBasin, locationBasin, typeBasin)
         let newLocation = getIntersectionThree(newYearLocation, basinLocation, typeLocation)
@@ -378,6 +475,7 @@ const MatxVerticalNav = () => {
         let locationTemp = updateQueryValue(locationDisplay, newLocation)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
 
+        console.log("bb newLocation ", newLocation)
         updateSettings({
             layout1Settings: {
                 map: {
@@ -389,7 +487,6 @@ const MatxVerticalNav = () => {
             }
         })
     }
-
 
     const handleItemClick = (item, index) => {
         // deal with selection logic

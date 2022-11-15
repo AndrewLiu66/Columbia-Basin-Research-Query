@@ -137,6 +137,31 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         }
     }, [pathname, calcaulateHeight])
 
+    const returnTwoListIntersectionCount = () => {
+        let type = item['name']
+
+        switch (type) {
+            case "Hydrologic Area":
+                if(Object.keys(basinSelected).length === 0) return 0
+                return Object.keys(basinSelected).length
+            case "Location":
+                if(Object.keys(locationSelected).length === 0) return 0
+                return Object.keys(locationSelected).length
+            case "Data Type":
+                if(Object.keys(dataTypeSelected).length === 0) return 0
+                return Object.keys(dataTypeSelected).length
+            case "Year":
+                if(Object.keys(yearSelected).length === 0) return 0
+                return Object.keys(yearSelected).length
+            case "Base Layer":
+                return 1
+            case "Additional Base Layer":
+                if(Object.keys(additionalLayer).length === 0) return 0
+                return Object.keys(additionalLayer).length
+        }
+    }
+
+
     return (
         <NavExpandRoot>
             <BaseButton
@@ -151,7 +176,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
                     <MenuIcon src={item.icon} />
                     {iconText && <BulletIcon />}
                     <ItemText className="sidenavHoverShow">
-                        {name} ({item.children.length})
+                        {name} ({returnTwoListIntersectionCount()}/{item.children.length})
                     </ItemText>
                 </Box>
 
