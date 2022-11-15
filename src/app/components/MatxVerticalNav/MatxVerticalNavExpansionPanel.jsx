@@ -4,6 +4,7 @@ import { styled, Box } from '@mui/system'
 import { useLocation } from 'react-router-dom'
 import { Icon, ButtonBase } from '@mui/material'
 import React, { useState, useRef, useCallback } from 'react'
+import useSettings from 'app/hooks/useSettings'
 
 const NavExpandRoot = styled('div')(({ theme }) => ({
     '& .expandIcon': {
@@ -79,10 +80,9 @@ const ItemText = styled('span')(() => ({
     verticalAlign: 'middle',
 }))
 
-
 const MenuIcon = styled('img')(() => ({
     width: '20px',
-    marginLeft: '20px'
+    marginLeft: '20px',
 }))
 const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     const [collapsed, setCollapsed] = useState(true)
@@ -90,6 +90,20 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     const componentHeight = useRef(0)
     const { pathname } = useLocation()
     const { name, iconText } = item
+    const { settings, updateSettings } = useSettings()
+    const { layout1Settings } = settings
+
+    const {
+        map: {
+            additionalLayer,
+            // select
+            basinSelected,
+            locationSelected,
+            yearSelected,
+            dataTypeSelected,
+            allQueryData,
+        },
+    } = layout1Settings
 
     const handleClick = () => {
         componentHeight.current = 0
@@ -97,19 +111,15 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         setCollapsed(!collapsed)
     }
     const calcaulateHeight = useCallback((node) => {
-        if (node.name !== 'child')
-        {
-            for (let child of node.children)
-            {
+        if (node.name !== 'child') {
+            for (let child of node.children) {
                 calcaulateHeight(child)
             }
         }
 
-        if (node.name === 'child')
-        {
+        if (node.name === 'child') {
             componentHeight.current += node.scrollHeight
-        }
-        else componentHeight.current += 44 //here 44 is node height
+        } else componentHeight.current += 44 //here 44 is node height
         return
     }, [])
 
@@ -119,11 +129,9 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         calcaulateHeight(elementRef.current)
 
         // OPEN DROPDOWN IF CHILD IS ACTIVE
-        for (let child of elementRef.current.children)
-        {
-            const link = child.getElementsByTagName('a')[0];
-            if (link && link.getAttribute('href') === pathname)
-            {
+        for (let child of elementRef.current.children) {
+            const link = child.getElementsByTagName('a')[0]
+            if (link && link.getAttribute('href') === pathname) {
                 setCollapsed(false)
             }
         }
@@ -142,7 +150,9 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
                 <Box display="flex" alignItems="center">
                     <MenuIcon src={item.icon} />
                     {iconText && <BulletIcon />}
-                    <ItemText className="sidenavHoverShow">{name} ({item.children.length})</ItemText>
+                    <ItemText className="sidenavHoverShow">
+                        {name} ({item.children.length})
+                    </ItemText>
                 </Box>
 
                 <div

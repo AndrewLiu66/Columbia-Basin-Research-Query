@@ -1,5 +1,5 @@
 import { styled, Box } from '@mui/system'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import useSettings from 'app/hooks/useSettings'
 import { Paragraph, Span } from '../Typography'
 import { ButtonBase } from '@mui/material'
@@ -239,15 +239,6 @@ const MatxVerticalNav = () => {
         let newlocationType = Object.keys(allType);
         let newlocationYear = Object.keys(allYears);
 
-        // console.log("newBasinLocation", newBasinLocation)
-
-        // console.log("basinSelected", basinSelected)
-        // Object.keys(locationSelected).map(item => {
-        //     newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"] )
-        //     newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
-        //     newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
-        // })
-
         for (let i = 0; i < Object.keys(locationSelected).length; i++)
         {
             let item = Object.keys(locationSelected)[i]
@@ -429,6 +420,9 @@ const MatxVerticalNav = () => {
         // deal with filter logic
     }
 
+    // useEffect(() => {
+    //     handleLocationClick()
+    // }, [locationSelected])
 
     const renderLevels = (data) => {
         return data.map((item, index) => {

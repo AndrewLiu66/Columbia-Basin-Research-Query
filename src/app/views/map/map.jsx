@@ -104,6 +104,8 @@ let monumentLayer2 = new FeatureLayer({
     },
 })
 
+// let layer = new FeatureLayer({})
+
 const removeFeatures = () => {
     monumentLayer.queryFeatures().then((results) => {
         const deleteEdits = {
@@ -167,11 +169,11 @@ const addFeatures = (locationDisplay) => {
     // console.log('addEdits', addEdits)
     applyEditsToLayer(addEdits)
 
+
     return addEdits
 }
 const addFeatures2 = (locationSelected) => {
     let data = Object.keys(locationSelected)
-
     let graphics = []
     let graphic
     for (let i = 0; i < data.length; i++) {
@@ -245,6 +247,8 @@ const applyEditsToLayer2 = (edits) => {
         })
 }
 
+
+
 function Oceanmap() {
     const { settings, updateSettings } = useSettings()
     const mapDiv = useRef(null)
@@ -266,7 +270,6 @@ function Oceanmap() {
     const [baseDots, setBaseDots] = useState({})
     const [alteredIds, setAlteredIds] = useState('')
 
-    console.log('alteredIds', alteredIds)
 
     // change the dark color dots on the map
     useEffect(() => {
@@ -278,8 +281,6 @@ function Oceanmap() {
 
     // based on the location selected, change the filter
     useEffect(() => {
-        console.log(123, baseDots, alteredIds)
-
         for (let i = 0; i < baseDots.length; i++) {
             if (baseDots[i].attributes.ObjectID === alteredIds.ObjectID) {
                 let selectedLocationName = baseDots[i].attributes.Name
@@ -304,7 +305,6 @@ function Oceanmap() {
                 },
                 basemap: baseLayer,
             })
-
             view = new MapView({
                 container: mapDiv.current,
                 map: twebmap,
@@ -324,37 +324,39 @@ function Oceanmap() {
             twebmap.add(monumentLayer)
             twebmap.add(monumentLayer2)
         }
-    }, [])
+
+    }, [baseLayer])
+
+    //  useEffect(() => {
+    //     if (mapDiv.current) {
+    //     for (const add in additionalLayer) {
+    //         const layer_url =
+    //             AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
+    //                 add
+    //             ]
+    //         const layer = new FeatureLayer(layer_url)
+    //         view.map.add(layer)
+    //     }
+    //     }
+    //     // addFeatures3(additionalLayer)
+    // }, [additionalLayer])
 
     useEffect(() => {
         if (view) {
             view.on('click', (event) => {
                 // only include graphics from hurricanesLayer in the hitTest
+
                 const opts = {
                     include: monumentLayer,
                 }
+
+                console.log(123)
                 view.hitTest(event, opts).then((response) => {
                     // check if a feature is returned from the hurricanesLayer
                     if (response.results.length) {
                         const graphic = response.results[0].graphic
                         const attributes = graphic.attributes
-                        // console.log('graphic', graphic)
-                        console.log('attributes', attributes)
-
-                        // console.log('opt', opts)
                         setAlteredIds(attributes)
-
-                        // let addFeatureList = monuLayer1.addFeatures
-                        // console.log(88, temp)
-                        // for (let i = 0; i < addFeatureList.length; i++) {
-                        //     let element = addFeatureList[i]
-                        //     if (
-                        //         element.attributes.ObjectID ==
-                        //         attributes.ObjectID
-                        //     ) {
-                        //         console.log('yes')
-                        //     }
-                        // }
                     }
                 })
             })
