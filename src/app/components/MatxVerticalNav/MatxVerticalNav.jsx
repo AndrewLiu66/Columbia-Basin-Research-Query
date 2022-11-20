@@ -349,14 +349,6 @@ const MatxVerticalNav = () => {
         let newTypeLocation = Object.keys(allLocation);
         let newTypeYear = Object.keys(allYears);
 
-        // console.log("newBasinLocation", newBasinLocation)
-
-        // console.log("basinSelected", basinSelected)
-        // Object.keys(dataTypeSelected).map(item => {
-        //     newTypeBasin = getIntersection(newTypeBasin, typeFilter["SacPAS"][item]["Hydrologic Area"] )
-        //     newTypeLocation = getIntersection(newTypeLocation, typeFilter["SacPAS"][item]["Locations"])
-        //     newTypeYear = getIntersection(newTypeYear, typeFilter["SacPAS"][item]["Year"])
-        // })
         for (let i = 0; i < Object.keys(dataTypeSelected).length; i++)
         {
             let item = Object.keys(dataTypeSelected)[i]
@@ -517,9 +509,6 @@ const MatxVerticalNav = () => {
         // deal with filter logic
     }
 
-    // useEffect(() => {
-    //     handleLocationClick()
-    // }, [locationSelected])
 
     const renderLevels = (data) => {
         return data.map((item, index) => {

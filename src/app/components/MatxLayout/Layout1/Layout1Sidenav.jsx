@@ -33,8 +33,11 @@ const SidebarNavRoot = styled(Box)(({ theme, width, primaryBg, bgImgURL }) => ({
     position: 'fixed',
     top: 0,
     left: 0,
+    width: '480px',
+    // width: '750px',
+    // width: '100%',
     height: '100vh',
-    width: width,
+    // width: width,
     boxShadow: themeShadows[8],
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top',
@@ -45,22 +48,22 @@ const SidebarNavRoot = styled(Box)(({ theme, width, primaryBg, bgImgURL }) => ({
     transition: 'all 250ms ease-in-out',
     backgroundImage: `linear-gradient(to bottom, rgba(${primaryBg}, 0.96), rgba(${primaryBg}, 0.96)), url(${bgImgURL})`,
     background: 'white',
-    '&:hover': {
-        width: sideNavWidth,
-        '& .sidenavHoverShow': {
-            display: 'block',
-        },
-        '& .compactNavItem': {
-            width: '100%',
-            maxWidth: '100%',
-            '& .nav-bullet': {
-                display: 'block',
-            },
-            '& .nav-bullet-text': {
-                display: 'none',
-            },
-        },
-    },
+    // '&:hover': {
+    //     width: sideNavWidth,
+    //     '& .sidenavHoverShow': {
+    //         display: 'block',
+    //     },
+    //     '& .compactNavItem': {
+    //         width: '100%',
+    //         maxWidth: '100%',
+    //         '& .nav-bullet': {
+    //             display: 'block',
+    //         },
+    //         '& .nav-bullet-text': {
+    //             display: 'none',
+    //         },
+    //     },
+    // },
 }))
 
 const NavListBox = styled(Box)(() => ({
@@ -267,7 +270,8 @@ const Layout1Sidenav = () => {
         <SidebarNavRoot
             bgImgURL={bgImgURL}
             primaryBg={primaryRGB}
-            width={getSidenavWidth()}
+
+            // width={getSidenavWidth()}
         >
             <NavListBox>
                 <Sidenav />
