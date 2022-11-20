@@ -7,15 +7,14 @@ import Graphic from '@arcgis/core/Graphic'
 import { styled, Box } from '@mui/system'
 import useSettings from 'app/hooks/useSettings'
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer'
-
 import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
-
 import BasinData from "app/data/basinLocations.json"
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
-
 import locationFilter from 'app/data/map_sacpas_locationFilter.json'
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import Expand from "@arcgis/core/widgets/Expand";
 
 const StyledBox = styled(Box)(() => ({
     padding: 0,
@@ -63,9 +62,6 @@ let monumentLayer = new FeatureLayer({
             },
         },
     },
-    popupTemplate: {
-        title: '{Name}',
-    },
 })
 
 let monumentLayer2 = new FeatureLayer({
@@ -104,9 +100,6 @@ let monumentLayer2 = new FeatureLayer({
                 width: 2,
             },
         },
-    },
-    popupTemplate: {
-        title: '{Name}',
     },
 })
 
@@ -167,16 +160,10 @@ const addFeatures = (locationDisplay) => {
             },
         }
 
-        const popupTemplate = {
-            title: '{Name}',
-            content: '<div>I am a Hydrophone</div>',
-        }
-
         graphic = new Graphic({
             geometry: point,
             attributes: attributes,
             symbol: simpleMarkerSymbol,
-            popupTemplate: popupTemplate,
         })
         graphics.push(graphic)
     }
@@ -216,16 +203,10 @@ const addFeatures2 = (locationSelected) => {
             },
         }
 
-        const popupTemplate = {
-            title: '{Name}',
-            content: '<div>I am a Hydrophone</div>',
-        }
-
         graphic = new Graphic({
             geometry: point,
             attributes: attributes,
             symbol: simpleMarkerSymbol,
-            popupTemplate: popupTemplate,
         })
         graphics.push(graphic)
     }
@@ -445,9 +426,6 @@ function Oceanmap() {
         setTimeout(() => {
             addFeatures2(locationSelected)
         }, 100)
-
-
-
     }, [locationSelected])
 
     // initialize the map
@@ -476,10 +454,22 @@ function Oceanmap() {
                 view.map.add(layer)
             }
 
+            let basemapGallery = new BasemapGallery({
+                view: view,
+                // source: [Basemap.fromId("arcgis-oceans"), Basemap.fromId("national-geographic"), Basemap.fromId("arcgis-terrain"), Basemap.fromId("arcgis-charted-territory"), Basemap.fromId("arcgis-community")]
+            });
+
+            const bgExpand = new Expand({
+                view,
+                content: basemapGallery,
+                expandIconClass: "esri-icon-basemap"
+            });
+
+            view.ui.add(bgExpand, "top-right");
+
             twebmap.add(monumentLayer)
             twebmap.add(monumentLayer2)
         }
-
     }, [baseLayer])
 
     useEffect(() => {
