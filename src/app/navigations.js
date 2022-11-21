@@ -30,20 +30,20 @@ export const navigations = [
         children: sidebarData["SacPAS"]["Years"]
     },
 
-    {
-        label: 'Map Options',
-        type: 'label',
-    },
-    {
-        name: 'Base Layer',
-        icon: '/assets/images/menuIcon/layers.png',
-        children: BaseLayer["SacPAS"]["baseLayer"]
-    },
-    {
-        name: 'Additional Base Layer',
-        icon: '/assets/images/menuIcon/plus.png',
-        children: AdditionalLayer["SacPAS"]["additionalLayer"]
-    }
+    // {
+    //     label: 'Map Options',
+    //     type: 'label',
+    // },
+    // {
+    //     name: 'Base Layer',
+    //     icon: '/assets/images/menuIcon/layers.png',
+    //     children: BaseLayer["SacPAS"]["baseLayer"]
+    // },
+    // {
+    //     name: 'Additional Base Layer',
+    //     icon: '/assets/images/menuIcon/plus.png',
+    //     children: AdditionalLayer["SacPAS"]["additionalLayer"]
+    // }
 ]
 
 export const getfilteredNavigations = (navList = [], role) => {

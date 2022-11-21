@@ -4,7 +4,6 @@ import { Box, styled, useTheme } from '@mui/system'
 import Sidenav from '../../Sidenav/Sidenav'
 import useSettings from 'app/hooks/useSettings'
 import { themeShadows } from 'app/components/MatxTheme/themeColors'
-import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant'
 import { navigations, getfilteredNavigations } from 'app/navigations'
 import BasinData from "app/data/basinLocations.json"
 import DataTypeMap from "app/data/map_sacpas_datatypes.json"
@@ -34,10 +33,7 @@ const SidebarNavRoot = styled(Box)(({ theme, width, primaryBg, bgImgURL }) => ({
     top: 0,
     left: 0,
     width: '480px',
-    // width: '750px',
-    // width: '100%',
     height: '100vh',
-    // width: width,
     boxShadow: themeShadows[8],
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top',
@@ -48,26 +44,9 @@ const SidebarNavRoot = styled(Box)(({ theme, width, primaryBg, bgImgURL }) => ({
     transition: 'all 250ms ease-in-out',
     backgroundImage: `linear-gradient(to bottom, rgba(${primaryBg}, 0.96), rgba(${primaryBg}, 0.96)), url(${bgImgURL})`,
     background: 'white',
-    // '&:hover': {
-    //     width: sideNavWidth,
-    //     '& .sidenavHoverShow': {
-    //         display: 'block',
-    //     },
-    //     '& .compactNavItem': {
-    //         width: '100%',
-    //         maxWidth: '100%',
-    //         '& .nav-bullet': {
-    //             display: 'block',
-    //         },
-    //         '& .nav-bullet-text': {
-    //             display: 'none',
-    //         },
-    //     },
-    // },
 }))
 
 const NavListBox = styled(Box)(() => ({
-    // background:'green',
     height: '90%',
     display: 'flex',
     flexDirection: 'column',
@@ -75,7 +54,6 @@ const NavListBox = styled(Box)(() => ({
 
 const ButtonBox = styled(Box)(() => ({
     width: '300px',
-    // background: 'green',
     position: 'absolute',
     marginLeft: '-150px',
     left: '50%',
@@ -104,8 +82,6 @@ const StyledCopyButton = styled(Button)(() => ({
         background: '#1D3127',
         color: '#FFFFFF',
     },
-    // textAlign: 'center',
-    // lineHeight: '35px',
 }))
 
 const baseURL = "https://www.cbr.washington.edu/sacramento/data/php/rpt/mg.php?mgconfig=river&outputFormat=plotImage&tempUnit=F&startdate=1/1&enddate=12/31&avgyear=0&consolidate=1&grid=1&y1min=&y1max=&y2min=&y2max=&size=medium"
@@ -152,17 +128,7 @@ const Layout1Sidenav = () => {
     const { settings, updateSettings } = useSettings()
     const leftSidebar = settings.layout1Settings.leftSidebar
     const { basinSelected, locationSelected, dataTypeSelected, yearSelected, hydroDisplay, locationDisplay, dataTypeDisplay, yearDisplay} = settings.layout1Settings.map
-    const { mode, bgImgURL } = leftSidebar
-    const getSidenavWidth = () => {
-        switch (mode)
-        {
-            case 'compact':
-                return sidenavCompactWidth
-            default:
-                return sideNavWidth
-        }
-    }
-
+    const { bgImgURL } = leftSidebar
     const primaryRGB = convertHexToRGB(theme.palette.primary.main)
 
     const [open, setOpen] = React.useState(false);

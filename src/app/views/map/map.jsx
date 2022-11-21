@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, Fragment, useState } from 'react'
 import MapView from '@arcgis/core/views/MapView'
-
 import WebMap from '@arcgis/core/WebMap'
 import esriConfig from '@arcgis/core/config'
 import Graphic from '@arcgis/core/Graphic'
@@ -22,6 +21,16 @@ const StyledBox = styled(Box)(() => ({
     height: '100%',
     width: '100%',
 }))
+
+const LocationNameBox = styled("div")(() => ({
+    height: "50px",
+    background: "#FFFFFF",
+    color: "#565957",
+    fontSize: "14px",
+    padding: "15px",
+    visibility: "hidden"
+}))
+
 
 esriConfig.apiKey =
     'AAPK460c081ffc584c5090c2b383ede3366b1JA6FLMBYno7qMVVlHo12K6EOAtFnfYV_6UQH2_bUGzYM0qQIBxyfrSfrVF8mJM8'
@@ -252,7 +261,6 @@ const convertListToListOfObjWithName = (lst) => {
 }
 
 const allBasin = BasinData["basinList"]
-const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
@@ -266,10 +274,7 @@ function Oceanmap() {
             baseLayer,
             additionalLayer,
             // select
-            basinSelected,
             locationSelected,
-            yearSelected,
-            dataTypeSelected,
             allQueryData,
             // ifReset
             hydroDisplay,
@@ -281,18 +286,13 @@ function Oceanmap() {
             locationType,
             locationYear,
             // for basin
-            basinLocation,
             basinType,
             basinYear,
             // for type
             typeBasin,
-            typeLocation,
             typeYear,
-
             yearBasin,
-            yearLocation,
             yearType
-
         }
     } = layout1Settings
 
@@ -319,11 +319,13 @@ function Oceanmap() {
         return temp1
     }
 
-
     let view
+
 
     const [baseDots, setBaseDots] = useState({})
     const [alteredIds, setAlteredIds] = useState('')
+    const [displayNameId, setDisplayNameId] = useState('')
+
 
     const replaceReduxList = (old, newLst) => {
         let temp = old
@@ -365,9 +367,6 @@ function Oceanmap() {
                 }
             }
         })
-
-
-
         let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
@@ -399,7 +398,7 @@ function Oceanmap() {
     // change the dark color dots on the map
     useEffect(() => {
         removeFeatures()
-        // console.log(234)
+
         setTimeout(() => {
             let addEdits = addFeatures(locationDisplay)
             let addArray = addEdits.addFeatures
@@ -470,13 +469,113 @@ function Oceanmap() {
             twebmap.add(monumentLayer)
             twebmap.add(monumentLayer2)
         }
-    }, [baseLayer])
+    }, [])
+
+    useEffect(() => {
+        if (view)
+        {
+            view.ui.add("name", "bottom-left");
+            view
+            .when()
+            .then(() =>
+            {
+                return monumentLayer.when();
+            })
+            .then((layer) =>
+            {
+                const renderer = layer.renderer.clone();
+                renderer.symbol.width = 4;
+                renderer.symbol.color = [128, 128, 128, 0.8];
+                layer.renderer = renderer;
+                return view.whenLayerView(layer);
+            })
+            .then((layerView) =>
+            {
+                    view.on("pointer-move", eventHandler);
+                    let lock = true;
+                    function eventHandler(event)
+                    {
+
+                        if (!lock) return;
+
+                        const opts = {
+                            include: [monumentLayer]
+                        };
+
+                        view.hitTest(event, opts).then(getGraphics).catch(() => {
+                            // console.log("something happen")
+                        }).catch(() => {
+                            // console.log("something happen3")
+                        });
+
+                        lock = false
+
+                        setTimeout(function () {
+                            lock = true;
+                        }, 180)
+                    }
+
+                    let highlight, currentId;
+
+                    function getGraphics(response)
+                    {
+                        if (response.results.length) {
+                            const graphic = response.results[0].graphic;
+                            const attributes = graphic.attributes;
+                            const id = attributes.ObjectID;
+                            if (
+                                highlight &&
+                                (currentId !== id)
+                            ) {
+                                highlight.remove();
+                                highlight = null;
+                                return;
+                            }
+                            if (highlight) {
+                                return;
+                            }
+                            document.getElementById("name").style.visibility = "visible";
+                            setDisplayNameId(id)
+
+                            const query = layerView.createQuery();
+                            query.where = "ObjectID = " + id;
+                            layerView.queryObjectIds(query).then((ids) =>
+                            {
+                                if (highlight) {
+                                    highlight.remove();
+                                }
+                                highlight = layerView.highlight(ids);
+                                currentId = id;
+                            }).catch(() => {
+                                // console.log("something happen2")
+                            });
+                        } else {
+                            if (highlight) {
+                                highlight.remove();
+                                highlight = null;
+                            }
+                            document.getElementById("name").style.visibility = "hidden";
+                        }
+                    }
+            }).catch(() => {
+                // console.log("something happen3")
+            });
+        }
+    })
+
+    useEffect(() => {
+        for (let i = 0; i < baseDots.length; i++) {
+            if (baseDots[i].attributes.ObjectID === displayNameId) {
+                let selectedLocationName = baseDots[i].attributes.Name
+                document.getElementById("name").innerHTML = selectedLocationName;
+            }
+        }
+    }, [displayNameId])
 
     useEffect(() => {
         if (view) {
             view.on('click', (event) => {
                 // only include graphics from hurricanesLayer in the hitTest
-
                 const opts = {
                     include: monumentLayer,
                 }
@@ -488,13 +587,19 @@ function Oceanmap() {
                         const attributes = graphic.attributes
                         setAlteredIds(attributes)
                     }
+                }).catch(() => {
+                    // console.log("something happen3")
                 })
             })
         }
-    }, [])
+    })
+
     return (
         <Fragment>
             <StyledBox className="mapDiv" ref={mapDiv}></StyledBox>
+            <div id="info">
+                <LocationNameBox id="name"></LocationNameBox> <br />
+            </div>
         </Fragment>
     )
 }

@@ -16,7 +16,6 @@ const NavExpandRoot = styled('div')(({ theme }) => ({
         transform: 'rotate(0deg)',
     },
     '& .expansion-panel': {
-        // background: 'green',
         marginBottom: '10px',
         padding: '3px 0',
         overflow: 'hidden',
@@ -47,9 +46,7 @@ const BaseButton = styled(ButtonBase)(({ theme }) => ({
     borderRadius: '4px',
     marginBottom: '8px !important',
     display: 'flex',
-    // background: 'red',
     justifyContent: 'space-between !important',
-    // color: theme.palette.text.primary,
     '&:hover': {
         background: 'rgba(255, 255, 255, 0.08)',
     },
@@ -70,7 +67,6 @@ const BulletIcon = styled('div')(({ theme }) => ({
     marginLeft: '20px',
     marginRight: '8px',
     borderRadius: '300px !important',
-    // background: theme.palette.primary.contrastText,
     background: theme.palette.text.primary,
 }))
 
@@ -90,7 +86,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     const componentHeight = useRef(0)
     const { pathname } = useLocation()
     const { name, iconText } = item
-    const { settings, updateSettings } = useSettings()
+    const { settings } = useSettings()
     const { layout1Settings } = settings
 
     const {
@@ -101,7 +97,6 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             locationSelected,
             yearSelected,
             dataTypeSelected,
-            allQueryData,
         },
     } = layout1Settings
 
@@ -125,9 +120,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
 
     useEffect(() => {
         if (!elementRef) return
-
         calcaulateHeight(elementRef.current)
-
         // OPEN DROPDOWN IF CHILD IS ACTIVE
         for (let child of elementRef.current.children) {
             const link = child.getElementsByTagName('a')[0]
@@ -153,11 +146,11 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             case "Year":
                 if(Object.keys(yearSelected).length === 0) return 0
                 return Object.keys(yearSelected).length
-            case "Base Layer":
-                return 1
             case "Additional Base Layer":
                 if(Object.keys(additionalLayer).length === 0) return 0
                 return Object.keys(additionalLayer).length
+            default:
+                return 1
         }
     }
 

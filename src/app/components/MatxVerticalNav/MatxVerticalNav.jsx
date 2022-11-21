@@ -1,5 +1,5 @@
 import { styled, Box } from '@mui/system'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import useSettings from 'app/hooks/useSettings'
 import { Paragraph, Span } from '../Typography'
 import { ButtonBase } from '@mui/material'
@@ -467,7 +467,6 @@ const MatxVerticalNav = () => {
         let locationTemp = updateQueryValue(locationDisplay, newLocation)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
 
-        console.log("bb newLocation ", newLocation)
         updateSettings({
             layout1Settings: {
                 map: {
