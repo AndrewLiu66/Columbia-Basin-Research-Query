@@ -14,14 +14,13 @@ const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
-
-
 const Layout1Settings = {
     leftSidebar: {
         show: true,
         mode: 'full',
         theme: 'slateDark1',
         bgImgURL: '/assets/images/sidebar/sidebar-bg-dark.jpg',
+        resetStatus: false,
     },
     topbar: {
         show: true,

@@ -1,8 +1,9 @@
 // import sidebarData from 'app/MockData/map_sacpas_lexicon.json'
 import sidebarData from 'app/data/map_sacpas_lexicon.json'
 import BasinLocation from 'app/data/basinLocations.json'
-import BaseLayer from 'app/data/baseLayer.json'
-import AdditionalLayer from 'app/data/additionalLayer.json'
+// import BaseLayer from 'app/data/baseLayer.json'
+// import AdditionalLayer from 'app/data/additionalLayer.json'
+
 
 export const navigations = [
     {

@@ -8,7 +8,7 @@ import { navigations, getfilteredNavigations } from 'app/navigations'
 import BasinData from "app/data/basinLocations.json"
 import DataTypeMap from "app/data/map_sacpas_datatypes.json"
 import LocationMap from "app/data/map_sacpas_sites.json"
-
+import CloseIcon from '@mui/icons-material/Close';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -63,7 +63,7 @@ const ButtonBox = styled(Box)(() => ({
     justifyContent: 'center'
 }))
 
-const OperateButton = styled(Box)(() => ({
+const OperateButton = styled(Button)(() => ({
     background: '#837E7E',
     width: '100px',
     height: '40px',
@@ -133,7 +133,6 @@ const Layout1Sidenav = () => {
 
     const [open, setOpen] = React.useState(false);
 
-
     const handleClose = () => {
         setOpen(false);
     };
@@ -167,8 +166,12 @@ const Layout1Sidenav = () => {
         let emptyLocationDisplay = replaceObjWithOriginal(locationDisplay, allLocation)
         let emptyTypeDisplay = replaceObjWithOriginal(dataTypeDisplay, allType)
         let emptyYearDisplay = replaceObjWithOriginal(yearDisplay, allYears)
+
         updateSettings({
             layout1Settings: {
+                leftSidebar: {
+                    resetStatus: true,
+                },
                 map: {
                     allQueryData: filteredNavigations,
 
@@ -177,7 +180,6 @@ const Layout1Sidenav = () => {
                     dataTypeSelected: emptyType,
                     yearSelected: emptyYear,
 
-                    // ifReset: true,
                     basinDisplay: emptyBasinDisplay,
                     locationDisplay: emptyLocationDisplay,
                     dataTypeDisplay: emptyTypeDisplay,
@@ -242,9 +244,9 @@ const Layout1Sidenav = () => {
             <NavListBox>
                 <Sidenav />
                 <ButtonBox>
-                    <OperateButton onClick={handleTransitToUrl}>Submit</OperateButton>
-                    <OperateButton onClick={handleOpenUrl}>Get Url</OperateButton>
-                    <OperateButton onClick={handleReset}>Reset</OperateButton>
+                    <Button variant="contained" onClick={handleTransitToUrl} style={{ background: '#837E7E'}}>Submit</Button>
+                    <Button variant="contained" onClick={handleOpenUrl} style={{ background: '#837E7E', margin: '0 30px'}}>Get Url</Button>
+                    <Button variant="contained" onClick={handleReset} style={{ background: '#837E7E'}}>Reset</Button>
                 </ButtonBox>
             </NavListBox>
 
@@ -258,6 +260,7 @@ const Layout1Sidenav = () => {
                 aria-describedby="alert-dialog-description"
 
             >
+                <CloseIcon onClick={handleClose} style={{ position: 'absolute', right: '16px', top: '20px', cursor: 'pointer'}}></CloseIcon>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description" style={{height: "100px"}}>
                         {url}

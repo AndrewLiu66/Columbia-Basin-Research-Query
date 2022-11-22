@@ -86,10 +86,13 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     const componentHeight = useRef(0)
     const { pathname } = useLocation()
     const { name, iconText } = item
-    const { settings } = useSettings()
+    const { settings, updateSettings } = useSettings()
     const { layout1Settings } = settings
 
     const {
+        leftSidebar: {
+            resetStatus
+        },
         map: {
             additionalLayer,
             // select
@@ -117,6 +120,11 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         } else componentHeight.current += 44 //here 44 is node height
         return
     }, [])
+
+    useEffect(() => {
+        setCollapsed(true)
+        updateSettings({ layout1Settings: { leftSidebar: { resetStatus: false}} })
+    }, [resetStatus])
 
     useEffect(() => {
         if (!elementRef) return

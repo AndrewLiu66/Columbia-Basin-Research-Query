@@ -353,7 +353,7 @@ function Oceanmap() {
             newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
             newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
         }
-        // console.log(56, locationBasin, newlocationBasin)
+
         let updatedLocationBasin = replaceReduxList(locationBasin, newlocationBasin)
         let updatedLocationType = replaceReduxList(locationType, newlocationType)
         let updatedLocationYear = replaceReduxList(locationYear, newlocationYear)
@@ -370,7 +370,7 @@ function Oceanmap() {
         let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
-
+        newYear = newYear.sort((a, b) => {return b - a});
 
         // console.log("newLocation", newLocation)
         let temp = allQueryData

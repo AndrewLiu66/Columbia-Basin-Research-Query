@@ -7,17 +7,18 @@ import MatxVerticalNavExpansionPanel from './MatxVerticalNavExpansionPanel'
 import AdditionalLayerSources from "app/data/additionalLayerSources.json"
 import BaseLayer from "app/data/baseLayer.json"
 import BasinData from "app/data/basinLocations.json"
-
 import { Icon } from '@mui/material'
-
 import yearFilter from 'app/data/map_sacpas_yearFilter.json'
 import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 import basinFilter from 'app/data/map_sacpas_basinFilter.json'
 import typeFilter from 'app/data/map_sacpas_typeFilter.json'
-
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
 
 const allBasin = BasinData["basinList"]
 const allLocation = LocationData["SacPAS"]
@@ -25,12 +26,16 @@ const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
-    fontSize: '12px',
+    // background: 'green',
+    fontSize: '13px',
     marginTop: '20px',
     marginLeft: '15px',
     marginBottom: '10px',
     textTransform: 'uppercase',
-    display: mode === 'compact' && 'none',
+    // display: mode === 'compact' && 'none',
+    display: 'flex',
+    justifyContent: 'flexStart',
+    alignItems: 'center',
     color: theme.palette.text.secondary,
 }))
 
@@ -51,6 +56,16 @@ const StyledText = styled(Span)(({ mode }) => ({
     fontSize: '0.875rem',
     paddingLeft: '0.8rem',
     display: mode === 'compact' && 'none',
+}))
+
+const IntructionHeader = styled('p')(({ mode }) => ({
+    fontSize: '19px',
+}))
+
+const StyledQuestionIcon = styled(HelpOutlineIcon)(({ mode }) => ({
+    fontSize: '28px',
+    paddingLeft: '10px',
+    cursor: 'pointer'
 }))
 
 const BulletIcon = styled('div')(({ theme }) => ({
@@ -74,7 +89,6 @@ const getIntersectionThree = (a, b, c) => {
     var temp = [...new Set(a)].filter(x => setB.has(x));
     return [...new Set(temp)].filter(x => setC.has(x));
 }
-
 
 const allBaseLayer = BaseLayer["SacPAS"]["layerList"]
 
@@ -111,25 +125,6 @@ const MatxVerticalNav = () => {
     const { settings, updateSettings } = useSettings()
     const { mode } = settings.layout1Settings.leftSidebar
     const { layout1Settings } = settings
-
-    // all corresponding list for each categories
-    // const [basinLocation, setBasinLocation] = useState(Object.keys(allLocation))
-    // const [basinType, setBasinType] = useState(Object.keys(allType))
-    // const [basinYear, setBasinYear] = useState(Object.keys(allYears))
-
-    // const [locationType, setLocationType] = useState(Object.keys(allType))
-    // const [locationBasin, setLocationBasin] = useState(Object.keys(allBasin))
-    // const [locationYear, setLocationYear] = useState(Object.keys(allYears))
-
-    // const [typeBasin, setTypeBasin] = useState(Object.keys(allBasin))
-    // const [typeLocation, setTypeLocation] = useState(Object.keys(allLocation))
-    // const [typeYear, setTypeYear] = useState(Object.keys(allYears))
-
-    // const [yearBasin, setYearBasin] = useState(Object.keys(allBasin))
-    // const [yearLocation, setYearLocation] = useState(Object.keys(allLocation))
-    // const [yearType, setYearType] = useState(Object.keys(allType))
-
-
     const {
         map: {
             baseLayer,
@@ -161,10 +156,15 @@ const MatxVerticalNav = () => {
             yearBasin,
             yearLocation,
             yearType
-
         }
     } = layout1Settings
 
+    const [open, setOpen] = React.useState(false);
+
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleItemSelected = (querySelect, item) => {
         let temp = querySelect;
@@ -215,9 +215,6 @@ const MatxVerticalNav = () => {
         let newBasinType = Object.keys(allType);
         let newBasinYear = Object.keys(allYears);
 
-        // console.log("newBasinLocation", newBasinLocation)
-
-        // console.log("basinSelected", basinSelected)
         for (let i = 0; i < Object.keys(basinSelected).length; i++)
         {
             let item = Object.keys(basinSelected)[i]
@@ -225,20 +222,10 @@ const MatxVerticalNav = () => {
             newBasinType = getIntersection(newBasinType, basinFilter["SacPAS"][item]["Data Type"])
             newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
         }
-        // Object.keys(basinSelected).map(item => {
-        //     newBasinLocation = getIntersection(newBasinLocation, basinFilter["SacPAS"][item]["Locations"] )
-        //     newBasinType = getIntersection(newBasinType, basinFilter["SacPAS"][item]["Data Type"])
-        //     newBasinYear = getIntersection(newBasinYear, basinFilter["SacPAS"][item]["Year"])
-        // })
-
         let updatedBasinLocation = replaceReduxList(basinLocation, newBasinLocation)
         let updatedBasinType = replaceReduxList(basinType, newBasinType)
         let updatedBasinYear = replaceReduxList(basinYear, newBasinYear)
 
-
-        // setBasinLocation(newBasinLocation)
-        // setBasinType(newBasinType)
-        // setBasinYear(newBasinYear)
         updateSettings({
             layout1Settings: {
                 map: {
@@ -249,12 +236,11 @@ const MatxVerticalNav = () => {
             }
         })
 
-
         let newLocation = getIntersectionThree(newBasinLocation, typeLocation, yearLocation)
         let newType = getIntersectionThree(newBasinType, locationType, yearType)
         let newYear = getIntersectionThree(newBasinYear, locationYear, typeYear)
+        newYear = newYear.sort((a, b) => {return b - a});
 
-        // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[2].children = convertListToListOfObjWithName(newLocation)
         temp[3].children = convertListToListOfObjWithName(newType)
@@ -290,18 +276,6 @@ const MatxVerticalNav = () => {
             newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
         }
 
-
-        // console.log("newBasinLocation", newBasinLocation)
-        // setLocationBasin(newlocationBasin)
-        // setLocationType(newlocationType)
-        // setLocationYear(newlocationYear)
-
-
-        // console.log("locationBasin", locationBasin)
-        // console.log("locationBasin1", locationBasin1)
-
-        // testing
-        // console.log(56, locationBasin, newlocationBasin)
         let updatedLocationBasin = replaceReduxList(locationBasin, newlocationBasin)
         let updatedLocationType = replaceReduxList(locationType, newlocationType)
         let updatedLocationYear = replaceReduxList(locationYear, newlocationYear)
@@ -319,7 +293,7 @@ const MatxVerticalNav = () => {
         let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
-
+        newYear = newYear.sort((a, b) => {return b - a});
 
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
@@ -357,12 +331,6 @@ const MatxVerticalNav = () => {
             newTypeYear = getIntersection(newTypeYear, typeFilter["SacPAS"][item]["Year"])
         }
 
-        // console.log("newBasinLocation", newBasinLocation)
-        // setTypeBasin(newTypeBasin)
-        // setTypeLocation(newTypeLocation)
-        // setTypeYear(newTypeYear)
-
-
         let updatedTypeBasin = replaceReduxList(typeBasin, newTypeBasin)
         let updatedTypeLocation = replaceReduxList(typeLocation, newTypeLocation)
         let updatedTypeYear = replaceReduxList(typeYear, newTypeYear)
@@ -381,8 +349,7 @@ const MatxVerticalNav = () => {
         let newLocation = getIntersectionThree(newTypeLocation, basinLocation, yearLocation)
         let newYear = getIntersectionThree(newTypeYear, basinYear, locationYear)
 
-        // console.log("newLocation", newLocation)
-        // console.log("newLocation", newLocation)
+        newYear = newYear.sort((a, b) => {return b - a});
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[2].children = convertListToListOfObjWithName(newLocation)
@@ -406,20 +373,9 @@ const MatxVerticalNav = () => {
     }
 
     const handleYearClick = () => {
-        // if chose a new basin, all basin - location, type, year gets updated
         let newYearBasin = Object.keys(allBasin);
         let newYearLocation = Object.keys(allLocation);
         let newYearType = Object.keys(allType);
-
-        // console.log("newBasinLocation", newBasinLocation)
-
-        // console.log("basinSelected", basinSelected)
-        // Object.keys(yearSelected).map(item => {
-        //     newYearBasin = getIntersection(newYearBasin, yearFilter["SacPAS"][item]["Hydrologic Area"])
-        //     newYearLocation = getIntersection(newYearLocation, yearFilter["SacPAS"][item]["Locations"])
-        //     newYearType = getIntersection(newYearType, yearFilter["SacPAS"][item]["Data Type"])
-        // })
-
         for (let i = 0; i < Object.keys(yearSelected).length; i++)
         {
             let item = Object.keys(yearSelected)[i]
@@ -427,19 +383,9 @@ const MatxVerticalNav = () => {
             newYearLocation = getIntersection(newYearLocation, yearFilter["SacPAS"][item]["Locations"])
             newYearType = getIntersection(newYearType, yearFilter["SacPAS"][item]["Data Type"])
         }
-
-
-
-
-        // console.log("newBasinLocation", newBasinLocation)
-        // setYearBasin(newYearBasin)
-        // setYearLocation(newYearLocation)
-        // setYearType(newYearType)
         let updatedYearBasin = replaceReduxList(yearBasin, newYearBasin)
         let updatedYearLocation = replaceReduxList(yearLocation, newYearLocation)
         let updatedYearType = replaceReduxList(yearType, newYearType)
-
-
         updateSettings({
             layout1Settings: {
                 map: {
@@ -449,15 +395,11 @@ const MatxVerticalNav = () => {
                 }
             }
         })
-
-
-
         let newBasin = getIntersectionThree(newYearBasin, locationBasin, typeBasin)
         let newLocation = getIntersectionThree(newYearLocation, basinLocation, typeLocation)
 
         let newType = getIntersectionThree(newYearType, basinType, locationType)
 
-        // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[2].children = convertListToListOfObjWithName(newLocation)
@@ -505,21 +447,44 @@ const MatxVerticalNav = () => {
         {
             handleBaselayerSelected(item)
         }
-        // deal with filter logic
     }
 
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
             if (item.type === 'label')
                 return (
-                    <ListLabel
-                        key={index}
-                        mode={mode}
-                        className="sidenavHoverShow"
-                    >
-                        {item.label}
-                    </ListLabel>
+                    <Fragment key={index}>
+                        <ListLabel
+                            mode={mode}
+                            className="sidenavHoverShow"
+                        >
+                            {item.label}
+                            <StyledQuestionIcon onClick={handleOpen}></StyledQuestionIcon>
+                        </ListLabel>
+                        <Dialog
+                            maxWidth={"lg"}
+                            fullWidth={true}
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+
+                        >
+                            <CloseIcon onClick={handleClose} style={{ position: 'absolute', right: '16px', top: '20px', cursor: 'pointer'}}></CloseIcon>
+                            <DialogContent>
+                                <Box id="alert-dialog-description" style={{ height: "100px" }}>
+                                    <IntructionHeader>Instruction for generating a plot:</IntructionHeader>
+
+                                    The application has a plotting limits of 18 lines, a line being defined as unique combination of year+location+datatype, you have to select at least 1 location, 1 year, and 1 data type in order to submit the query
+                                </Box>
+                            </DialogContent>
+                        </Dialog>
+                    </Fragment>
                 )
             if (item.children)
             {
@@ -577,7 +542,7 @@ const MatxVerticalNav = () => {
                                         (Object.keys(yearSelected).includes(item.name)) ||
                                         (Object.keys(additionalLayer).includes(item.name)) ||
                                         (baseLayer === item.name)
-                                    ) ? { color: '#db5609' } : null}
+                                    ) ? { color: '#db5609', fontWeight: 700} : null}
                                 >
                                     {alterDisplayName(item.name)}
                                 </StyledText>
