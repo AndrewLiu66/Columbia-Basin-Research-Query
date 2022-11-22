@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { convertHexToRGB } from 'app/utils/utils'
 import { Box, styled, useTheme } from '@mui/system'
 import Sidenav from '../../Sidenav/Sidenav'
@@ -132,6 +132,7 @@ const Layout1Sidenav = () => {
     const primaryRGB = convertHexToRGB(theme.palette.primary.main)
 
     const [open, setOpen] = React.useState(false);
+    const [submitButtonStatus, changeSubmitButtonStatus] = React.useState(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -234,19 +235,24 @@ const Layout1Sidenav = () => {
         window.open(result);
     }
 
+    useEffect(() => {
+        if (Object.keys(locationSelected).length > 0 && Object.keys(dataTypeSelected).length > 0 && Object.keys(yearSelected).length > 0)
+        {
+            changeSubmitButtonStatus(true)
+        }
+    }, [locationSelected, dataTypeSelected, yearSelected])
     return (
         <SidebarNavRoot
             bgImgURL={bgImgURL}
             primaryBg={primaryRGB}
-
-            // width={getSidenavWidth()}
         >
             <NavListBox>
                 <Sidenav />
                 <ButtonBox>
-                    <Button variant="contained" onClick={handleTransitToUrl} style={{ background: '#837E7E'}}>Submit</Button>
-                    <Button variant="contained" onClick={handleOpenUrl} style={{ background: '#837E7E', margin: '0 30px'}}>Get Url</Button>
-                    <Button variant="contained" onClick={handleReset} style={{ background: '#837E7E'}}>Reset</Button>
+                    {submitButtonStatus ? <Button variant="outlined" onClick={handleTransitToUrl} style={{ background: '#2C5243', color: 'white', border: 'none' }}>Submit</Button>: <Button variant="outlined" style={{ background: '#cccccc', color: '#7d7c7c', border: 'none' }}>Submit</Button>}
+
+                    <Button variant="outlined" onClick={handleOpenUrl} style={{ background: '#2C5243', color: 'white', margin: '0 30px', border: 'none'}}>Get Url</Button>
+                    <Button variant="outlined" onClick={handleReset} style={{ background: '#2C5243', color: 'white', border: 'none'}}>Reset</Button>
                 </ButtonBox>
             </NavListBox>
 
