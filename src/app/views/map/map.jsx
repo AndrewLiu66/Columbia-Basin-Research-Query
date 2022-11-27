@@ -15,6 +15,10 @@ import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import Expand from "@arcgis/core/widgets/Expand";
 
+
+const aa1 = new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer")
+
+
 const StyledBox = styled(Box)(() => ({
     padding: 0,
     margin: 0,
@@ -326,6 +330,7 @@ function Oceanmap() {
     const [alteredIds, setAlteredIds] = useState('')
     const [displayNameId, setDisplayNameId] = useState('')
 
+    const [dd, setdd] = useState({})
 
     const replaceReduxList = (old, newLst) => {
         let temp = old
@@ -398,14 +403,11 @@ function Oceanmap() {
     // change the dark color dots on the map
     useEffect(() => {
         removeFeatures()
-
         setTimeout(() => {
             let addEdits = addFeatures(locationDisplay)
             let addArray = addEdits.addFeatures
             setBaseDots(addArray)
         }, 100)
-
-
     }, [locationDisplay])
 
     // based on the location selected, change the filter
@@ -444,6 +446,7 @@ function Oceanmap() {
                 zoom: 7,
             })
 
+            setdd(view)
             for (const add in additionalLayer) {
                 const layer_url =
                     AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
@@ -470,6 +473,23 @@ function Oceanmap() {
             twebmap.add(monumentLayer2)
         }
     }, [])
+
+    useEffect(() => {
+        if (dd)
+        {
+            if (dd.map)
+            {
+                if (Object.keys(additionalLayer).includes("Califonia WBD HUC8 WaterSheds"))
+                {
+                    dd.map.remove(aa1)
+                } else
+                {
+                    dd.map.add(aa1)
+                }
+            }
+        }
+    }, [additionalLayer])
+
 
     useEffect(() => {
         if (view)
