@@ -197,3 +197,79 @@ export const handleOutputName = (location, start, end, selectedValue = "") => {
         return location + '-CTD-' + start + '-' + end
     return location + '-' + start + '-' + end
 }
+
+export const getIntersection = (a, b) => {
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
+}
+
+export const getIntersectionThree = (a, b, c) => {
+    var setB = new Set(b);
+    var setC = new Set(c);
+    var temp = [...new Set(a)].filter(x => setB.has(x));
+    return [...new Set(temp)].filter(x => setC.has(x));
+}
+
+export function twoArrayUnion(arr1, arr2) {
+    const union = Array.from(new Set([...arr1, ...arr2]));
+    return union
+}
+
+export function threeArrayUnion(arr1, arr2, arr3) {
+    const union = Array.from(new Set([...arr1, ...arr2, ...arr3]));
+    return union
+}
+
+
+export const convertListToListOfObjWithName = (lst) => {
+    let res = []
+    lst.map(item => {
+        res.push({ name: item })
+        return res
+    })
+    return res
+}
+
+export const replaceReduxList = (old, newLst) => {
+    let temp = old
+    while (temp.length > 0)
+    {
+        temp.pop();
+    }
+    for (let i = 0; i < newLst.length; i++)
+    {
+        temp.push(newLst[i])
+    }
+    return temp
+}
+
+export const updateQueryValue = (DisplayData, filteredData) => {
+    let temp1 = DisplayData
+    Object.keys(temp1).forEach(key => {
+        delete temp1[key];
+    })
+
+    filteredData.map(item => {
+        temp1[item] = item
+        return temp1
+    })
+    return temp1
+}
+
+export const clearObj = (obj) => {
+    let temp = obj
+    Object.keys(temp).forEach(key => {
+        delete temp[key];
+    })
+    return temp
+}
+export const replaceObjWithOriginal = (cur, original) => {
+    let temp = cur
+    Object.keys(temp).forEach(key => {
+        delete temp[key];
+    })
+    Object.keys(original).map(item => {
+        return temp[item] = item
+    })
+    return temp
+}

@@ -16,7 +16,17 @@ import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import Expand from "@arcgis/core/widgets/Expand";
 
 
-const aa1 = new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer")
+const additionalLayerObj = {
+    "Califonia WBD HUC6 WaterSheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer"),
+    "Califonia WBD HUC8 WaterSheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer"),
+    "Idaho Priority Waters HUC8": new FeatureLayer("https://services1.arcgis.com/754BERmVIq3RqSf8/arcgis/rest/services/idaho_priority_waters_huc8/FeatureServer"),
+    "Washington HUC6 WaterSheds": new FeatureLayer("https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/3"),
+    "Washington HUC8 WaterSheds": new FeatureLayer("https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/2"),
+    "Oregon HUC8 WaterSheds": new FeatureLayer("https://services7.arcgis.com/Lfg8HsawuFLJUsOU/arcgis/rest/services/Oregon_HUC_08_Watersheds/FeatureServer")
+}
+
+
+// const aa1 = new FeatureLayer("https://services7.arcgis.com/Lfg8HsawuFLJUsOU/arcgis/rest/services/Oregon_HUC_08_Watersheds/FeatureServer")
 
 
 const StyledBox = styled(Box)(() => ({
@@ -330,7 +340,7 @@ function Oceanmap() {
     const [alteredIds, setAlteredIds] = useState('')
     const [displayNameId, setDisplayNameId] = useState('')
 
-    const [dd, setdd] = useState({})
+    const [viewObj, setViewObj] = useState({})
 
     const replaceReduxList = (old, newLst) => {
         let temp = old
@@ -446,7 +456,7 @@ function Oceanmap() {
                 zoom: 7,
             })
 
-            setdd(view)
+            setViewObj(view)
             for (const add in additionalLayer) {
                 const layer_url =
                     AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
@@ -474,18 +484,26 @@ function Oceanmap() {
         }
     }, [])
 
-    useEffect(() => {
-        if (dd)
+    const changeAdditionalLayer = (viewObj, layerName) => {
+        if (!Object.keys(additionalLayer).includes(layerName))
         {
-            if (dd.map)
+            viewObj.map.remove(additionalLayerObj[layerName])
+        } else
+        {
+            viewObj.map.add(additionalLayerObj[layerName])
+        }
+    }
+    useEffect(() => {
+        if (viewObj)
+        {
+            if (viewObj.map)
             {
-                if (Object.keys(additionalLayer).includes("Califonia WBD HUC8 WaterSheds"))
-                {
-                    dd.map.remove(aa1)
-                } else
-                {
-                    dd.map.add(aa1)
-                }
+                changeAdditionalLayer(viewObj, "Califonia WBD HUC6 WaterSheds")
+                changeAdditionalLayer(viewObj, "Califonia WBD HUC8 WaterSheds")
+                changeAdditionalLayer(viewObj, "Idaho Priority Waters HUC8")
+                changeAdditionalLayer(viewObj, "Washington HUC6 WaterSheds")
+                changeAdditionalLayer(viewObj, "Washington HUC8 WaterSheds")
+                changeAdditionalLayer(viewObj, "Oregon HUC8 WaterSheds")
             }
         }
     }, [additionalLayer])

@@ -28,6 +28,7 @@ const Layout1Settings = {
         theme: 'whiteBlue',
     },
     map: {
+        filterCondition: false,
         // ifReset: false,
         // all selected values
         baseLayer: 'arcgis-oceans',
@@ -43,6 +44,7 @@ const Layout1Settings = {
         yearDisplay: allYears,
         // contain all query data under each list
         allQueryData: filteredNavigations,
+        // ******  with filter ******
         // for location
         locationBasin: Object.keys(allBasin),
         locationType: Object.keys(allType),
@@ -58,7 +60,26 @@ const Layout1Settings = {
         // for year
         yearBasin: Object.keys(allBasin),
         yearLocation: Object.keys(allLocation),
-        yearType: Object.keys(allType)
+        yearType: Object.keys(allType),
+
+        // ******  without filter ******
+        // for location
+        locationBasinF: [],
+        locationTypeF: [],
+        locationYearF: [],
+        // for basin
+        basinLocationF: [],
+        basinTypeF: [],
+        basinYearF: [],
+        // for type
+        typeBasinF: [],
+        typeLocationF: [],
+        typeYearF: [],
+        // for year
+        yearBasinF: [],
+        yearLocationF: [],
+        yearTypeF: [],
+
     },
     // basinSelected: {},
 }
