@@ -251,7 +251,7 @@ const MatxVerticalNav = () => {
         let newBasinType = Object.keys(allType);
         let newBasinYear = Object.keys(allYears);
 
-        if (Object.keys(basinSelected).length > 0)
+        if (Object.keys(basinSelected).length > 0 || Object.keys(hydroDisplay).length !== Object.keys(allBasin).length)
         {
             newBasinLocation = []
             newBasinType = []
@@ -370,7 +370,7 @@ const MatxVerticalNav = () => {
         let newlocationType = Object.keys(allType);
         let newlocationYear = Object.keys(allYears);
 
-        if (Object.keys(locationSelected).length > 0)
+        if (Object.keys(locationSelected).length > 0 || Object.keys(locationDisplay).length !== Object.keys(allLocation).length)
         {
             newlocationBasin = []
             newlocationType = []
@@ -385,6 +385,8 @@ const MatxVerticalNav = () => {
             newlocationYear = twoArrayUnion(newlocationYear, locationFilter["SacPAS"][item]["Year"])
         }
 
+
+        console.log("newlocationBasin", newlocationBasin)
         let updatedLocationBasin = replaceReduxList(locationBasinF, newlocationBasin)
         let updatedLocationType = replaceReduxList(locationTypeF, newlocationType)
         let updatedLocationYear = replaceReduxList(locationYearF, newlocationYear)
@@ -399,6 +401,8 @@ const MatxVerticalNav = () => {
             }
         })
 
+        console.log("typeBasinF", typeBasinF)
+        console.log("yearBasinF", yearBasinF)
         let newBasin = threeArrayUnion(newlocationBasin, typeBasinF, yearBasinF)
         let newType = threeArrayUnion(newlocationType, basinTypeF, yearTypeF)
         let newYear = threeArrayUnion(newlocationYear, basinYearF, typeYearF)
@@ -489,13 +493,15 @@ const MatxVerticalNav = () => {
         let newTypeLocation = Object.keys(allLocation);
         let newTypeYear = Object.keys(allYears);
 
-        if (Object.keys(dataTypeSelected).length > 0)
+        // console.log("dataTypeDisplay", dataTypeDisplay)
+        if (Object.keys(dataTypeSelected).length > 0 || Object.keys(dataTypeDisplay).length !== Object.keys(allType).length)
         {
             newTypeBasin = [];
             newTypeLocation = [];
             newTypeYear = [];
         }
 
+        // console.log("dataTypeSelected", dataTypeSelected)
         for (let i = 0; i < Object.keys(dataTypeSelected).length; i++)
         {
             let item = Object.keys(dataTypeSelected)[i]
@@ -503,6 +509,9 @@ const MatxVerticalNav = () => {
             newTypeLocation = twoArrayUnion(newTypeLocation, typeFilter["SacPAS"][item]["Locations"])
             newTypeYear = twoArrayUnion(newTypeYear, typeFilter["SacPAS"][item]["Year"])
         }
+
+
+        // console.log("newTypeLocation", newTypeLocation)
 
         let updatedTypeBasin = replaceReduxList(typeBasinF, newTypeBasin)
         let updatedTypeLocation = replaceReduxList(typeLocationF, newTypeLocation)
@@ -599,7 +608,7 @@ const MatxVerticalNav = () => {
         let newYearLocation = Object.keys(allLocation);
         let newYearType = Object.keys(allType);
 
-        if (Object.keys(yearSelected).length > 0)
+        if (Object.keys(yearSelected).length > 0 || Object.keys(yearDisplay).length !== Object.keys(allYears).length)
         {
             newYearBasin = []
             newYearLocation = []

@@ -21,6 +21,8 @@ import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 
+import { replaceReduxList } from 'app/utils/utils'
+
 const allBasin = BasinData["basinList"]
 const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
@@ -127,12 +129,64 @@ const Layout1Sidenav = () => {
     const theme = useTheme()
     const { settings, updateSettings } = useSettings()
     const leftSidebar = settings.layout1Settings.leftSidebar
-    const { basinSelected, locationSelected, dataTypeSelected, yearSelected, hydroDisplay, locationDisplay, dataTypeDisplay, yearDisplay} = settings.layout1Settings.map
+    // const { basinSelected, locationSelected, dataTypeSelected, yearSelected, hydroDisplay, locationDisplay, dataTypeDisplay, yearDisplay} = settings.layout1Settings.map
     const { bgImgURL } = leftSidebar
     const primaryRGB = convertHexToRGB(theme.palette.primary.main)
-
+    const { layout1Settings } = settings
     const [open, setOpen] = React.useState(false);
     const [submitButtonStatus, changeSubmitButtonStatus] = React.useState(false);
+
+    const {
+        leftSidebar: {
+            resetStatus
+        },
+        map: {
+            filterCondition,
+            baseLayer,
+            additionalLayer,
+            // select
+            basinSelected,
+            locationSelected,
+            yearSelected,
+            dataTypeSelected,
+            allQueryData,
+            // ifReset
+            hydroDisplay,
+            locationDisplay,
+            dataTypeDisplay,
+            yearDisplay,
+            // for location
+            locationBasin,
+            locationType,
+            locationYear,
+            // for basin
+            basinLocation,
+            basinType,
+            basinYear,
+            // for type
+            typeBasin,
+            typeLocation,
+            typeYear,
+
+            yearBasin,
+            yearLocation,
+            yearType,
+            // without filter
+            locationBasinF,
+            locationTypeF,
+            locationYearF,
+
+            basinLocationF,
+            basinTypeF,
+            basinYearF,
+            typeBasinF,
+            typeLocationF,
+            typeYearF,
+            yearBasinF,
+            yearLocationF,
+            yearTypeF
+        }
+    } = layout1Settings
 
     const handleClose = () => {
         setOpen(false);
@@ -157,7 +211,6 @@ const Layout1Sidenav = () => {
         return temp
     }
 
-
     const handleReset = () => {
         let emptyBasin = clearObj(basinSelected)
         let emptyLocation = clearObj(locationSelected)
@@ -167,6 +220,26 @@ const Layout1Sidenav = () => {
         let emptyLocationDisplay = replaceObjWithOriginal(locationDisplay, allLocation)
         let emptyTypeDisplay = replaceObjWithOriginal(dataTypeDisplay, allType)
         let emptyYearDisplay = replaceObjWithOriginal(yearDisplay, allYears)
+
+
+        let new_locationBasinF = replaceReduxList(locationBasinF, [])
+        let new_locationTypeF = replaceReduxList(locationTypeF, [])
+        let new_locationYearF = replaceReduxList(locationYearF, [])
+
+        let new_basinLocationF = replaceReduxList(basinLocationF, [])
+        let new_basinTypeF = replaceReduxList(basinTypeF, [])
+        let new_basinYearF = replaceReduxList(basinYearF, [])
+
+        let new_typeBasinF = replaceReduxList(typeBasinF, [])
+        let new_typeLocationF = replaceReduxList(typeLocationF, [])
+        let new_typeYearF = replaceReduxList(typeYearF, [])
+
+        let new_yearBasinF = replaceReduxList(yearBasinF, [])
+        let new_yearLocationF = replaceReduxList(yearLocationF, [])
+        let new_yearTypeF = replaceReduxList(yearTypeF, [])
+
+
+
         changeSubmitButtonStatus(false)
         updateSettings({
             layout1Settings: {
@@ -185,6 +258,20 @@ const Layout1Sidenav = () => {
                     locationDisplay: emptyLocationDisplay,
                     dataTypeDisplay: emptyTypeDisplay,
                     yearDisplay: emptyYearDisplay,
+
+                    locationBasinF: new_locationBasinF,
+                    locationTypeF:new_locationTypeF,
+                    locationYearF: new_locationYearF,
+
+                    basinLocationF: new_basinLocationF,
+                    basinTypeF: new_basinTypeF,
+                    basinYearF: new_basinYearF,
+                    typeBasinF: new_typeBasinF,
+                    typeLocationF: new_typeLocationF,
+                    typeYearF: new_typeYearF,
+                    yearBasinF: new_yearBasinF,
+                    yearLocationF: new_yearLocationF,
+                    yearTypeF: new_yearTypeF
                 }
             }
         })
