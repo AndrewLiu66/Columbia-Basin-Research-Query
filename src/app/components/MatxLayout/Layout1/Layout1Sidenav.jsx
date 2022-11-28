@@ -167,7 +167,7 @@ const Layout1Sidenav = () => {
         let emptyLocationDisplay = replaceObjWithOriginal(locationDisplay, allLocation)
         let emptyTypeDisplay = replaceObjWithOriginal(dataTypeDisplay, allType)
         let emptyYearDisplay = replaceObjWithOriginal(yearDisplay, allYears)
-
+        changeSubmitButtonStatus(false)
         updateSettings({
             layout1Settings: {
                 leftSidebar: {

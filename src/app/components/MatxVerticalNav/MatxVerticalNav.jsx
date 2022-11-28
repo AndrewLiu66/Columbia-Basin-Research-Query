@@ -245,18 +245,17 @@ const MatxVerticalNav = () => {
         })
     }
 
-
     const handleBasinClickF = () => {
         // if chose a new basin, all basin - location, type, year gets updated
-        let newBasinLocation = [];
-        let newBasinType = [];
-        let newBasinYear = [];
+        let newBasinLocation = Object.keys(allLocation);
+        let newBasinType = Object.keys(allType);
+        let newBasinYear = Object.keys(allYears);
 
-        if (Object.keys(basinSelected).length === 0)
+        if (Object.keys(basinSelected).length > 0)
         {
-            newBasinLocation = Object.keys(allLocation);
-            newBasinType = Object.keys(allType);
-            newBasinYear = Object.keys(allYears);
+            newBasinLocation = []
+            newBasinType = []
+            newBasinYear = []
         }
 
         for (let i = 0; i < Object.keys(basinSelected).length; i++)
@@ -267,7 +266,7 @@ const MatxVerticalNav = () => {
             newBasinYear = twoArrayUnion(newBasinYear, basinFilter["SacPAS"][item]["Year"])
         }
 
-        let updatedBasinLocation = replaceReduxList(locationBasinF, newBasinLocation)
+        let updatedBasinLocation = replaceReduxList(basinLocationF, newBasinLocation)
         let updatedBasinType = replaceReduxList(basinTypeF, newBasinType)
         let updatedBasinYear = replaceReduxList(basinYearF, newBasinYear)
 
@@ -284,6 +283,7 @@ const MatxVerticalNav = () => {
         let newLocation = threeArrayUnion(newBasinLocation, typeLocationF, yearLocationF)
         let newType = threeArrayUnion(newBasinType, locationTypeF, yearTypeF)
         let newYear = threeArrayUnion(newBasinYear, locationYearF, typeYearF)
+
 
         newYear = newYear.sort((a, b) => {return b - a});
 
@@ -366,15 +366,15 @@ const MatxVerticalNav = () => {
 
     const handleLocationClickF = () => {
         // if chose a new basin, all basin - location, type, year gets updated
-        let newlocationBasin = []
-        let newlocationType = []
-        let newlocationYear = []
+        let newlocationBasin = Object.keys(allBasin);
+        let newlocationType = Object.keys(allType);
+        let newlocationYear = Object.keys(allYears);
 
-        if (Object.keys(basinSelected).length === 0)
+        if (Object.keys(locationSelected).length > 0)
         {
-            newlocationBasin = Object.keys(allBasin);
-            newlocationType = Object.keys(allType);
-            newlocationYear = Object.keys(allYears);
+            newlocationBasin = []
+            newlocationType = []
+            newlocationYear = []
         }
 
         for (let i = 0; i < Object.keys(locationSelected).length; i++)
@@ -402,6 +402,7 @@ const MatxVerticalNav = () => {
         let newBasin = threeArrayUnion(newlocationBasin, typeBasinF, yearBasinF)
         let newType = threeArrayUnion(newlocationType, basinTypeF, yearTypeF)
         let newYear = threeArrayUnion(newlocationYear, basinYearF, typeYearF)
+
         newYear = newYear.sort((a, b) => {return b - a});
 
         let temp = allQueryData
@@ -484,15 +485,15 @@ const MatxVerticalNav = () => {
 
     const handleTypeClickF = () => {
         // if chose a new basin, all basin - location, type, year gets updated
-        let newTypeBasin = [];
-        let newTypeLocation = [];
-        let newTypeYear = [];
+        let newTypeBasin = Object.keys(allBasin);
+        let newTypeLocation = Object.keys(allLocation);
+        let newTypeYear = Object.keys(allYears);
 
-        if (Object.keys(basinSelected).length === 0)
+        if (Object.keys(dataTypeSelected).length > 0)
         {
-            newTypeBasin = Object.keys(allBasin);
-            newTypeLocation = Object.keys(allLocation);
-            newTypeYear = Object.keys(allYears);
+            newTypeBasin = [];
+            newTypeLocation = [];
+            newTypeYear = [];
         }
 
         for (let i = 0; i < Object.keys(dataTypeSelected).length; i++)
@@ -594,15 +595,15 @@ const MatxVerticalNav = () => {
     }
 
     const handleYearClickF = () => {
-        let newYearBasin = [];
-        let newYearLocation = [];
-        let newYearType = [];
+        let newYearBasin = Object.keys(allBasin);
+        let newYearLocation = Object.keys(allLocation);
+        let newYearType = Object.keys(allType);
 
-        if (Object.keys(basinSelected).length === 0)
+        if (Object.keys(yearSelected).length > 0)
         {
-            newYearBasin = Object.keys(allBasin);
-            newYearLocation = Object.keys(allLocation);
-            newYearType = Object.keys(allType);
+            newYearBasin = []
+            newYearLocation = []
+            newYearType = []
         }
 
 
@@ -705,8 +706,6 @@ const MatxVerticalNav = () => {
     const handleOpen = () => {
         setOpen(true);
     };
-
-
 
     const handleEnableFilter = (event) => {
         let curr = filterCondition
