@@ -24,6 +24,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { navigations, getfilteredNavigations } from 'app/navigations'
 import {getIntersection, getIntersectionThree, clearObj, replaceObjWithOriginal, convertListToListOfObjWithName, twoArrayUnion, threeArrayUnion, replaceReduxList, updateQueryValue} from 'app/utils/utils'
+import { H2, H4, H5 } from 'app/components/Typography'
 
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
@@ -503,11 +504,29 @@ const MatxVerticalNav = () => {
 
                         >
                             <CloseIcon onClick={handleClose} style={{ position: 'absolute', right: '16px', top: '20px', cursor: 'pointer'}}></CloseIcon>
-                            <DialogContent>
+                            <DialogContent   style={{
+                                height: '480px'
+                            }}>
                                 <Box id="alert-dialog-description" style={{ height: "100px" }}>
                                     <IntructionHeader>Instruction for generating a plot:</IntructionHeader>
 
-                                    The application has a plotting limits of 18 lines, a line being defined as unique combination of year+location+datatype, you have to select at least 1 location, 1 year, and 1 data type in order to submit the query
+                                    <H5>Query:</H5>
+                                    <Box>Select at least one location, one data type, and one year to submit a query.</Box><br></br>
+
+                                    <H5>Tables and csv files:</H5>
+                                    <Box>For data tables viewed online and csv file downloads, there is a limit of 100 unique combinations of location, year, and data type.</Box><br></br>
+
+                                    <H5>Graphs:</H5>
+                                    <Box>For graphs, there is a limit of 18 lines. A line is defined as a unique combination of location, year, and data type. There is also a limit of 2 y-axes, each representing a different unit of measurement.
+                                    </Box><br></br>
+
+                                    <H5>Get url:</H5>
+                                    <Box>The query-specific url can be copied and entered in programming scripts for data downloading. The url can also be entered in an online browser to recreate the graph for viewing.</Box><br></br>
+
+                                    <H5>Selection filter:</H5>
+                                    <Box>This feature can be set to “On” to filter options available for locations, data types, and years of observed data, as each selection is made. Setting the filter to “Off” will allow full flexibility of selection options. The full flexibility may result in combinations that yield a result of no observed data. But it does allow combinations of two or more locations with different data types of different unit measurements, which sometimes occur.</Box>
+
+
                                 </Box>
                             </DialogContent>
                         </Dialog>

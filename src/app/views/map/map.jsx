@@ -17,6 +17,9 @@ import Expand from "@arcgis/core/widgets/Expand";
 
 
 const additionalLayerObj = {
+    "River and Stream": new FeatureLayer({
+        url: "https://services8.arcgis.com/7yPK7vytRf49nyPG/arcgis/rest/services/usa_rivers_and_streams/FeatureServer/0"
+      }),
     "Califonia WBD HUC6 WaterSheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer"),
     "Califonia WBD HUC8 WaterSheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer"),
     "Idaho Priority Waters HUC8": new FeatureLayer("https://services1.arcgis.com/754BERmVIq3RqSf8/arcgis/rest/services/idaho_priority_waters_huc8/FeatureServer"),
