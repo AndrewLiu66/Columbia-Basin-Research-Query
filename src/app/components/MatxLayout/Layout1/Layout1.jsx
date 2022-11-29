@@ -23,11 +23,13 @@ const ContentBox = styled(Box)(() => ({
 }))
 const SideNavBox = styled(Box)(() => ({
     height: '100vh',
-    width: '660px',
+    width: '460px',
+    minWidth: '460px',
     // background: 'green'
 }))
 
 const LayoutContainer = styled(Box)(({ width }) => ({
+    // background: 'green',
     height: '100vh',
     display: 'flex',
     flexGrow: '1',
@@ -62,11 +64,12 @@ const Layout1 = () => {
 
     return (
         <Layout1Root className={layoutClasses}>
+            {/* <Layout1Sidenav style={{background: 'orange'}}/> */}
             <SideNavBox>
                 {/* sidenav */}
-                <SidenavTheme>
-                    <Layout1Sidenav/>
-                </SidenavTheme>
+                {/* <SidenavTheme> */}
+                <Layout1Sidenav style={{background: 'orange'}}/>
+                {/* </SidenavTheme> */}
             </SideNavBox>
 
             <LayoutContainer>
@@ -77,6 +80,7 @@ const Layout1 = () => {
                         </MatxSuspense>
                     </Box>
                 </ContentBox>
+                {/* <Outlet/> */}
             </LayoutContainer>
         </Layout1Root>
     )

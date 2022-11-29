@@ -34,13 +34,14 @@ const SidebarNavRoot = styled(Box)(({ theme, width, primaryBg, bgImgURL }) => ({
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '480px',
+    // minWidth: '460px',
+    width: '460px',
     height: '100vh',
     boxShadow: themeShadows[8],
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top',
     backgroundSize: 'cover',
-    zIndex: 111,
+    // zIndex: 111,
     overflow: 'hidden',
     color: theme.palette.text.primary,
     transition: 'all 250ms ease-in-out',
@@ -222,24 +223,6 @@ const Layout1Sidenav = () => {
         let emptyYearDisplay = replaceObjWithOriginal(yearDisplay, allYears)
 
 
-        let new_locationBasinF = replaceReduxList(locationBasinF, [])
-        let new_locationTypeF = replaceReduxList(locationTypeF, [])
-        let new_locationYearF = replaceReduxList(locationYearF, [])
-
-        let new_basinLocationF = replaceReduxList(basinLocationF, [])
-        let new_basinTypeF = replaceReduxList(basinTypeF, [])
-        let new_basinYearF = replaceReduxList(basinYearF, [])
-
-        let new_typeBasinF = replaceReduxList(typeBasinF, [])
-        let new_typeLocationF = replaceReduxList(typeLocationF, [])
-        let new_typeYearF = replaceReduxList(typeYearF, [])
-
-        let new_yearBasinF = replaceReduxList(yearBasinF, [])
-        let new_yearLocationF = replaceReduxList(yearLocationF, [])
-        let new_yearTypeF = replaceReduxList(yearTypeF, [])
-
-
-
         changeSubmitButtonStatus(false)
         updateSettings({
             layout1Settings: {
@@ -258,20 +241,6 @@ const Layout1Sidenav = () => {
                     locationDisplay: emptyLocationDisplay,
                     dataTypeDisplay: emptyTypeDisplay,
                     yearDisplay: emptyYearDisplay,
-
-                    locationBasinF: new_locationBasinF,
-                    locationTypeF:new_locationTypeF,
-                    locationYearF: new_locationYearF,
-
-                    basinLocationF: new_basinLocationF,
-                    basinTypeF: new_basinTypeF,
-                    basinYearF: new_basinYearF,
-                    typeBasinF: new_typeBasinF,
-                    typeLocationF: new_typeLocationF,
-                    typeYearF: new_typeYearF,
-                    yearBasinF: new_yearBasinF,
-                    yearLocationF: new_yearLocationF,
-                    yearTypeF: new_yearTypeF
                 }
             }
         })

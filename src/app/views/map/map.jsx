@@ -32,7 +32,7 @@ const additionalLayerObj = {
 const StyledBox = styled(Box)(() => ({
     padding: 0,
     margin: 0,
-    height: '100%',
+    height: '100vh',
     width: '100%',
 }))
 
