@@ -33,7 +33,12 @@ const allLocation = LocationData["SacPAS"]
 const allType = TypeData["SacPAS"]
 const allYears = YearData["SacPAS"]
 
-console.log("allBasin", allBasin)
+const allBasinList = convertListToListOfObjWithName(Object.keys(BasinData["basinList"]))
+const allLocationList = convertListToListOfObjWithName(Object.keys(LocationData["SacPAS"]))
+const allTypeList = convertListToListOfObjWithName(Object.keys(TypeData["SacPAS"]))
+const allYearsList = convertListToListOfObjWithName(Object.keys(YearData["SacPAS"]))
+
+
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
     // background: 'green',
     fontSize: '13px',
@@ -163,6 +168,8 @@ const MatxVerticalNav = () => {
     };
 
     const handleItemSelected = (querySelect, item) => {
+        console.log("querySelect", querySelect)
+        console.log("item", item)
         let temp = querySelect;
         if (Object.keys(temp).includes(item))
         {
@@ -398,6 +405,7 @@ const MatxVerticalNav = () => {
 
     const handleItemClick = (item, index) => {
         // deal with selection logic
+        console.log("aa", item)
         if (Object.keys(BasinData["basinList"]).includes(item))
         {
             handleItemSelected(basinSelected, item)
@@ -428,6 +436,7 @@ const MatxVerticalNav = () => {
             }
         } else if (Object.keys(AdditionalLayerSources["SacPAS"]["additionalLayerSouces"]).includes(item))
         {
+            console.log("cc", item)
             handleItemSelected(additionalLayer, item)
         } else
         {

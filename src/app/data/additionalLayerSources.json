@@ -1,9 +1,9 @@
 {
     "SacPAS": {
         "additionalLayerSouces": {
-            "River and Stream": "https://services8.arcgis.com/7yPK7vytRf49nyPG/arcgis/rest/services/usa_rivers_and_streams/FeatureServer/0",
-            "Califonia WBD HUC6 WaterSheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer",
-            "Califonia WBD HUC8 WaterSheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer",
+            "Rivers and Streams": "https://services8.arcgis.com/7yPK7vytRf49nyPG/arcgis/rest/services/usa_rivers_and_streams/FeatureServer/0",
+            "Califonia WBD HUC6 Watersheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer",
+            "Califonia WBD HUC8 Watersheds": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer",
             "Idaho Priority Waters HUC8": "https://services1.arcgis.com/754BERmVIq3RqSf8/arcgis/rest/services/idaho_priority_waters_huc8/FeatureServer",
             "Washington HUC6 WaterSheds": "https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/3",
             "Washington HUC8 WaterSheds": "https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/2",

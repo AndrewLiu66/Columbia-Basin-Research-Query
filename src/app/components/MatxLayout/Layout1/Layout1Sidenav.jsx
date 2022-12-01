@@ -295,8 +295,12 @@ const Layout1Sidenav = () => {
         if (Object.keys(locationSelected).length > 0 && Object.keys(dataTypeSelected).length > 0 && Object.keys(yearSelected).length > 0)
         {
             changeSubmitButtonStatus(true)
+        } else if (Object.keys(locationSelected).length === 0 || Object.keys(dataTypeSelected).length === 0 || Object.keys(yearSelected).length === 0)
+        {
+            changeSubmitButtonStatus(false)
         }
     }, [locationSelected, dataTypeSelected, yearSelected])
+
     return (
         <SidebarNavRoot
             bgImgURL={bgImgURL}

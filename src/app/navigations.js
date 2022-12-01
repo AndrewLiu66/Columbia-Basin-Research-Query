@@ -41,7 +41,7 @@ export const navigations = [
     //     children: BaseLayer["SacPAS"]["baseLayer"]
     // },
     {
-        name: 'Additional Base Layer',
+        name: 'Additional Layers',
         icon: '/assets/images/menuIcon/plus.png',
         children: AdditionalLayer["SacPAS"]["additionalLayer"]
     }
