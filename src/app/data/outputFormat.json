@@ -1,0 +1,28 @@
+{
+    "SacPAS": {
+        "formatTypes": [
+            {
+                "name": "Graph"
+            },
+            {
+                "name": "Day of Year [DOY] Data Table"
+            },
+            {
+                "name": "Calendar Date [mm/dd] Data Table"
+            },
+            {
+                "name": "Download CSV Only [mm/dd]"
+            },
+            {
+                "name": "Download CSV Only [single data pt/row]"
+            }
+        ],
+        "allOutputFormat": {
+            "Graph": "Graph",
+            "Day of Year [DOY] Data Table": "Day of Year [DOY] Data Table",
+            "Calendar Date [mm/dd] Data Table": "Calendar Date [mm/dd] Data Table",
+            "Download CSV Only [mm/dd]": "Download CSV Only [mm/dd]",
+            "Download CSV Only [single data pt/row]": "Download CSV Only [single data pt/row]"
+        }
+    }
+}

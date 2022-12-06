@@ -2,16 +2,13 @@
     "SacPAS": {
         "additionalLayer": [
             {
+                "name": "Surface Water Bodies (NHD)"
+            },
+            {
                 "name": "Califonia WBD HUC6 Watersheds"
             },
             {
                 "name": "Califonia WBD HUC8 Watersheds"
-            },
-            {
-                "name": "Rivers and Streams"
-            },
-            {
-                "name": "Surface Water Bodies (NHD)"
             }
         ]
     }

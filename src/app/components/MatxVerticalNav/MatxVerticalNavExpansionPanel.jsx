@@ -100,6 +100,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             locationSelected,
             yearSelected,
             dataTypeSelected,
+            outputType
         },
     } = layout1Settings
 
@@ -157,6 +158,9 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             case "Additional Base Layer":
                 if(Object.keys(additionalLayer).length === 0) return 0
                 return Object.keys(additionalLayer).length
+            case "Format Types":
+                if(outputType === "") return 0
+                return 1
             default:
                 return 1
         }

@@ -9,19 +9,15 @@ import BasinData from "app/data/basinLocations.json"
 import DataTypeMap from "app/data/map_sacpas_datatypes.json"
 import LocationMap from "app/data/map_sacpas_sites.json"
 import CloseIcon from '@mui/icons-material/Close';
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-
-
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 
-import { replaceReduxList } from 'app/utils/utils'
 
 const allBasin = BasinData["basinList"]
 const allLocation = LocationData["SacPAS"]
@@ -87,7 +83,7 @@ const StyledCopyButton = styled(Button)(() => ({
     },
 }))
 
-const baseURL = "https://www.cbr.washington.edu/sacramento/data/php/rpt/mg.php?mgconfig=river&outputFormat=plotImage&tempUnit=F&startdate=1/1&enddate=12/31&avgyear=0&consolidate=1&grid=1&y1min=&y1max=&y2min=&y2max=&size=medium"
+const baseURL = "https://www.cbr.washington.edu/sacramento/data/php/rpt/mg.php?mgconfig=river&tempUnit=F&startdate=1/1&enddate=12/31&avgyear=0&consolidate=1&grid=1&y1min=&y1max=&y2min=&y2max=&size=medium"
 
 
 function ClipboardCopy({ copyText }) {
@@ -95,26 +91,26 @@ function ClipboardCopy({ copyText }) {
 
     // This is the function we wrote earlier
     async function copyTextToClipboard(text) {
-      if ('clipboard' in navigator) {
+        if ('clipboard' in navigator) {
         return await navigator.clipboard.writeText(text);
-      } else {
+        } else {
         return document.execCommand('copy', true, text);
-      }
+        }
     }
 
     // onClick handler function for the copy button
     const handleCopyClick = () => {
-      // Asynchronously call copyTextToClipboard
-      copyTextToClipboard(copyText)
+        // Asynchronously call copyTextToClipboard
+        copyTextToClipboard(copyText)
         .then(() => {
-          // If successful, update the isCopied state value
-          setIsCopied(true);
-          setTimeout(() => {
+            // If successful, update the isCopied state value
+            setIsCopied(true);
+            setTimeout(() => {
             setIsCopied(false);
-          }, 1500);
+            }, 1500);
         })
         .catch((err) => {
-          console.log(err);
+            console.log(err);
         });
     }
 
@@ -138,54 +134,18 @@ const Layout1Sidenav = () => {
     const [submitButtonStatus, changeSubmitButtonStatus] = React.useState(false);
 
     const {
-        leftSidebar: {
-            resetStatus
-        },
         map: {
-            filterCondition,
-            baseLayer,
-            additionalLayer,
+            outputType,
             // select
             basinSelected,
             locationSelected,
             yearSelected,
             dataTypeSelected,
-            allQueryData,
             // ifReset
             hydroDisplay,
             locationDisplay,
             dataTypeDisplay,
             yearDisplay,
-            // for location
-            locationBasin,
-            locationType,
-            locationYear,
-            // for basin
-            basinLocation,
-            basinType,
-            basinYear,
-            // for type
-            typeBasin,
-            typeLocation,
-            typeYear,
-
-            yearBasin,
-            yearLocation,
-            yearType,
-            // without filter
-            locationBasinF,
-            locationTypeF,
-            locationYearF,
-
-            basinLocationF,
-            basinTypeF,
-            basinYearF,
-            typeBasinF,
-            typeLocationF,
-            typeYearF,
-            yearBasinF,
-            yearLocationF,
-            yearTypeF
         }
     } = layout1Settings
 
@@ -230,6 +190,7 @@ const Layout1Sidenav = () => {
                     resetStatus: true,
                 },
                 map: {
+                    outputType: "Graph",
                     allQueryData: filteredNavigations,
 
                     basinSelected: emptyBasin,
@@ -251,6 +212,7 @@ const Layout1Sidenav = () => {
             let url_location = ""
             let url_type = ""
             let url_year = ""
+            let url_format = "&outputFormat="
             if (Object.keys(locationSelected).length !== 0)
             {
                 Object.keys(locationSelected).map(item => {
@@ -275,7 +237,28 @@ const Layout1Sidenav = () => {
                 })
             }
 
-            const final_url = baseURL + url_type + url_location + url_year
+
+            if (outputType !== "")
+            {
+                if (outputType === "Graph")
+                {
+                    url_format += "plotImage"
+                } else if (outputType === "Day of Year [DOY] Data Table")
+                {
+                    url_format += "doyReport"
+                } else if (outputType === "Calendar Date [mm/dd] Data Table")
+                {
+                    url_format += "mmddReport"
+                } else if (outputType === "Download CSV Only [mm/dd]")
+                {
+                    url_format += "csv"
+                } else if (outputType === "Download CSV Only [single data pt/row]")
+                {
+                    url_format += "csvSingle"
+                }
+            }
+
+            const final_url = baseURL + url_format + url_type + url_location + url_year
             setUrl(final_url)
             resolve(final_url);
         });
@@ -291,11 +274,45 @@ const Layout1Sidenav = () => {
         window.open(result);
     }
 
+    const handleCheckYaxisCount = () => {
+        let typeMap = TypeData["SacPAS"]
+        let lst = Object.keys(dataTypeSelected)
+        let length = lst.length
+        let uniqueCode = new Set()
+        for (let i = 0; i < length; i++)
+        {
+            uniqueCode.add(typeMap[lst[i]]["units"])
+        }
+        return uniqueCode.size > 2 ? false : true;
+    }
+
     useEffect(() => {
-        if (Object.keys(locationSelected).length > 0 && Object.keys(dataTypeSelected).length > 0 && Object.keys(yearSelected).length > 0)
+        let eighteenCriteriaPass = true
+        let twoYaxisPass = true
+
+        let locationSelectedLength = Object.keys(locationSelected).length
+        let typeSelectedLength = Object.keys(dataTypeSelected).length
+        let yearSelectedLength = Object.keys(yearSelected).length
+
+        twoYaxisPass = handleCheckYaxisCount()
+
+        if (locationSelectedLength * typeSelectedLength * yearSelectedLength > 18)
+        {
+            eighteenCriteriaPass = false
+        }
+
+        if (locationSelectedLength > 0 && typeSelectedLength > 0 && yearSelectedLength > 0)
         {
             changeSubmitButtonStatus(true)
-        } else if (Object.keys(locationSelected).length === 0 || Object.keys(dataTypeSelected).length === 0 || Object.keys(yearSelected).length === 0)
+        } else if (locationSelectedLength === 0 || typeSelectedLength === 0 || yearSelectedLength === 0)
+        {
+            changeSubmitButtonStatus(false)
+        }
+
+        if (!twoYaxisPass)
+        {
+            changeSubmitButtonStatus(false)
+        } else if (!eighteenCriteriaPass)
         {
             changeSubmitButtonStatus(false)
         }

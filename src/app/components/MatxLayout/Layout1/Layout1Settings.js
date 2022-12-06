@@ -28,15 +28,16 @@ const Layout1Settings = {
         theme: 'whiteBlue',
     },
     map: {
-        filterCondition: false,
+        filterCondition: true,
         // ifReset: false,
         // all selected values
+        outputType: 'Graph',
         baseLayer: 'arcgis-oceans',
         basinSelected: {},
         locationSelected: {},
         dataTypeSelected: {},
         yearSelected: {},
-        additionalLayer: {},
+        additionalLayer: { "Surface Water Bodies (NHD)": "Surface Water Bodies (NHD)" },
         // all value display under each category
         hydroDisplay: allBasin,
         locationDisplay: allLocation,
@@ -61,25 +62,6 @@ const Layout1Settings = {
         yearBasin: Object.keys(allBasin),
         yearLocation: Object.keys(allLocation),
         yearType: Object.keys(allType),
-
-        // ******  without filter ******
-        // for location
-        locationBasinF: [],
-        locationTypeF: [],
-        locationYearF: [],
-        // for basin
-        basinLocationF: [],
-        basinTypeF: [],
-        basinYearF: [],
-        // for type
-        typeBasinF: [],
-        typeLocationF: [],
-        typeYearF: [],
-        // for year
-        yearBasinF: [],
-        yearLocationF: [],
-        yearTypeF: [],
-
     },
     // basinSelected: {},
 }

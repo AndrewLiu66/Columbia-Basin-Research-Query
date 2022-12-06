@@ -14,20 +14,17 @@ import YearData from 'app/data/map_sacpas_yearFilter.json'
 import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import Expand from "@arcgis/core/widgets/Expand";
+import Zoom from "@arcgis/core/widgets/Zoom";
 
+import MapImageLayer from "@arcgis/core/layers/MapImageLayer";
 
 const additionalLayerObj = {
-    "Rivers and Streams": new FeatureLayer("https://services8.arcgis.com/7yPK7vytRf49nyPG/arcgis/rest/services/usa_rivers_and_streams/FeatureServer/0"),
+    "Surface Water Bodies (NHD)": new MapImageLayer({
+        url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSHydroCached/MapServer"
+    }),
     "Califonia WBD HUC6 Watersheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer"),
-    "Califonia WBD HUC8 Watersheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer"),
-    "Idaho Priority Waters HUC8": new FeatureLayer("https://services1.arcgis.com/754BERmVIq3RqSf8/arcgis/rest/services/idaho_priority_waters_huc8/FeatureServer"),
-    "Washington HUC6 Watersheds": new FeatureLayer("https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/3"),
-    "Washington HUC8 Watersheds": new FeatureLayer("https://gispublic.dfw.wa.gov/arcgis/rest/services/ApplicationServices/FP_HUC/MapServer/2"),
-    "Oregon HUC8 WaterSheds": new FeatureLayer("https://services7.arcgis.com/Lfg8HsawuFLJUsOU/arcgis/rest/services/Oregon_HUC_08_Watersheds/FeatureServer")
+    "Califonia WBD HUC8 Watersheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer")
 }
-
-
-// const aa1 = new FeatureLayer("https://services7.arcgis.com/Lfg8HsawuFLJUsOU/arcgis/rest/services/Oregon_HUC_08_Watersheds/FeatureServer")
 
 
 const StyledBox = styled(Box)(() => ({
@@ -38,10 +35,11 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 const LocationNameBox = styled("div")(() => ({
-    height: "50px",
+    width: '550px',
+    height: "60px",
     background: "#FFFFFF",
     color: "#565957",
-    fontSize: "14px",
+    fontSize: "18px",
     padding: "15px",
     visibility: "hidden"
 }))
@@ -411,6 +409,16 @@ function Oceanmap() {
         })
     }
 
+    const changeAdditionalLayer = (viewObj, layerName) => {
+        if (!Object.keys(additionalLayer).includes(layerName))
+        {
+            viewObj.map.remove(additionalLayerObj[layerName])
+        } else
+        {
+            viewObj.map.add(additionalLayerObj[layerName])
+        }
+    }
+
     // change the dark color dots on the map
     useEffect(() => {
         removeFeatures()
@@ -455,17 +463,31 @@ function Oceanmap() {
                 map: twebmap,
                 center: [-122.4194, 37.7749], //Longitude, latitude
                 zoom: 7,
+                ui: {
+                    components: ["attribution"]
+                }
             })
 
+            changeAdditionalLayer(view, "Surface Water Bodies (NHD)")
+
+            var zoom = new Zoom({
+                view: view,
+                layout: "horizontal"
+            });
+
+            view.ui.add(zoom, {
+                position: "bottom-right"
+            });
+
             setViewObj(view)
-            for (const add in additionalLayer) {
-                const layer_url =
-                    AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
-                        add
-                    ]
-                const layer = new FeatureLayer(layer_url)
-                view.map.add(layer)
-            }
+            // for (const add in additionalLayer) {
+            //     const layer_url =
+            //         AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
+            //             add
+            //         ]
+            //     const layer = new FeatureLayer(layer_url)
+            //     view.map.add(layer)
+            // }
 
             let basemapGallery = new BasemapGallery({
                 view: view,
@@ -482,30 +504,18 @@ function Oceanmap() {
 
             twebmap.add(monumentLayer)
             twebmap.add(monumentLayer2)
+
         }
     }, [])
 
-    const changeAdditionalLayer = (viewObj, layerName) => {
-        if (!Object.keys(additionalLayer).includes(layerName))
-        {
-            viewObj.map.remove(additionalLayerObj[layerName])
-        } else
-        {
-            viewObj.map.add(additionalLayerObj[layerName])
-        }
-    }
     useEffect(() => {
         if (viewObj)
         {
             if (viewObj.map)
             {
+                changeAdditionalLayer(viewObj, "Surface Water Bodies (NHD)")
                 changeAdditionalLayer(viewObj, "Califonia WBD HUC6 Watersheds")
                 changeAdditionalLayer(viewObj, "Califonia WBD HUC8 Watersheds")
-                changeAdditionalLayer(viewObj, "Idaho Priority Waters HUC8")
-                changeAdditionalLayer(viewObj, "Washington HUC6 WaterSheds")
-                changeAdditionalLayer(viewObj, "Washington HUC8 WaterSheds")
-                changeAdditionalLayer(viewObj, "Oregon HUC8 WaterSheds")
-                changeAdditionalLayer(viewObj, "Rivers and Streams")
             }
         }
     }, [additionalLayer])
@@ -514,7 +524,7 @@ function Oceanmap() {
     useEffect(() => {
         if (view)
         {
-            view.ui.add("name", "bottom-left");
+            view.ui.add("name", "top-left");
             view
             .when()
             .then(() =>

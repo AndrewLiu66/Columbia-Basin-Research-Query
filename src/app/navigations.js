@@ -3,6 +3,7 @@ import sidebarData from 'app/data/map_sacpas_lexicon.json'
 import BasinLocation from 'app/data/basinLocations.json'
 // import BaseLayer from 'app/data/baseLayer.json'
 import AdditionalLayer from 'app/data/additionalLayer.json'
+import OutputFormat from 'app/data/outputFormat.json'
 
 
 export const navigations = [
@@ -30,21 +31,29 @@ export const navigations = [
         icon: '/assets/images/menuIcon/year.png',
         children: sidebarData["SacPAS"]["Years"]
     },
-
+    {
+        label: 'Output Format',
+        type: 'label',
+    },
+    {
+        name: 'Format Types',
+        icon: '/assets/images/menuIcon/output.png',
+        children: OutputFormat["SacPAS"]["formatTypes"]
+    },
     {
         label: 'Map Options',
         type: 'label',
+    },
+    {
+        name: 'Additional Layers',
+        icon: '/assets/images/menuIcon/plus.png',
+        children: AdditionalLayer["SacPAS"]["additionalLayer"]
     },
     // {
     //     name: 'Base Layer',
     //     icon: '/assets/images/menuIcon/layers.png',
     //     children: BaseLayer["SacPAS"]["baseLayer"]
     // },
-    {
-        name: 'Additional Layers',
-        icon: '/assets/images/menuIcon/plus.png',
-        children: AdditionalLayer["SacPAS"]["additionalLayer"]
-    }
 ]
 
 export const getfilteredNavigations = (navList = [], role) => {
