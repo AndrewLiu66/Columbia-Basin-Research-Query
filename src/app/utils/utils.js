@@ -257,19 +257,19 @@ export const updateQueryValue = (DisplayData, filteredData) => {
 }
 
 export const clearObj = (obj) => {
-    let temp = obj
-    Object.keys(temp).forEach(key => {
-        delete temp[key];
-    })
-    return temp
-}
+    // Create a new empty object
+    const temp = Object.assign({});
+
+    // Return the empty object
+    return temp;
+};
+
 export const replaceObjWithOriginal = (cur, original) => {
-    let temp = cur
+    const temp = Object.assign({}, original);
+
+    // Use the keys of the original object to add properties to the temp object
     Object.keys(temp).forEach(key => {
-        delete temp[key];
-    })
-    Object.keys(original).map(item => {
-        return temp[item] = item
-    })
-    return temp
-}
+        temp[key] = key;
+    });
+    return temp;
+};
