@@ -90,9 +90,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     const { layout1Settings } = settings
 
     const {
-        leftSidebar: {
-            resetStatus
-        },
+        leftSidebar: { resetStatus },
         map: {
             additionalLayer,
             // select
@@ -100,15 +98,23 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             locationSelected,
             yearSelected,
             dataTypeSelected,
-            outputType
+            outputType,
         },
     } = layout1Settings
 
     const handleClick = () => {
+        const allNavItems = document.getElementsByClassName('expansion-panel')
+        for (let item of allNavItems) {
+            if (item !== elementRef.current) {
+                item.style.maxHeight = '0px'
+            }
+        }
+
         componentHeight.current = 0
         calcaulateHeight(elementRef.current)
         setCollapsed(!collapsed)
     }
+
     const calcaulateHeight = useCallback((node) => {
         if (node.name !== 'child') {
             for (let child of node.children) {
@@ -124,7 +130,9 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
 
     useEffect(() => {
         setCollapsed(true)
-        updateSettings({ layout1Settings: { leftSidebar: { resetStatus: false}} })
+        updateSettings({
+            layout1Settings: { leftSidebar: { resetStatus: false } },
+        })
     }, [resetStatus])
 
     useEffect(() => {
@@ -143,29 +151,28 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         let type = item['name']
 
         switch (type) {
-            case "Hydrologic Area":
-                if(Object.keys(basinSelected).length === 0) return 0
+            case 'Hydrologic Area':
+                if (Object.keys(basinSelected).length === 0) return 0
                 return Object.keys(basinSelected).length
-            case "Location":
-                if(Object.keys(locationSelected).length === 0) return 0
+            case 'Location':
+                if (Object.keys(locationSelected).length === 0) return 0
                 return Object.keys(locationSelected).length
-            case "Data Type":
-                if(Object.keys(dataTypeSelected).length === 0) return 0
+            case 'Data Type':
+                if (Object.keys(dataTypeSelected).length === 0) return 0
                 return Object.keys(dataTypeSelected).length
-            case "Year":
-                if(Object.keys(yearSelected).length === 0) return 0
+            case 'Year':
+                if (Object.keys(yearSelected).length === 0) return 0
                 return Object.keys(yearSelected).length
-            case "Additional Base Layer":
-                if(Object.keys(additionalLayer).length === 0) return 0
+            case 'Additional Base Layer':
+                if (Object.keys(additionalLayer).length === 0) return 0
                 return Object.keys(additionalLayer).length
-            case "Format Types":
-                if(outputType === "") return 0
+            case 'Format Types':
+                if (outputType === '') return 0
                 return 1
             default:
                 return 1
         }
     }
-
 
     return (
         <NavExpandRoot>
@@ -181,7 +188,8 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
                     <MenuIcon src={item.icon} />
                     {iconText && <BulletIcon />}
                     <ItemText className="sidenavHoverShow">
-                        {name} ({returnTwoListIntersectionCount()}/{item.children.length})
+                        {name} ({returnTwoListIntersectionCount()}/
+                        {item.children.length})
                     </ItemText>
                 </Box>
 
