@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
-import GraphReducer from './GraphReducer'
 
 const RootReducer = combineReducers({
-    graph: GraphReducer
+    graph: {}
 })
 
 export default RootReducer
