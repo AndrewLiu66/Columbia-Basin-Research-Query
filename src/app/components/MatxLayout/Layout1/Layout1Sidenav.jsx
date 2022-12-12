@@ -5,24 +5,23 @@ import Sidenav from '../../Sidenav/Sidenav'
 import useSettings from 'app/hooks/useSettings'
 import { themeShadows } from 'app/components/MatxTheme/themeColors'
 import { navigations, getfilteredNavigations } from 'app/navigations'
-import BasinData from "app/data/basinLocations.json"
-import DataTypeMap from "app/data/map_sacpas_datatypes.json"
-import LocationMap from "app/data/map_sacpas_sites.json"
-import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import BasinData from 'app/data/basinLocations.json'
+import DataTypeMap from 'app/data/map_sacpas_datatypes.json'
+import LocationMap from 'app/data/map_sacpas_sites.json'
+import CloseIcon from '@mui/icons-material/Close'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 
-
-const allBasin = BasinData["basinList"]
-const allLocation = LocationData["SacPAS"]
-const allType = TypeData["SacPAS"]
-const allYears = YearData["SacPAS"]
+const allBasin = BasinData['basinList']
+const allLocation = LocationData['SacPAS']
+const allType = TypeData['SacPAS']
+const allYears = YearData['SacPAS']
 
 const filteredNavigations = getfilteredNavigations(navigations, 'ADMIN')
 
@@ -59,19 +58,18 @@ const ButtonBox = styled(Box)(() => ({
     bottom: '40px',
     display: 'flex',
     cursor: 'pointer',
-    justifyContent: 'center'
+    justifyContent: 'center',
 }))
 
-const OperateButton = styled(Button)(() => ({
-    background: '#837E7E',
-    width: '100px',
-    height: '40px',
-    borderRadius: '8px',
-    color: '#FFFFFF',
-    margin: '0 16px',
-    textAlign: 'center',
-    lineHeight: '40px'
+const WarningMSG = styled(Box)(() => ({
+    color: '#e03b09',
+    width: '200px',
+    position: 'absolute',
+    marginLeft: '-100px',
+    left: '50%',
+    bottom: '90px',
 }))
+
 const StyledCopyButton = styled(Button)(() => ({
     background: '#2F4F40',
     height: '35px',
@@ -83,18 +81,18 @@ const StyledCopyButton = styled(Button)(() => ({
     },
 }))
 
-const baseURL = "https://www.cbr.washington.edu/sacramento/data/php/rpt/mg.php?mgconfig=river&tempUnit=F&startdate=1/1&enddate=12/31&avgyear=0&consolidate=1&grid=1&y1min=&y1max=&y2min=&y2max=&size=medium"
-
+const baseURL =
+    'https://www.cbr.washington.edu/sacramento/data/php/rpt/mg.php?mgconfig=river&tempUnit=F&startdate=1/1&enddate=12/31&avgyear=0&consolidate=1&grid=1&y1min=&y1max=&y2min=&y2max=&size=medium'
 
 function ClipboardCopy({ copyText }) {
-    const [isCopied, setIsCopied] = useState(false);
+    const [isCopied, setIsCopied] = useState(false)
 
     // This is the function we wrote earlier
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
-        return await navigator.clipboard.writeText(text);
+            return await navigator.clipboard.writeText(text)
         } else {
-        return document.execCommand('copy', true, text);
+            return document.execCommand('copy', true, text)
         }
     }
 
@@ -102,23 +100,23 @@ function ClipboardCopy({ copyText }) {
     const handleCopyClick = () => {
         // Asynchronously call copyTextToClipboard
         copyTextToClipboard(copyText)
-        .then(() => {
-            // If successful, update the isCopied state value
-            setIsCopied(true);
-            setTimeout(() => {
-            setIsCopied(false);
-            }, 1500);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+            .then(() => {
+                // If successful, update the isCopied state value
+                setIsCopied(true)
+                setTimeout(() => {
+                    setIsCopied(false)
+                }, 1500)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
         <StyledCopyButton onClick={handleCopyClick}>
             {isCopied ? 'Copied!' : 'Copy'}
         </StyledCopyButton>
-    );
+    )
 }
 
 const Layout1Sidenav = () => {
@@ -130,9 +128,9 @@ const Layout1Sidenav = () => {
     const { bgImgURL } = leftSidebar
     const primaryRGB = convertHexToRGB(theme.palette.primary.main)
     const { layout1Settings } = settings
-    const [open, setOpen] = React.useState(false);
-    const [submitButtonStatus, changeSubmitButtonStatus] = React.useState(false);
-
+    const [open, setOpen] = React.useState(false)
+    const [submitButtonStatus, changeSubmitButtonStatus] = React.useState(false)
+    const [warningStatus, setSWarningStatus] = React.useState(false)
     const {
         map: {
             outputType,
@@ -146,28 +144,28 @@ const Layout1Sidenav = () => {
             locationDisplay,
             dataTypeDisplay,
             yearDisplay,
-        }
+        },
     } = layout1Settings
 
     const handleClose = () => {
-        setOpen(false);
-    };
+        setOpen(false)
+    }
 
     const clearObj = (obj) => {
         let temp = obj
-        Object.keys(temp).forEach(key => {
-            delete temp[key];
+        Object.keys(temp).forEach((key) => {
+            delete temp[key]
         })
         return temp
     }
 
     const replaceObjWithOriginal = (cur, original) => {
         let temp = cur
-        Object.keys(temp).forEach(key => {
-            delete temp[key];
+        Object.keys(temp).forEach((key) => {
+            delete temp[key]
         })
-        Object.keys(original).map(item => {
-            return temp[item] = item
+        Object.keys(original).map((item) => {
+            return (temp[item] = item)
         })
         return temp
     }
@@ -178,10 +176,12 @@ const Layout1Sidenav = () => {
         let emptyType = clearObj(dataTypeSelected)
         let emptyYear = clearObj(yearSelected)
         let emptyBasinDisplay = replaceObjWithOriginal(hydroDisplay, allBasin)
-        let emptyLocationDisplay = replaceObjWithOriginal(locationDisplay, allLocation)
+        let emptyLocationDisplay = replaceObjWithOriginal(
+            locationDisplay,
+            allLocation
+        )
         let emptyTypeDisplay = replaceObjWithOriginal(dataTypeDisplay, allType)
         let emptyYearDisplay = replaceObjWithOriginal(yearDisplay, allYears)
-
 
         changeSubmitButtonStatus(false)
         updateSettings({
@@ -190,7 +190,7 @@ const Layout1Sidenav = () => {
                     resetStatus: true,
                 },
                 map: {
-                    outputType: "Graph",
+                    outputType: 'Graph',
                     allQueryData: filteredNavigations,
 
                     basinSelected: emptyBasin,
@@ -202,88 +202,86 @@ const Layout1Sidenav = () => {
                     locationDisplay: emptyLocationDisplay,
                     dataTypeDisplay: emptyTypeDisplay,
                     yearDisplay: emptyYearDisplay,
-                }
-            }
+                },
+            },
         })
     }
 
     const handleGenerateUrl = () => {
-        return new Promise(resolve => {
-            let url_location = ""
-            let url_type = ""
-            let url_year = ""
-            let url_format = "&outputFormat="
-            if (Object.keys(locationSelected).length !== 0)
-            {
-                Object.keys(locationSelected).map(item => {
-                    url_location = url_location + "&loc[]=" + LocationMap["SacPAS"][item]["webqcode"]
+        return new Promise((resolve) => {
+            let url_location = ''
+            let url_type = ''
+            let url_year = ''
+            let url_format = '&outputFormat='
+            if (Object.keys(locationSelected).length !== 0) {
+                Object.keys(locationSelected).map((item) => {
+                    url_location =
+                        url_location +
+                        '&loc[]=' +
+                        LocationMap['SacPAS'][item]['webqcode']
                     return url_location
                 })
             }
 
-            if (Object.keys(dataTypeSelected).length !== 0)
-            {
-                Object.keys(dataTypeSelected).map(item => {
-                    url_type = url_type + "&data[]=" + DataTypeMap["SacPAS"][item]["webqcode"]
+            if (Object.keys(dataTypeSelected).length !== 0) {
+                Object.keys(dataTypeSelected).map((item) => {
+                    url_type =
+                        url_type +
+                        '&data[]=' +
+                        DataTypeMap['SacPAS'][item]['webqcode']
                     return url_type
                 })
             }
 
-            if (Object.keys(yearSelected).length !== 0)
-            {
-                Object.keys(yearSelected).map(item => {
-                    url_year = url_year + "&year[]=" + item
+            if (Object.keys(yearSelected).length !== 0) {
+                Object.keys(yearSelected).map((item) => {
+                    url_year = url_year + '&year[]=' + item
                     return url_year
                 })
             }
 
-
-            if (outputType !== "")
-            {
-                if (outputType === "Graph")
-                {
-                    url_format += "plotImage"
-                } else if (outputType === "Day of Year [DOY] Data Table")
-                {
-                    url_format += "doyReport"
-                } else if (outputType === "Calendar Date [mm/dd] Data Table")
-                {
-                    url_format += "mmddReport"
-                } else if (outputType === "Download CSV Only [mm/dd]")
-                {
-                    url_format += "csv"
-                } else if (outputType === "Download CSV Only [single data pt/row]")
-                {
-                    url_format += "csvSingle"
+            if (outputType !== '') {
+                if (outputType === 'Graph') {
+                    url_format += 'plotImage'
+                } else if (outputType === 'Day of Year [DOY] Data Table') {
+                    url_format += 'doyReport'
+                } else if (outputType === 'Calendar Date [mm/dd] Data Table') {
+                    url_format += 'mmddReport'
+                } else if (outputType === 'Download CSV Only [mm/dd]') {
+                    url_format += 'csv'
+                } else if (
+                    outputType === 'Download CSV Only [single data pt/row]'
+                ) {
+                    url_format += 'csvSingle'
                 }
             }
 
-            const final_url = baseURL + url_format + url_type + url_location + url_year
+            const final_url =
+                baseURL + url_format + url_type + url_location + url_year
             setUrl(final_url)
-            resolve(final_url);
-        });
+            resolve(final_url)
+        })
     }
 
     const handleOpenUrl = () => {
         handleGenerateUrl()
-        setOpen(true);
-    };
+        setOpen(true)
+    }
 
     const handleTransitToUrl = async () => {
         let result = await handleGenerateUrl()
-        window.open(result);
+        window.open(result)
     }
 
     const handleCheckYaxisCount = () => {
-        let typeMap = TypeData["SacPAS"]
+        let typeMap = TypeData['SacPAS']
         let lst = Object.keys(dataTypeSelected)
         let length = lst.length
         let uniqueCode = new Set()
-        for (let i = 0; i < length; i++)
-        {
-            uniqueCode.add(typeMap[lst[i]]["units"])
+        for (let i = 0; i < length; i++) {
+            uniqueCode.add(typeMap[lst[i]]['units'])
         }
-        return uniqueCode.size > 2 ? false : true;
+        return uniqueCode.size > 2 ? false : true
     }
 
     useEffect(() => {
@@ -296,63 +294,137 @@ const Layout1Sidenav = () => {
 
         twoYaxisPass = handleCheckYaxisCount()
 
-        if (locationSelectedLength * typeSelectedLength * yearSelectedLength > 18)
-        {
+        if (
+            locationSelectedLength * typeSelectedLength * yearSelectedLength >
+            18
+        ) {
             eighteenCriteriaPass = false
         }
 
-        if (locationSelectedLength > 0 && typeSelectedLength > 0 && yearSelectedLength > 0)
-        {
+        if (
+            locationSelectedLength > 0 &&
+            typeSelectedLength > 0 &&
+            yearSelectedLength > 0
+        ) {
             changeSubmitButtonStatus(true)
-        } else if (locationSelectedLength === 0 || typeSelectedLength === 0 || yearSelectedLength === 0)
-        {
+        } else if (
+            locationSelectedLength === 0 ||
+            typeSelectedLength === 0 ||
+            yearSelectedLength === 0
+        ) {
             changeSubmitButtonStatus(false)
         }
-
-        if (!twoYaxisPass)
-        {
+        setSWarningStatus(false)
+        if (!twoYaxisPass) {
             changeSubmitButtonStatus(false)
-        } else if (!eighteenCriteriaPass)
-        {
+            setSWarningStatus(true)
+        } else if (!eighteenCriteriaPass) {
             changeSubmitButtonStatus(false)
+            setSWarningStatus(true)
         }
     }, [locationSelected, dataTypeSelected, yearSelected])
 
     return (
-        <SidebarNavRoot
-            bgImgURL={bgImgURL}
-            primaryBg={primaryRGB}
-        >
+        <SidebarNavRoot bgImgURL={bgImgURL} primaryBg={primaryRGB}>
             <NavListBox>
                 <Sidenav />
                 <ButtonBox>
-                    {submitButtonStatus ? <Button variant="outlined" onClick={handleTransitToUrl} style={{ background: '#2C5243', color: 'white', border: 'none' }}>Submit</Button>: <Button variant="outlined" style={{ background: '#cccccc', color: '#7d7c7c', border: 'none' }}>Submit</Button>}
+                    {submitButtonStatus ? (
+                        <Button
+                            variant="outlined"
+                            onClick={handleTransitToUrl}
+                            style={{
+                                background: '#2C5243',
+                                color: 'white',
+                                border: 'none',
+                            }}
+                        >
+                            Submit
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="outlined"
+                            style={{
+                                background: '#cccccc',
+                                color: '#7d7c7c',
+                                border: 'none',
+                            }}
+                        >
+                            Submit
+                        </Button>
+                    )}
 
-                    {submitButtonStatus? <Button variant="outlined" onClick={handleOpenUrl} style={{ background: '#2C5243', color: 'white', margin: '0 30px', border: 'none' }}>Get Url</Button>:<Button variant="outlined" style={{ background: '#cccccc', margin: '0 30px', color: '#7d7c7c', border: 'none' }}>Get Url</Button>
-                    }
+                    {submitButtonStatus ? (
+                        <Button
+                            variant="outlined"
+                            onClick={handleOpenUrl}
+                            style={{
+                                background: '#2C5243',
+                                color: 'white',
+                                margin: '0 30px',
+                                border: 'none',
+                            }}
+                        >
+                            Get Url
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="outlined"
+                            style={{
+                                background: '#cccccc',
+                                margin: '0 30px',
+                                color: '#7d7c7c',
+                                border: 'none',
+                            }}
+                        >
+                            Get Url
+                        </Button>
+                    )}
 
-                    <Button variant="outlined" onClick={handleReset} style={{ background: '#2C5243', color: 'white', border: 'none'}}>Reset</Button>
+                    <Button
+                        variant="outlined"
+                        onClick={handleReset}
+                        style={{
+                            background: '#2C5243',
+                            color: 'white',
+                            border: 'none',
+                        }}
+                    >
+                        Reset
+                    </Button>
                 </ButtonBox>
+                {warningStatus && (
+                    <WarningMSG>Too many selected! See(?)</WarningMSG>
+                )}
             </NavListBox>
 
-
             <Dialog
-                maxWidth={"lg"}
+                maxWidth={'lg'}
                 fullWidth={true}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-
             >
-                <CloseIcon onClick={handleClose} style={{ position: 'absolute', right: '16px', top: '20px', cursor: 'pointer'}}></CloseIcon>
+                <CloseIcon
+                    onClick={handleClose}
+                    style={{
+                        position: 'absolute',
+                        right: '16px',
+                        top: '20px',
+                        cursor: 'pointer',
+                    }}
+                ></CloseIcon>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description" style={{height: "100px"}}>
+                    <DialogContentText
+                        id="alert-dialog-description"
+                        style={{ height: '100px' }}
+                    >
                         {url}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <ClipboardCopy copyText={url} />
+                    <ClipboardCopy copyText={url} />
                 </DialogActions>
             </Dialog>
         </SidebarNavRoot>

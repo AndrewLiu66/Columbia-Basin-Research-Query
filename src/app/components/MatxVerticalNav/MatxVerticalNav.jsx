@@ -239,17 +239,10 @@ const MatxVerticalNav = () => {
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
-        let locationTemp = updateQueryValue(locationDisplay, newLocation)
-        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
-        let yearTemp = updateQueryValue(yearDisplay, newYear)
-
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    // locationDisplay: locationTemp,
-                    // dataTypeDisplay: typeTemp,
-                    // yearDisplay: yearTemp,
                 },
             },
         })
@@ -316,17 +309,10 @@ const MatxVerticalNav = () => {
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
-        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
-        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
-        let yearTemp = updateQueryValue(yearDisplay, newYear)
-
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    // hydroDisplay: basinTemp,
-                    // dataTypeDisplay: typeTemp,
-                    // yearDisplay: yearTemp,
                 },
             },
         })
@@ -391,17 +377,10 @@ const MatxVerticalNav = () => {
         temp[2].children = convertListToListOfObjWithName(newLocation)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
-        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
-        let locationTemp = updateQueryValue(locationDisplay, newLocation)
-        let yearTemp = updateQueryValue(yearDisplay, newYear)
-
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    // hydroDisplay: basinTemp,
-                    // locationDisplay: locationTemp,
-                    // yearDisplay: yearTemp,
                 },
             },
         })
@@ -459,17 +438,10 @@ const MatxVerticalNav = () => {
         temp[2].children = convertListToListOfObjWithName(newLocation)
         temp[3].children = convertListToListOfObjWithName(newType)
 
-        // let basinTemp = updateQueryValue(hydroDisplay, newBasin)
-        // let locationTemp = updateQueryValue(locationDisplay, newLocation)
-        // let typeTemp = updateQueryValue(dataTypeDisplay, newType)
-
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
-                    // hydroDisplay: basinTemp,
-                    // locationDisplay: locationTemp,
-                    // dataTypeDisplay: typeTemp,
                 },
             },
         })
@@ -519,30 +491,6 @@ const MatxVerticalNav = () => {
 
     // ***** handle toggle button logic *****
     const handleEnableFilter = (event) => {
-        // let curr = filterCondition
-        // if (!curr) // when filter is enabled
-        // {
-        //     handleBasinClick()
-        //     handleLocationClick()
-        //     handleTypeClick()
-        //     handleYearClick()
-        // } else // when filter is disabled
-        // {
-        //     let temp = allQueryData
-        //     temp[1].children = convertListToListOfObjWithName(allBasinList)
-        //     temp[2].children = convertListToListOfObjWithName(allLocationList)
-        //     temp[3].children = convertListToListOfObjWithName(allTypeList)
-        //     temp[4].children = convertListToListOfObjWithName(allYearsList)
-        // }
-
-        // updateSettings({
-        //     layout1Settings: {
-        //         map: {
-        //             filterCondition: !curr,
-        //         }
-        //     }
-        // })
-
         let curr = filterCondition
         let emptyBasin = clearObj(basinSelected)
         let emptyLocation = clearObj(locationSelected)
