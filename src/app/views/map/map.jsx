@@ -6,26 +6,28 @@ import Graphic from '@arcgis/core/Graphic'
 import { styled, Box } from '@mui/system'
 import useSettings from 'app/hooks/useSettings'
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer'
-import AdditionalLayerSources from 'app/data/additionalLayerSources.json'
-import BasinData from "app/data/basinLocations.json"
+import BasinData from 'app/data/basinLocations.json'
 import LocationData from 'app/data/map_sacpas_sites.json'
 import TypeData from 'app/data/map_sacpas_datatypes.json'
 import YearData from 'app/data/map_sacpas_yearFilter.json'
 import locationFilter from 'app/data/map_sacpas_locationFilter.json'
-import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
-import Expand from "@arcgis/core/widgets/Expand";
-import Zoom from "@arcgis/core/widgets/Zoom";
+import BasemapGallery from '@arcgis/core/widgets/BasemapGallery'
+import Expand from '@arcgis/core/widgets/Expand'
+import Zoom from '@arcgis/core/widgets/Zoom'
 
-import MapImageLayer from "@arcgis/core/layers/MapImageLayer";
+import MapImageLayer from '@arcgis/core/layers/MapImageLayer'
 
 const additionalLayerObj = {
-    "Surface Water Bodies (NHD)": new MapImageLayer({
-        url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSHydroCached/MapServer"
+    'Surface Water Bodies (NHD)': new MapImageLayer({
+        url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSHydroCached/MapServer',
     }),
-    "Califonia WBD HUC6 Watersheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer"),
-    "Califonia WBD HUC8 Watersheds": new FeatureLayer("https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer")
+    'Califonia WBD HUC6 Watersheds': new FeatureLayer(
+        'https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/NHD_HUC6_Watersheds/FeatureServer'
+    ),
+    'Califonia WBD HUC8 Watersheds': new FeatureLayer(
+        'https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/Hydrologic_Units/FeatureServer'
+    ),
 }
-
 
 const StyledBox = styled(Box)(() => ({
     padding: 0,
@@ -34,16 +36,15 @@ const StyledBox = styled(Box)(() => ({
     width: '100%',
 }))
 
-const LocationNameBox = styled("div")(() => ({
+const LocationNameBox = styled('div')(() => ({
     width: '550px',
-    height: "60px",
-    background: "#FFFFFF",
-    color: "#565957",
-    fontSize: "18px",
-    padding: "15px",
-    visibility: "hidden"
+    height: '60px',
+    background: '#FFFFFF',
+    color: '#565957',
+    fontSize: '18px',
+    padding: '15px',
+    visibility: 'hidden',
 }))
-
 
 esriConfig.apiKey =
     'AAPK460c081ffc584c5090c2b383ede3366b1JA6FLMBYno7qMVVlHo12K6EOAtFnfYV_6UQH2_bUGzYM0qQIBxyfrSfrVF8mJM8'
@@ -144,15 +145,15 @@ const removeFeatures2 = () => {
     })
 }
 const getIntersection = (a, b) => {
-    var setB = new Set(b);
-    return [...new Set(a)].filter(x => setB.has(x));
+    var setB = new Set(b)
+    return [...new Set(a)].filter((x) => setB.has(x))
 }
 
 const getIntersectionThree = (a, b, c) => {
-    var setB = new Set(b);
-    var setC = new Set(c);
-    var temp = [...new Set(a)].filter(x => setB.has(x));
-    return [...new Set(temp)].filter(x => setC.has(x));
+    var setB = new Set(b)
+    var setC = new Set(c)
+    var temp = [...new Set(a)].filter((x) => setB.has(x))
+    return [...new Set(temp)].filter((x) => setC.has(x))
 }
 
 const addFeatures = (locationDisplay) => {
@@ -196,7 +197,6 @@ const addFeatures = (locationDisplay) => {
     applyEditsToLayer(addEdits)
     // return addEdits
     return addEdits
-
 }
 
 const addFeatures2 = (locationSelected) => {
@@ -242,8 +242,7 @@ const addFeatures2 = (locationSelected) => {
 const applyEditsToLayer = (edits) => {
     monumentLayer
         .applyEdits(edits)
-            .then((editsResult) => {
-        })
+        .then((editsResult) => {})
         .catch((error) => {
             console.log('error = ', error)
         })
@@ -266,17 +265,16 @@ const applyEditsToLayer2 = (edits) => {
 
 const convertListToListOfObjWithName = (lst) => {
     let res = []
-    lst.map(item => {
+    lst.map((item) => {
         res.push({ name: item })
         return res
     })
     return res
 }
 
-const allBasin = BasinData["basinList"]
-const allType = TypeData["SacPAS"]
-const allYears = YearData["SacPAS"]
-
+const allBasin = BasinData['basinList']
+const allType = TypeData['SacPAS']
+const allYears = YearData['SacPAS']
 
 function Oceanmap() {
     const { settings, updateSettings } = useSettings()
@@ -305,8 +303,8 @@ function Oceanmap() {
             typeBasin,
             typeYear,
             yearBasin,
-            yearType
-        }
+            yearType,
+        },
     } = layout1Settings
 
     const handleItemSelected = (querySelect, item) => {
@@ -321,11 +319,11 @@ function Oceanmap() {
 
     const updateQueryValue = (DisplayData, filteredData) => {
         let temp1 = DisplayData
-        Object.keys(temp1).forEach(key => {
-            delete temp1[key];
+        Object.keys(temp1).forEach((key) => {
+            delete temp1[key]
         })
 
-        filteredData.map(item => {
+        filteredData.map((item) => {
             temp1[item] = item
             return temp1
         })
@@ -333,8 +331,7 @@ function Oceanmap() {
     }
 
     let view
-
-
+    console.log('locationDisplay', locationDisplay)
     const [baseDots, setBaseDots] = useState({})
     const [alteredIds, setAlteredIds] = useState('')
     const [displayNameId, setDisplayNameId] = useState('')
@@ -344,33 +341,48 @@ function Oceanmap() {
     const replaceReduxList = (old, newLst) => {
         let temp = old
         while (temp.length > 0) {
-            temp.pop();
+            temp.pop()
         }
-        for (let i = 0; i < newLst.length; i++)
-        {
+        for (let i = 0; i < newLst.length; i++) {
             temp.push(newLst[i])
         }
         return temp
     }
 
-
     const handleLocationClick = () => {
         // if chose a new basin, all basin - location, type, year gets updated
-        let newlocationBasin = Object.keys(allBasin);
-        let newlocationType = Object.keys(allType);
-        let newlocationYear = Object.keys(allYears);
+        let newlocationBasin = Object.keys(allBasin)
+        let newlocationType = Object.keys(allType)
+        let newlocationYear = Object.keys(allYears)
 
-        for (let i = 0; i < Object.keys(locationSelected).length; i++)
-        {
+        for (let i = 0; i < Object.keys(locationSelected).length; i++) {
             let item = Object.keys(locationSelected)[i]
-            newlocationBasin = getIntersection(newlocationBasin, locationFilter["SacPAS"][item]["Hydrologic Area"])
-            newlocationType = getIntersection(newlocationType, locationFilter["SacPAS"][item]["Data Type"])
-            newlocationYear = getIntersection(newlocationYear, locationFilter["SacPAS"][item]["Year"])
+            newlocationBasin = getIntersection(
+                newlocationBasin,
+                locationFilter['SacPAS'][item]['Hydrologic Area']
+            )
+            newlocationType = getIntersection(
+                newlocationType,
+                locationFilter['SacPAS'][item]['Data Type']
+            )
+            newlocationYear = getIntersection(
+                newlocationYear,
+                locationFilter['SacPAS'][item]['Year']
+            )
         }
 
-        let updatedLocationBasin = replaceReduxList(locationBasin, newlocationBasin)
-        let updatedLocationType = replaceReduxList(locationType, newlocationType)
-        let updatedLocationYear = replaceReduxList(locationYear, newlocationYear)
+        let updatedLocationBasin = replaceReduxList(
+            locationBasin,
+            newlocationBasin
+        )
+        let updatedLocationType = replaceReduxList(
+            locationType,
+            newlocationType
+        )
+        let updatedLocationYear = replaceReduxList(
+            locationYear,
+            newlocationYear
+        )
 
         updateSettings({
             layout1Settings: {
@@ -378,20 +390,25 @@ function Oceanmap() {
                     locationBasin: updatedLocationBasin,
                     locationType: updatedLocationType,
                     locationYear: updatedLocationYear,
-                }
-            }
+                },
+            },
         })
-        let newBasin = getIntersectionThree(newlocationBasin, typeBasin, yearBasin)
+        let newBasin = getIntersectionThree(
+            newlocationBasin,
+            typeBasin,
+            yearBasin
+        )
         let newType = getIntersectionThree(newlocationType, basinType, yearType)
         let newYear = getIntersectionThree(newlocationYear, basinYear, typeYear)
-        newYear = newYear.sort((a, b) => {return b - a});
+        newYear = newYear.sort((a, b) => {
+            return b - a
+        })
 
         // console.log("newLocation", newLocation)
         let temp = allQueryData
         temp[1].children = convertListToListOfObjWithName(newBasin)
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
-
 
         let basinTemp = updateQueryValue(hydroDisplay, newBasin)
         let typeTemp = updateQueryValue(dataTypeDisplay, newType)
@@ -404,17 +421,15 @@ function Oceanmap() {
                     hydroDisplay: basinTemp,
                     dataTypeDisplay: typeTemp,
                     yearDisplay: yearTemp,
-                }
-            }
+                },
+            },
         })
     }
 
     const changeAdditionalLayer = (viewObj, layerName) => {
-        if (!Object.keys(additionalLayer).includes(layerName))
-        {
+        if (!Object.keys(additionalLayer).includes(layerName)) {
             viewObj.map.remove(additionalLayerObj[layerName])
-        } else
-        {
+        } else {
             viewObj.map.add(additionalLayerObj[layerName])
         }
     }
@@ -464,152 +479,136 @@ function Oceanmap() {
                 center: [-122.4194, 37.7749], //Longitude, latitude
                 zoom: 7,
                 ui: {
-                    components: ["attribution"]
-                }
+                    components: ['attribution'],
+                },
             })
 
-            changeAdditionalLayer(view, "Surface Water Bodies (NHD)")
+            changeAdditionalLayer(view, 'Surface Water Bodies (NHD)')
 
             var zoom = new Zoom({
                 view: view,
-                layout: "horizontal"
-            });
+                layout: 'horizontal',
+            })
 
             view.ui.add(zoom, {
-                position: "bottom-right"
-            });
+                position: 'bottom-right',
+            })
 
             setViewObj(view)
-            // for (const add in additionalLayer) {
-            //     const layer_url =
-            //         AdditionalLayerSources['SacPAS']['additionalLayerSouces'][
-            //             add
-            //         ]
-            //     const layer = new FeatureLayer(layer_url)
-            //     view.map.add(layer)
-            // }
 
             let basemapGallery = new BasemapGallery({
                 view: view,
-                // source: [Basemap.fromId("arcgis-oceans"), Basemap.fromId("national-geographic"), Basemap.fromId("arcgis-terrain"), Basemap.fromId("arcgis-charted-territory"), Basemap.fromId("arcgis-community")]
-            });
+            })
 
             const bgExpand = new Expand({
                 view,
                 content: basemapGallery,
-                expandIconClass: "esri-icon-basemap"
-            });
+                expandIconClass: 'esri-icon-basemap',
+            })
 
-            view.ui.add(bgExpand, "top-right");
+            view.ui.add(bgExpand, 'top-right')
 
             twebmap.add(monumentLayer)
             twebmap.add(monumentLayer2)
-
         }
     }, [])
 
     useEffect(() => {
-        if (viewObj)
-        {
-            if (viewObj.map)
-            {
-                changeAdditionalLayer(viewObj, "Surface Water Bodies (NHD)")
-                changeAdditionalLayer(viewObj, "Califonia WBD HUC6 Watersheds")
-                changeAdditionalLayer(viewObj, "Califonia WBD HUC8 Watersheds")
+        if (viewObj) {
+            if (viewObj.map) {
+                changeAdditionalLayer(viewObj, 'Surface Water Bodies (NHD)')
+                changeAdditionalLayer(viewObj, 'Califonia WBD HUC6 Watersheds')
+                changeAdditionalLayer(viewObj, 'Califonia WBD HUC8 Watersheds')
             }
         }
     }, [additionalLayer])
 
-
     useEffect(() => {
-        if (view)
-        {
-            view.ui.add("name", "top-left");
-            view
-            .when()
-            .then(() =>
-            {
-                return monumentLayer.when();
-            })
-            .then((layer) =>
-            {
-                const renderer = layer.renderer.clone();
-                renderer.symbol.width = 4;
-                renderer.symbol.color = [128, 128, 128, 0.8];
-                layer.renderer = renderer;
-                return view.whenLayerView(layer);
-            })
-            .then((layerView) =>
-            {
-                    view.on("pointer-move", eventHandler);
-                    let lock = true;
-                    function eventHandler(event)
-                    {
-
-                        if (!lock) return;
+        if (view) {
+            view.ui.add('name', 'top-left')
+            view.when()
+                .then(() => {
+                    return monumentLayer.when()
+                })
+                .then((layer) => {
+                    const renderer = layer.renderer.clone()
+                    renderer.symbol.width = 4
+                    renderer.symbol.color = [128, 128, 128, 0.8]
+                    layer.renderer = renderer
+                    return view.whenLayerView(layer)
+                })
+                .then((layerView) => {
+                    view.on('pointer-move', eventHandler)
+                    let lock = true
+                    function eventHandler(event) {
+                        if (!lock) return
 
                         const opts = {
-                            include: [monumentLayer]
-                        };
+                            include: [monumentLayer],
+                        }
 
-                        view.hitTest(event, opts).then(getGraphics).catch(() => {
-                            // console.log("something happen")
-                        }).catch(() => {
-                            // console.log("something happen3")
-                        });
+                        view.hitTest(event, opts)
+                            .then(getGraphics)
+                            .catch(() => {
+                                // console.log("something happen")
+                            })
+                            .catch(() => {
+                                // console.log("something happen3")
+                            })
 
                         lock = false
 
                         setTimeout(function () {
-                            lock = true;
+                            lock = true
                         }, 180)
                     }
 
-                    let highlight, currentId;
+                    let highlight, currentId
 
-                    function getGraphics(response)
-                    {
+                    function getGraphics(response) {
                         if (response.results.length) {
-                            const graphic = response.results[0].graphic;
-                            const attributes = graphic.attributes;
-                            const id = attributes.ObjectID;
-                            if (
-                                highlight &&
-                                (currentId !== id)
-                            ) {
-                                highlight.remove();
-                                highlight = null;
-                                return;
+                            const graphic = response.results[0].graphic
+                            const attributes = graphic.attributes
+                            const id = attributes.ObjectID
+                            if (highlight && currentId !== id) {
+                                highlight.remove()
+                                highlight = null
+                                return
                             }
                             if (highlight) {
-                                return;
+                                return
                             }
-                            document.getElementById("name").style.visibility = "visible";
+                            document.getElementById('name').style.visibility =
+                                'visible'
                             setDisplayNameId(id)
 
-                            const query = layerView.createQuery();
-                            query.where = "ObjectID = " + id;
-                            layerView.queryObjectIds(query).then((ids) =>
-                            {
-                                if (highlight) {
-                                    highlight.remove();
-                                }
-                                highlight = layerView.highlight(ids);
-                                currentId = id;
-                            }).catch(() => {
-                                // console.log("something happen2")
-                            });
+                            const query = layerView.createQuery()
+                            query.where = 'ObjectID = ' + id
+                            layerView
+                                .queryObjectIds(query)
+                                .then((ids) => {
+                                    if (highlight) {
+                                        highlight.remove()
+                                    }
+                                    highlight = layerView.highlight(ids)
+                                    currentId = id
+                                })
+                                .catch(() => {
+                                    // console.log("something happen2")
+                                })
                         } else {
                             if (highlight) {
-                                highlight.remove();
-                                highlight = null;
+                                highlight.remove()
+                                highlight = null
                             }
-                            document.getElementById("name").style.visibility = "hidden";
+                            document.getElementById('name').style.visibility =
+                                'hidden'
                         }
                     }
-            }).catch(() => {
-                // console.log("something happen3")
-            });
+                })
+                .catch(() => {
+                    // console.log("something happen3")
+                })
         }
     })
 
@@ -617,7 +616,7 @@ function Oceanmap() {
         for (let i = 0; i < baseDots.length; i++) {
             if (baseDots[i].attributes.ObjectID === displayNameId) {
                 let selectedLocationName = baseDots[i].attributes.Name
-                document.getElementById("name").innerHTML = selectedLocationName;
+                document.getElementById('name').innerHTML = selectedLocationName
             }
         }
     }, [displayNameId])
@@ -630,16 +629,18 @@ function Oceanmap() {
                     include: monumentLayer,
                 }
 
-                view.hitTest(event, opts).then((response) => {
-                    // check if a feature is returned from the hurricanesLayer
-                    if (response.results.length) {
-                        const graphic = response.results[0].graphic
-                        const attributes = graphic.attributes
-                        setAlteredIds(attributes)
-                    }
-                }).catch(() => {
-                    // console.log("something happen3")
-                })
+                view.hitTest(event, opts)
+                    .then((response) => {
+                        // check if a feature is returned from the hurricanesLayer
+                        if (response.results.length) {
+                            const graphic = response.results[0].graphic
+                            const attributes = graphic.attributes
+                            setAlteredIds(attributes)
+                        }
+                    })
+                    .catch(() => {
+                        // console.log("something happen3")
+                    })
             })
         }
     })
