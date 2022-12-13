@@ -331,7 +331,11 @@ function Oceanmap() {
     }
 
     let view
-    console.log('locationDisplay', locationDisplay)
+    console.log(
+        'locationDisplay',
+        Object.keys(locationDisplay),
+        Object.keys(locationDisplay).length
+    )
     const [baseDots, setBaseDots] = useState({})
     const [alteredIds, setAlteredIds] = useState('')
     const [displayNameId, setDisplayNameId] = useState('')
