@@ -47,11 +47,6 @@ const allLocation = LocationData['SacPAS']
 const allType = TypeData['SacPAS']
 const allYears = YearData['SacPAS']
 
-const allBasinList = Object.keys(BasinData['basinList'])
-const allLocationList = Object.keys(LocationData['SacPAS'])
-const allTypeList = Object.keys(TypeData['SacPAS'])
-const allYearsList = Object.keys(YearData['SacPAS'])
-
 const ListLabel = styled(Box)(({ theme, mode }) => ({
     fontSize: '13px',
     marginTop: '20px',
@@ -316,10 +311,17 @@ const MatxVerticalNav = () => {
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    dataTypeDisplay: typeTemp,
+                    yearDisplay: yearTemp,
                 },
             },
         })
@@ -384,10 +386,17 @@ const MatxVerticalNav = () => {
         temp[2].children = convertListToListOfObjWithName(newLocation)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    locationDisplay: locationTemp,
+                    yearDisplay: yearTemp,
                 },
             },
         })
@@ -445,10 +454,17 @@ const MatxVerticalNav = () => {
         temp[2].children = convertListToListOfObjWithName(newLocation)
         temp[3].children = convertListToListOfObjWithName(newType)
 
+        let basinTemp = updateQueryValue(hydroDisplay, newBasin)
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
+                    hydroDisplay: basinTemp,
+                    locationDisplay: locationTemp,
+                    dataTypeDisplay: typeTemp,
                 },
             },
         })

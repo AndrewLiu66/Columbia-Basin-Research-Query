@@ -434,11 +434,6 @@ function Oceanmap() {
         }
     }
 
-    console.log(
-        'locationDisplay',
-        Object.keys(locationDisplay),
-        Object.keys(locationDisplay).length
-    )
     // change the dark color dots on the map
     useEffect(() => {
         removeFeatures()
