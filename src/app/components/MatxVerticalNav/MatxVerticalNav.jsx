@@ -239,10 +239,17 @@ const MatxVerticalNav = () => {
         temp[3].children = convertListToListOfObjWithName(newType)
         temp[4].children = convertListToListOfObjWithName(newYear)
 
+        let locationTemp = updateQueryValue(locationDisplay, newLocation)
+        let typeTemp = updateQueryValue(dataTypeDisplay, newType)
+        let yearTemp = updateQueryValue(yearDisplay, newYear)
+
         updateSettings({
             layout1Settings: {
                 map: {
                     allQueryData: temp,
+                    locationDisplay: locationTemp,
+                    dataTypeDisplay: typeTemp,
+                    yearDisplay: yearTemp,
                 },
             },
         })
