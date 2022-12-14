@@ -163,7 +163,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             case 'Year':
                 if (Object.keys(yearSelected).length === 0) return 0
                 return Object.keys(yearSelected).length
-            case 'Additional Base Layer':
+            case 'Additional Layers':
                 if (Object.keys(additionalLayer).length === 0) return 0
                 return Object.keys(additionalLayer).length
             case 'Format Types':

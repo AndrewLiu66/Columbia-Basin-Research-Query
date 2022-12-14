@@ -191,7 +191,6 @@ export const getApiLocation = (location) => {
     return location.replace(' ', '_').toLowerCase()
 }
 
-
 export const handleOutputName = (location, start, end, selectedValue = "") => {
     if (selectedValue === "CTD")
         return location + '-CTD-' + start + '-' + end
@@ -199,27 +198,45 @@ export const handleOutputName = (location, start, end, selectedValue = "") => {
 }
 
 export const getIntersection = (a, b) => {
-    var setB = new Set(b);
-    return [...new Set(a)].filter(x => setB.has(x));
-}
+    const uniqueA = a.filter((x, i) => a.indexOf(x) === i);
+    const uniqueB = b.filter((x, i) => b.indexOf(x) === i);
+    const intersection = [];
+    for (const element of uniqueA) {
+      if (uniqueB.includes(element)) {
+        intersection.push(element);
+      }
+    }
+
+    return intersection;
+  };
+
 
 export const getIntersectionThree = (a, b, c) => {
-    var setB = new Set(b);
-    var setC = new Set(c);
-    var temp = [...new Set(a)].filter(x => setB.has(x));
-    return [...new Set(temp)].filter(x => setC.has(x));
-}
+    // Use the Array.prototype.filter() method to find the unique elements in each array
+    const uniqueA = a.filter((x, i) => a.indexOf(x) === i);
+    const uniqueB = b.filter((x, i) => b.indexOf(x) === i);
+    const uniqueC = c.filter((x, i) => c.indexOf(x) === i);
+    // Create a new empty array to store the intersection
+    const intersection = [];
+    // Iterate over the unique elements in uniqueA and find the intersection with uniqueB and uniqueC
+    for (const element of uniqueA) {
+      if (uniqueB.includes(element) && uniqueC.includes(element)) {
+        intersection.push(element);
+      }
+    }
+    return intersection;
+};
 
 export function twoArrayUnion(arr1, arr2) {
-    const union = Array.from(new Set([...arr1, ...arr2]));
-    return union
+    const combined = arr1.concat(arr2);
+    const union = Array.from(new Set(combined));
+    return union;
 }
 
 export function threeArrayUnion(arr1, arr2, arr3) {
-    const union = Array.from(new Set([...arr1, ...arr2, ...arr3]));
-    return union
+    const union = Array.from(new Set(arr1.concat(arr2, arr3)));
+    return union;
 }
-
 
 export const convertListToListOfObjWithName = (lst) => {
     let res = []
@@ -257,7 +274,6 @@ export const updateQueryValue = (DisplayData, filteredData) => {
 }
 
 export const clearObj = (obj) => {
-    // Create a new empty object
     const temp = Object.assign({});
     return temp;
 };
@@ -265,7 +281,6 @@ export const clearObj = (obj) => {
 export const replaceObjWithOriginal = (cur, original) => {
     const temp = Object.assign({}, original);
 
-    // Use the keys of the original object to add properties to the temp object
     Object.keys(temp).forEach(key => {
         temp[key] = key;
     });

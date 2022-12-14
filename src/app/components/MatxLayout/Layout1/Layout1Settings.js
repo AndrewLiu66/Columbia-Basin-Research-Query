@@ -37,7 +37,7 @@ const Layout1Settings = {
         locationSelected: {},
         dataTypeSelected: {},
         yearSelected: {},
-        additionalLayer: { "Surface Water Bodies (NHD)": "Surface Water Bodies (NHD)" },
+        additionalLayer: {},
         // all value display under each category
         hydroDisplay: allBasin,
         locationDisplay: allLocation,
