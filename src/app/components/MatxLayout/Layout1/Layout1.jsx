@@ -4,9 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { styled, Box, useTheme } from '@mui/system'
 import { useMediaQuery } from '@mui/material'
 import MatxSuspense from 'app/components/MatxSuspense/MatxSuspense'
-import SidenavTheme from '../../MatxTheme/SidenavTheme/SidenavTheme'
 import Layout1Sidenav from './Layout1Sidenav'
-
 
 const Layout1Root = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -43,7 +41,6 @@ const LayoutContainer = styled(Box)(({ width }) => ({
     transition: 'all 0.3s ease',
 }))
 
-
 const Layout1 = () => {
     const { settings, updateSettings } = useSettings()
 
@@ -64,19 +61,15 @@ const Layout1 = () => {
 
     return (
         <Layout1Root className={layoutClasses}>
-            {/* <Layout1Sidenav style={{background: 'orange'}}/> */}
             <SideNavBox>
-                {/* sidenav */}
-                {/* <SidenavTheme> */}
-                <Layout1Sidenav style={{background: 'orange'}}/>
-                {/* </SidenavTheme> */}
+                <Layout1Sidenav />
             </SideNavBox>
 
             <LayoutContainer>
-                <ContentBox width='100%'>
-                    <Box flexGrow={1} position="relative" width='100%'>
+                <ContentBox width="100%">
+                    <Box flexGrow={1} position="relative" width="100%">
                         <MatxSuspense>
-                            <Outlet width='100%'/>
+                            <Outlet width="100%" />
                         </MatxSuspense>
                     </Box>
                 </ContentBox>

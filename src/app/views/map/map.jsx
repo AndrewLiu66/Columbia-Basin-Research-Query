@@ -14,7 +14,12 @@ import locationFilter from 'app/data/map_sacpas_locationFilter.json'
 import BasemapGallery from '@arcgis/core/widgets/BasemapGallery'
 import Expand from '@arcgis/core/widgets/Expand'
 import Zoom from '@arcgis/core/widgets/Zoom'
-
+import {
+    getIntersection,
+    getIntersectionThree,
+    convertListToListOfObjWithName,
+    updateQueryValue,
+} from 'app/utils/utils'
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer'
 
 const additionalLayerObj = {
@@ -144,17 +149,6 @@ const removeFeatures2 = () => {
         applyEditsToLayer2(deleteEdits)
     })
 }
-const getIntersection = (a, b) => {
-    var setB = new Set(b)
-    return [...new Set(a)].filter((x) => setB.has(x))
-}
-
-const getIntersectionThree = (a, b, c) => {
-    var setB = new Set(b)
-    var setC = new Set(c)
-    var temp = [...new Set(a)].filter((x) => setB.has(x))
-    return [...new Set(temp)].filter((x) => setC.has(x))
-}
 
 const addFeatures = (locationDisplay) => {
     let data = Object.keys(locationDisplay)
@@ -193,7 +187,6 @@ const addFeatures = (locationDisplay) => {
     const addEdits = {
         addFeatures: graphics,
     }
-    // console.log('addEdits', addEdits)
     applyEditsToLayer(addEdits)
     // return addEdits
     return addEdits
@@ -240,36 +233,15 @@ const addFeatures2 = (locationSelected) => {
 }
 
 const applyEditsToLayer = (edits) => {
-    monumentLayer
-        .applyEdits(edits)
-        .then((editsResult) => {})
-        .catch((error) => {
-            console.log('error = ', error)
-        })
+    monumentLayer.applyEdits(edits).catch((error) => {
+        console.log('error = ', error)
+    })
 }
 
 const applyEditsToLayer2 = (edits) => {
-    monumentLayer2
-        .applyEdits(edits)
-        .then((editsResult) => {
-            // console.log('edits', edits)
-            if (editsResult.addFeatureResults.length > 0) {
-                // console.log('editsResult', editsResult)
-                // selectFeature(objectId);
-            }
-        })
-        .catch((error) => {
-            console.log('error = ', error)
-        })
-}
-
-const convertListToListOfObjWithName = (lst) => {
-    let res = []
-    lst.map((item) => {
-        res.push({ name: item })
-        return res
+    monumentLayer2.applyEdits(edits).catch((error) => {
+        console.log('error = ', error)
     })
-    return res
 }
 
 const allBasin = BasinData['basinList']
@@ -315,19 +287,6 @@ function Oceanmap() {
             temp[item] = item
         }
         updateSettings({ layout1Settings: { map: { querySelect: temp } } })
-    }
-
-    const updateQueryValue = (DisplayData, filteredData) => {
-        let temp1 = DisplayData
-        Object.keys(temp1).forEach((key) => {
-            delete temp1[key]
-        })
-
-        filteredData.map((item) => {
-            temp1[item] = item
-            return temp1
-        })
-        return temp1
     }
 
     let view

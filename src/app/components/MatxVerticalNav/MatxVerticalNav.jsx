@@ -170,12 +170,20 @@ const MatxVerticalNav = () => {
         setOpen(false)
     }
 
-    // clear all the key value pairs. and add new selected items
-    const handleItemSelected = (querySelect, item) => {
-        let temp = querySelect
-        if (Object.keys(temp).includes(item)) delete temp[item]
-        else temp[item] = item
-        updateSettings({ layout1Settings: { map: { querySelect: temp } } })
+    const handleItemSelected = (querySelect, item, type = '') => {
+        // let temp = querySelect
+        if (type !== '') {
+            // Empty the querySelect object
+            for (let i = 0; i < Object.keys(querySelect).length; i++) {
+                delete querySelect[Object.keys(querySelect)[i]]
+            }
+            querySelect[item] = item
+        } else {
+            if (Object.keys(querySelect).includes(item))
+                delete querySelect[item]
+            else querySelect[item] = item
+        }
+        updateSettings({ layout1Settings: { map: { querySelect } } })
     }
 
     // ***** handle query item selected, and generate filtered list *****
@@ -472,7 +480,7 @@ const MatxVerticalNav = () => {
 
     const handleItemClick = (item, index) => {
         if (Object.keys(BasinData['basinList']).includes(item)) {
-            handleItemSelected(basinSelected, item)
+            handleItemSelected(basinSelected, item, 'basinClick')
             if (filterCondition) {
                 handleBasinClick()
             }
@@ -629,7 +637,10 @@ const MatxVerticalNav = () => {
                                             data type. There is also a limit of
                                             2 y-axes, each representing a
                                             different unit of measurement.{' '}
-                                            <a onClick={handleAccordion}>
+                                            <a
+                                                href="#"
+                                                onClick={handleAccordion}
+                                            >
                                                 see example
                                             </a>
                                         </div>

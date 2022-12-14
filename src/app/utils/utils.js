@@ -259,8 +259,6 @@ export const updateQueryValue = (DisplayData, filteredData) => {
 export const clearObj = (obj) => {
     // Create a new empty object
     const temp = Object.assign({});
-
-    // Return the empty object
     return temp;
 };
 
