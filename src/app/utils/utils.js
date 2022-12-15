@@ -274,9 +274,12 @@ export const updateQueryValue = (DisplayData, filteredData) => {
 }
 
 export const clearObj = (obj) => {
-    const temp = Object.assign({});
-    return temp;
-};
+    let temp = obj
+    Object.keys(temp).forEach(key => {
+        delete temp[key];
+    })
+    return temp
+}
 
 export const replaceObjWithOriginal = (cur, original) => {
     const temp = Object.assign({}, original);

@@ -33,7 +33,7 @@ const Layout1Settings = {
         // all selected values
         outputType: 'Graph',
         baseLayer: 'arcgis-oceans',
-        basinSelected: {},
+        basinSelected: {"All Locations": "All Locations"},
         locationSelected: {},
         dataTypeSelected: {},
         yearSelected: {},
