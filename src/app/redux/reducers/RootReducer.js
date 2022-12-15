@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 
 const RootReducer = combineReducers({
-    graph: {}
+    graph: function (state = {}, action) {
+        return { "temp": 1 }
+    }
 })
 
 export default RootReducer
