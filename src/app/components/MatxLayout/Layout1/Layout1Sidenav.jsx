@@ -172,6 +172,7 @@ const Layout1Sidenav = () => {
 
     const handleReset = () => {
         let emptyBasin = clearObj(basinSelected)
+        emptyBasin = { 'All Locations': 'All Locations' }
         let emptyLocation = clearObj(locationSelected)
         let emptyType = clearObj(dataTypeSelected)
         let emptyYear = clearObj(yearSelected)
