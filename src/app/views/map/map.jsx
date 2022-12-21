@@ -75,7 +75,7 @@ let monumentLayer = new FeatureLayer({
         },
     ],
     objectIdField: 'ObjectID',
-
+    outFields: '*',
     geometryType: 'point',
     spatialReference: { wkid: 4326 },
     source: [], // adding an empty feature collection
@@ -113,7 +113,6 @@ let monumentLayer2 = new FeatureLayer({
         },
     ],
     objectIdField: 'ObjectID',
-
     geometryType: 'point',
     spatialReference: { wkid: 4326 },
     source: [], // adding an empty feature collection
@@ -405,12 +404,16 @@ function Oceanmap() {
 
     // based on the location selected, change the filter
     useEffect(() => {
-        for (let i = 0; i < baseDots.length; i++) {
-            if (baseDots[i].attributes.ObjectID === alteredIds.ObjectID) {
-                let selectedLocationName = baseDots[i].attributes.Name
-                handleItemSelected(locationSelected, selectedLocationName)
-                handleLocationClick()
-            }
+        // for (let i = 0; i < baseDots.length; i++) {
+        //     if (baseDots[i].attributes.ObjectID === alteredIds.ObjectID) {
+        //         let selectedLocationName = baseDots[i].attributes.Name
+        //         handleItemSelected(locationSelected, selectedLocationName)
+        //         handleLocationClick()
+        //     }
+        // }
+        if (alteredIds !== '') {
+            handleItemSelected(locationSelected, alteredIds)
+            handleLocationClick()
         }
     }, [alteredIds])
 
@@ -529,6 +532,7 @@ function Oceanmap() {
                             const graphic = response.results[0].graphic
                             const attributes = graphic.attributes
                             const id = attributes.ObjectID
+                            const name = attributes.Name
                             if (highlight && currentId !== id) {
                                 highlight.remove()
                                 highlight = null
@@ -539,7 +543,8 @@ function Oceanmap() {
                             }
                             document.getElementById('name').style.visibility =
                                 'visible'
-                            setDisplayNameId(id)
+                            document.getElementById('name').innerHTML = name
+                            // setDisplayNameId(id)
 
                             const query = layerView.createQuery()
                             query.where = 'ObjectID = ' + id
@@ -571,14 +576,14 @@ function Oceanmap() {
         }
     })
 
-    useEffect(() => {
-        for (let i = 0; i < baseDots.length; i++) {
-            if (baseDots[i].attributes.ObjectID === displayNameId) {
-                let selectedLocationName = baseDots[i].attributes.Name
-                document.getElementById('name').innerHTML = selectedLocationName
-            }
-        }
-    }, [displayNameId])
+    // useEffect(() => {
+    //     // for (let i = 0; i < baseDots.length; i++) {
+    //     //     if (baseDots[i].attributes.ObjectID === displayNameId) {
+    //     //         let selectedLocationName = baseDots[i].attributes.Name
+    //     //         document.getElementById('name').innerHTML = selectedLocationName
+    //     //     }
+    //     // }
+    // }, [displayNameId])
 
     useEffect(() => {
         if (view) {
@@ -594,7 +599,8 @@ function Oceanmap() {
                         if (response.results.length) {
                             const graphic = response.results[0].graphic
                             const attributes = graphic.attributes
-                            setAlteredIds(attributes)
+                            const name = attributes.Name
+                            setAlteredIds(name)
                         }
                     })
                     .catch(() => {
