@@ -89,6 +89,15 @@ const InternalLink = styled(Box)(({ theme }) => ({
         background: '#F5F5F5',
     },
 }))
+const DisabledLink = styled(Box)(({ theme }) => ({
+    height: '32px',
+    '& a': {
+        color: theme.palette.text.primary,
+    },
+    '& .navItemActive': {
+        backgroundColor: 'rgba(255, 255, 255, 0.16)',
+    },
+}))
 
 const StyledText = styled(Span)(({ mode }) => ({
     fontSize: '0.875rem',
@@ -98,6 +107,11 @@ const StyledText = styled(Span)(({ mode }) => ({
 
 const IntructionHeader = styled('p')(({ mode }) => ({
     fontSize: '19px',
+}))
+const FlexBox = styled(Box)(({ mode }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 }))
 
 const StyledQuestionIcon = styled(HelpOutlineIcon)(({ mode }) => ({
@@ -478,6 +492,11 @@ const MatxVerticalNav = () => {
         })
     }
 
+    const disableList = [
+        'Sacramento River Basin',
+        'San Joaquin River Basin',
+        'Delta',
+    ]
     const handleItemClick = (item, index) => {
         if (Object.keys(BasinData['basinList']).includes(item)) {
             handleItemSelected(basinSelected, item, 'basinClick')
@@ -782,71 +801,208 @@ const MatxVerticalNav = () => {
             } else {
                 return (
                     // all the items under each category
-                    <InternalLink
-                        key={index}
-                        onClick={() => handleItemClick(item.name)}
-                    >
-                        <ButtonBase
-                            key={item.name}
-                            name="child"
-                            sx={{ width: '100%' }}
-                        >
-                            {item?.icon ? (
-                                <Icon className="icon" sx={{ width: 36 }}>
-                                    {item.icon}
-                                </Icon>
-                            ) : (
-                                <Fragment>
-                                    <BulletIcon
-                                        className={`nav-bullet`}
-                                        sx={{
-                                            display:
-                                                mode === 'compact' && 'none',
-                                        }}
-                                    />
-                                    <Box
-                                        className="nav-bullet-text"
-                                        sx={{
-                                            ml: '20px',
-                                            fontSize: '11px',
-                                            display:
-                                                mode !== 'compact' && 'none',
-                                        }}
-                                    >
-                                        {item.iconText}
-                                    </Box>
-                                </Fragment>
-                            )}
-                            <StyledText
-                                mode={mode}
-                                className="sidenavHoverShow"
-                                style={
-                                    Object.keys(basinSelected).includes(
-                                        item.name
-                                    ) ||
-                                    Object.keys(dataTypeSelected).includes(
-                                        item.name
-                                    ) ||
-                                    Object.keys(locationSelected).includes(
-                                        item.name
-                                    ) ||
-                                    Object.keys(yearSelected).includes(
-                                        item.name
-                                    ) ||
-                                    Object.keys(additionalLayer).includes(
-                                        item.name
-                                    ) ||
-                                    outputType === item.name ||
-                                    baseLayer === item.name
-                                        ? { color: '#db5609', fontWeight: 700 }
-                                        : null
-                                }
+                    <Fragment key={index}>
+                        {/* {filterCondition && (
+                            <InternalLink
+                                onClick={() => handleItemClick(item.name)}
                             >
-                                {item.name}
-                            </StyledText>
-                            <Box mx="auto"></Box>
-                        </ButtonBase>
-                    </InternalLink>
+                                <ButtonBase
+                                    key={item.name}
+                                    name="child"
+                                    sx={{ width: '100%' }}
+                                >
+                                    {item?.icon ? (
+                                        <Icon
+                                            className="icon"
+                                            sx={{ width: 36 }}
+                                        >
+                                            {item.icon}
+                                        </Icon>
+                                    ) : (
+                                        <Fragment>
+                                            <BulletIcon
+                                                className={`nav-bullet`}
+                                                sx={{
+                                                    display:
+                                                        mode === 'compact' &&
+                                                        'none',
+                                                }}
+                                            />
+                                            <Box
+                                                className="nav-bullet-text"
+                                                sx={{
+                                                    ml: '20px',
+                                                    fontSize: '11px',
+                                                    display:
+                                                        mode !== 'compact' &&
+                                                        'none',
+                                                }}
+                                            >
+                                                {item.iconText}
+                                            </Box>
+                                        </Fragment>
+                                    )}
+                                    <StyledText
+                                        mode={mode}
+                                        className="sidenavHoverShow"
+                                        style={
+                                            Object.keys(basinSelected).includes(
+                                                item.name
+                                            ) ||
+                                            Object.keys(
+                                                dataTypeSelected
+                                            ).includes(item.name) ||
+                                            Object.keys(
+                                                locationSelected
+                                            ).includes(item.name) ||
+                                            Object.keys(yearSelected).includes(
+                                                item.name
+                                            ) ||
+                                            Object.keys(
+                                                additionalLayer
+                                            ).includes(item.name) ||
+                                            outputType === item.name ||
+                                            baseLayer === item.name
+                                                ? {
+                                                      color: '#db5609',
+                                                      fontWeight: 700,
+                                                  }
+                                                : null
+                                        }
+                                    >
+                                        {item.name}
+                                    </StyledText>
+                                    <Box mx="auto"></Box>
+                                </ButtonBase>
+                            </InternalLink>
+                        )} */}
+                        {!filterCondition && disableList.includes(item.name) ? (
+                            <DisabledLink>
+                                <FlexBox
+                                    key={item.name}
+                                    name="child"
+                                    sx={{ width: '100%' }}
+                                >
+                                    {item?.icon ? (
+                                        <Icon
+                                            className="icon"
+                                            sx={{ width: 36 }}
+                                        >
+                                            {item.icon}
+                                        </Icon>
+                                    ) : (
+                                        <Fragment>
+                                            <BulletIcon
+                                                className={`nav-bullet`}
+                                                sx={{
+                                                    display:
+                                                        mode === 'compact' &&
+                                                        'none',
+                                                }}
+                                                style={{
+                                                    background: '#aba9a9',
+                                                }}
+                                            />
+                                            <Box
+                                                className="nav-bullet-text"
+                                                sx={{
+                                                    ml: '20px',
+                                                    fontSize: '11px',
+                                                    display:
+                                                        mode !== 'compact' &&
+                                                        'none',
+                                                }}
+                                            >
+                                                {item.iconText}
+                                            </Box>
+                                        </Fragment>
+                                    )}
+
+                                    <StyledText
+                                        mode={mode}
+                                        className="sidenavHoverShow"
+                                        style={{ color: '#aba9a9' }}
+                                    >
+                                        {item.name}
+                                    </StyledText>
+                                    <Box mx="auto"></Box>
+                                </FlexBox>
+                            </DisabledLink>
+                        ) : (
+                            <InternalLink
+                                onClick={() => handleItemClick(item.name)}
+                            >
+                                <ButtonBase
+                                    key={item.name}
+                                    name="child"
+                                    sx={{ width: '100%' }}
+                                >
+                                    {item?.icon ? (
+                                        <Icon
+                                            className="icon"
+                                            sx={{ width: 36 }}
+                                        >
+                                            {item.icon}
+                                        </Icon>
+                                    ) : (
+                                        <Fragment>
+                                            <BulletIcon
+                                                className={`nav-bullet`}
+                                                sx={{
+                                                    display:
+                                                        mode === 'compact' &&
+                                                        'none',
+                                                }}
+                                            />
+                                            <Box
+                                                className="nav-bullet-text"
+                                                sx={{
+                                                    ml: '20px',
+                                                    fontSize: '11px',
+                                                    display:
+                                                        mode !== 'compact' &&
+                                                        'none',
+                                                }}
+                                            >
+                                                {item.iconText}
+                                            </Box>
+                                        </Fragment>
+                                    )}
+                                    <StyledText
+                                        mode={mode}
+                                        className="sidenavHoverShow"
+                                        style={
+                                            Object.keys(basinSelected).includes(
+                                                item.name
+                                            ) ||
+                                            Object.keys(
+                                                dataTypeSelected
+                                            ).includes(item.name) ||
+                                            Object.keys(
+                                                locationSelected
+                                            ).includes(item.name) ||
+                                            Object.keys(yearSelected).includes(
+                                                item.name
+                                            ) ||
+                                            Object.keys(
+                                                additionalLayer
+                                            ).includes(item.name) ||
+                                            outputType === item.name ||
+                                            baseLayer === item.name
+                                                ? {
+                                                      color: '#db5609',
+                                                      fontWeight: 700,
+                                                  }
+                                                : null
+                                        }
+                                    >
+                                        {item.name}
+                                    </StyledText>
+                                    <Box mx="auto"></Box>
+                                </ButtonBase>
+                            </InternalLink>
+                        )}
+                    </Fragment>
                 )
             }
         })
