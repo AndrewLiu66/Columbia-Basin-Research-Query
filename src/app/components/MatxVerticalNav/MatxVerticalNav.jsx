@@ -667,7 +667,9 @@ const MatxVerticalNav = () => {
                                                 },
                                             }}
                                         ></AccordionSummary>
-                                        <AccordionDetails sx={{ mt: -2 }}>
+                                        <AccordionDetails
+                                            sx={{ mt: -2, color: '#919191' }}
+                                        >
                                             For graphs, there is a limit of 18
                                             lines. A line is defined as a unique
                                             combination of location, year, and

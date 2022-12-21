@@ -404,13 +404,6 @@ function Oceanmap() {
 
     // based on the location selected, change the filter
     useEffect(() => {
-        // for (let i = 0; i < baseDots.length; i++) {
-        //     if (baseDots[i].attributes.ObjectID === alteredIds.ObjectID) {
-        //         let selectedLocationName = baseDots[i].attributes.Name
-        //         handleItemSelected(locationSelected, selectedLocationName)
-        //         handleLocationClick()
-        //     }
-        // }
         if (alteredIds !== '') {
             handleItemSelected(locationSelected, alteredIds)
             handleLocationClick()
@@ -575,15 +568,6 @@ function Oceanmap() {
                 })
         }
     })
-
-    // useEffect(() => {
-    //     // for (let i = 0; i < baseDots.length; i++) {
-    //     //     if (baseDots[i].attributes.ObjectID === displayNameId) {
-    //     //         let selectedLocationName = baseDots[i].attributes.Name
-    //     //         document.getElementById('name').innerHTML = selectedLocationName
-    //     //     }
-    //     // }
-    // }, [displayNameId])
 
     useEffect(() => {
         if (view) {
