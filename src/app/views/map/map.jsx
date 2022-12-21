@@ -584,6 +584,8 @@ function Oceanmap() {
                             const graphic = response.results[0].graphic
                             const attributes = graphic.attributes
                             const name = attributes.Name
+
+                            // console.log('name', name)
                             setAlteredIds(name)
                         }
                     })
